@@ -8,8 +8,10 @@ Arabic-first (Egyptian dialect) party trivia game for friends: "العب، ات�
 
 ## Features
 
-- 860+ questions across 36 categories (including flags of 225 countries and territories, landmark photos, date cards and emoji movies)
-- Online game modes: classic race and bluff (both online only, each player on their own phone)
+- 6,800+ questions across 40+ categories (flags, landmark and animal photos with credit lines, audio clips, Egyptian film casts and portraits, football nationality and career questions, date cards and emoji movies)
+- Online game modes: classic race, bluff and imposter ("برا السرب"), all online only, each player on their own phone
+- Teams mode (2 to 4 teams, team score = sum of members) for classic and bluff
+- Name and bluff-answer word filter (`js/data/badwords.js`)
 - Mixed difficulty on every question: easy 5, medium 10, hard 20 points
 - Pick 10 to 30 questions per game; choose at least 6 categories to start
 - Category browser with live search, filters and per-category question counts
@@ -67,3 +69,10 @@ The game has no accounts and no analytics. Settings and scores stay in the brows
 ## License
 
 [MIT](LICENSE)
+
+## Data sources and licensing
+
+- Hand-written questions: original, written for this project.
+- Wikidata facts (Egyptian film casts, football nationality and club careers) are CC0.
+- Photos, portraits and audio come from Wikimedia Commons (public domain, CC0, CC BY and CC BY-SA only). Each photo shows its credit line in the game (`§P:url|credit§` rows in the question banks).
+- No TMDB, no scraped datasets, no competitor content. Competitor games were used for mechanics and ideas only.
