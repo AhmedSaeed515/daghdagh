@@ -220,3 +220,36 @@ html,body{background:#0b0b12}
 .av{overflow:hidden}.av svg{width:100%;height:100%;display:block}
 .avb{padding:6px}.avb svg{width:100%;height:auto;display:block;max-width:64px;margin:0 auto}
 .avgrid{grid-template-columns:repeat(4,1fr)}
+
+/* v14 lobby + motion */
+.lg .roomc{background:linear-gradient(145deg,#7c3aed,#4c1d95);border-radius:26px;padding:16px;box-shadow:0 6px 0 #3b1580;margin:8px 0 12px;text-align:start}
+.lg .roomc small{color:#d8c8ff;font-weight:800}
+.lg .roomc .code{font-size:46px;font-weight:900;letter-spacing:7px;direction:ltr;text-align:right;margin:2px 0 12px;animation:zk-pop .5s cubic-bezier(.2,1.6,.4,1) both}
+.lg .rbtns{display:flex;gap:10px}.lg .rbtns .btn{flex:1;margin:0;width:auto;white-space:nowrap}
+.lg .rbtns .btn.y{background:var(--y);color:var(--ink);box-shadow:0 4px 0 #c9a200}
+.lg .hrow{display:flex;justify-content:space-between;align-items:center}.lg .hrow i{color:var(--mut);font-style:normal;font-weight:800}
+.lg .plist{display:flex;flex-direction:column;gap:8px}
+.lg .pl{display:flex;align-items:center;gap:12px;background:var(--card2);border-radius:20px;padding:8px 12px;animation:zk-slide .4s cubic-bezier(.2,1.2,.4,1) both;animation-delay:calc(var(--i,0)*45ms)}
+.lg .pl .av{width:48px;height:48px}.lg .pl b{flex:1;min-width:0;text-align:start;font-size:17px;overflow-wrap:anywhere}
+.lg .pl em{font-style:normal;font-size:13px;color:var(--y);font-weight:800;white-space:nowrap}.lg .pl em.rd{color:#6ee7a7}
+.lg .pl em.you{background:var(--y);color:var(--ink);border-radius:99px;padding:2px 10px}
+.lg .empty{border:2px dashed #3a3a5c;border-radius:20px;padding:10px;text-align:center;color:var(--mut);font-weight:800}
+.lg .sb{display:flex;flex-wrap:wrap;gap:6px}.lg .sp{min-width:0}
+.lg .rk{animation:zk-slide .4s cubic-bezier(.2,1.2,.4,1) both}
+.lg .rk:nth-child(2){animation-delay:.06s}.lg .rk:nth-child(3){animation-delay:.12s}.lg .rk:nth-child(4){animation-delay:.18s}.lg .rk:nth-child(n+5){animation-delay:.24s}
+.lg .rk:first-child{background:linear-gradient(90deg,#3a2e0a,var(--card2));border:2px solid var(--y)}
+.lg .sb b{display:inline-block;animation:zk-score .45s cubic-bezier(.2,1.8,.4,1)}
+.lg .lg-app.enter{animation:zk-enter .28s ease-out both}
+.lg .btn,.lg .opt,.lg .chip,.lg .mode,.lg .catc{transition:transform .08s ease-out}
+.lg .btn:active,.lg .opt:active,.lg .chip:active,.lg .mode:active{transform:translateY(3px) scale(.97)}
+.lg .opt.right{animation:zk-pulse .5s,zk-glow .8s}
+.lg .catc.on .ck{animation:zk-tick .25s cubic-bezier(.2,1.8,.4,1)}
+.lg .big-emoji.trophy{animation:zk-trophy 1s cubic-bezier(.2,1.6,.4,1) both,zk-bounce 1.6s 1s ease-in-out infinite}
+.lg .bar i.low{animation:zk-blink .4s infinite alternate}
+@keyframes zk-slide{from{transform:translateX(-24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes zk-enter{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+@keyframes zk-score{0%{transform:scale(.6)}60%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes zk-tick{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes zk-glow{from{opacity:.6}to{opacity:1}}
+@keyframes zk-trophy{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+@media (prefers-reduced-motion:reduce){.lg *,.lg *::before,.lg *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}}
