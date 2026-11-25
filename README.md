@@ -1,6 +1,6 @@
-<p align="center"><img src="logo.svg" alt="ZAKA ARENA logo" width="120"></p>
+<p align="center"><img src="logo.svg" alt="BOOM logo" width="120"></p>
 
-# ZAKA ARENA (ذكاء أرينا)
+# BOOM (بوم)
 
 Formerly "Logz+". Arabic-first trivia and riddles game, shipped as an installable, offline-capable Progressive Web App (PWA). Single-page, no build step, no backend to run.
 
