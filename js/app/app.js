@@ -44,6 +44,7 @@ function profileForm(first){
    <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
    ${QuestionReport.card()}
    <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد اللعب.</small></span><span class="ch">‹</span></button>
+   <button class="mode" data-act="theme"><span class="ic">${store.get('dark',false)?'☀️':'🌙'}</span><span class="tx"><b>${store.get('dark',false)?'الوضع الفاتح':'الوضع الداكن'}</b><small>بدّل بين الفاتح والداكن.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button></div>`;
   shell(`<div class="panel pf center">${first?'<h2>أهلاً بيك في دغدغ!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'avxl')}</div><h2>بروفايلي</h2>`}
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
@@ -272,6 +273,7 @@ document.addEventListener('click',e=>{
     case 'back':return goBack();case 'home':return home();case 'howto':return howto();
     case 'lj':{const el=document.getElementById('ljname');const nm=el?el.value.trim().slice(0,14):'';if(!nm){if(el)el.focus();return;}store.set('myname',nm);if(!store.get('myav',''))store.set('myav',AVS[Math.floor(Math.random()*AVS.length)]);return ONL.joinCode(JR);}
     case 'back2home':return home();
+    case 'theme':{const d=!store.get('dark',false);store.set('dark',d);document.documentElement.classList.toggle('dk',d);const m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#14141a':'#efece3';return profileView();}
     case 'sound':store.set('sound',!store.get('sound',true));if(TAB==='me')return profileView();t.textContent=store.get('sound',true)?'🔊':'🔇';return;
     case 'padd':CFG.players.push('لاعب '+(CFG.players.length+1));return setup(CFG.mode);
     case 'pdel':CFG.players.pop();return setup(CFG.mode);
