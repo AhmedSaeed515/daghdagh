@@ -25,7 +25,7 @@ window.QX={cats:{flg:'🚩 خمّن العلم (صور)',lmk:'📸 معالم (�
 (function(){
 window.PTS={1:5,2:10,3:20};
 const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-window.qbox=function(t){
+const qbox0=function(t){
   const m=/^§([FPDE]):([^§]*)§([\s\S]*)$/.exec(t||'');
   if(!m)return '<div class="q">'+E(t)+'</div>';
   const k=m[1],v=m[2],txt=E(m[3]);let media='';
@@ -35,6 +35,7 @@ window.qbox=function(t){
   else media='<div class="qmedia emo">'+E(v)+'</div>';
   return media+'<div class="q sm">'+txt+'</div>';
 };
+window.qbox=t=>qbox0(t)+(window.QuestionReport?QuestionReport.button(t):'');
 const colors=['#ffd23f','#ff5c8a','#2ee6a6','#4d9dff','#a78bfa','#ff9f43'];
 window.burst=function(n){
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
