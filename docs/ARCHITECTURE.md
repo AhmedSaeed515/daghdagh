@@ -1,42 +1,33 @@
 # Architecture
 
-## Overview
-
-Daghdagh is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
+دغدغ (Daghdagh) is a static, dependency-free PWA. No build step. Scripts load in order from `index.html`.
 
 ```
-index.html   UI, base styles, question bank, game engine, online-room client
-theme.css      paper and ink theme (overrides the base styles)
-logo.svg       static logo (the home screen animates it inline)
-manifest.json  PWA metadata
-sw.js          offline cache
-icon.svg       icon
+index.html          HTML shell only
+manifest.json       PWA manifest
+sw.js               service worker (cache daghdagh-v33)
+assets/             icon.svg, logo.svg
+css/base.css        layout and components
+css/theme.css       palette B (paper, ink, red) and the animated logo
+js/data/            question banks, categories, flags, avatars (plain data)
+js/lib/             Util, Store, Sound (small helper classes)
+js/online/online.js online rooms, relay client, host and guest logic
+js/app/app.js       views, Classic and Bluff modes, events
+js/main.js          boot and service worker registration
 ```
 
-## Game engine
+## Load order
+data files, then `js/lib/*`, then `online.js`, then `app.js`, then `main.js`.
 
-- Questions are stored as data (`index.html` plus the `qx.js`, `qb*.js` and `flags*.js` banks), grouped into 36 categories with difficulty levels.
-- A round is built from the selected categories, difficulty and round count.
-- Modes: `classic` (multiple choice with timer and helpers) and `bluff` (players write fake answers and vote). Both are online only.
-- Settings and local progress are saved in `localStorage` with the key prefix `lo3ba_`.
+## Classes
+- `Util`: DOM and text helpers (`$`, `app`, `esc`, `shuffle`, `norm`).
+- `Store`: localStorage wrapper. Key prefix `lo3ba_` (kept so saved profiles keep working).
+- `Sound`: small WebAudio sound effects.
 
-## Online rooms
+Online rooms use the relay topic prefix `lgz-` (kept so existing rooms keep working).
 
-Rooms use a host-authoritative model:
+## Rules baked into the game
+Points: easy 5, medium 10, hard 20. At least 6 categories per game. 10 to 30 questions. Classic and Bluff are online only. Default max players 8, host can raise it to 16.
 
-1. The host creates a room and gets a short code.
-2. Players join with the code from their own devices.
-3. The host runs the game state (phase, timers, scores) and broadcasts it to all players. Players send only their actions (join, answer, vote).
-4. Messages are relayed through public ntfy topics over plain HTTPS. The client probes the servers `ntfy.envs.net`, `ntfy.adminforge.de` and `ntfy.sh` and uses the first one that responds, with retry on rate limiting.
-
-Because relay topics are public, treat room messages as non-confidential. If the project needs private rooms later, replace the relay with an owned backend (for example WebSocket or a managed realtime service).
-
-## Offline and caching
-
-`sw.js` precaches the app shell (`./`, `index.html`, `theme.css`, `manifest.json`, `icon.svg`, `logo.svg`) and serves cache-first for same-origin requests. Cross-origin requests (the relay) always go to the network. Old caches are removed on activation. Bump the cache name in `sw.js` on every release that changes cached files.
-
-## Known limitations
-
-- The icon is SVG only. Some platforms prefer PNG icons (192px and 512px) for install prompts.
-- Online rooms depend on third-party public relays and can be rate limited.
-- The question bank lives inside `index.html`; moving it to a separate JSON file would make editing and review easier.
+## Next
+`app.js` and `online.js` are still closures. They will be split into classes (router, game engine, room client, views) with no behavior change.
