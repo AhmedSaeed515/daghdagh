@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=12"><script src="flags1.js?v=10"></script><script src="flags2.js?v=10"></script><script src="flags3.js?v=10"></script><script src="qx.js?v=10"></script><script src="qb2a.js?v=10"></script><script src="qb3a.js?v=10"></script><script src="qb4a.js?v=10"></script><script src="qb5a.js?v=10"></script><script src="qb1a.js?v=10"></script><script src="qb1b.js?v=10"></script><script src="qb1c.js?v=10"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=12"><script src="flags1.js?v=13"></script><script src="flags2.js?v=13"></script><script src="flags3.js?v=13"></script><script src="qx.js?v=13"></script><script src="qb2a.js?v=13"></script><script src="qb3a.js?v=13"></script><script src="qb4a.js?v=13"></script><script src="qb5a.js?v=13"></script><script src="qb1a.js?v=13"></script><script src="qb1b.js?v=13"></script><script src="qb1c.js?v=13"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -888,7 +888,7 @@ function applyState(s,now,seq){
   if(!s.pl.some(p=>p.i===ME.id)){ // not accepted (game already started?)
     if(s.ph!=='lobby'){leave();msg='اللعبة بدأت بالفعل في الغرفة دي.';return lobbyView();}
   }
-  if(prev&&s.ph==='rv'&&prev.ph!=='rv'){const k=s.pl.findIndex(p=>p.i===ME.id);if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
+  if(prev&&s.ph==='rv'&&prev.ph!=='rv'){setTimeout(()=>sfx.round(),900);const k=s.pl.findIndex(p=>p.i===ME.id);if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
   view();startUi();
 }
 
@@ -907,7 +907,7 @@ function hostBroadcast(){
   if(NET)NET.send({t:'st',seq:h.seq,s,now});
   const prev=S;S=s;S.seq=h.seq;off=0;lastSt=now;
   if(!prev||prev.r!==s.r)mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
-  if(prev&&s.ph==='rv'&&prev.ph!=='rv'){const k=0;if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
+  if(prev&&s.ph==='rv'&&prev.ph!=='rv'){setTimeout(()=>sfx.round(),900);const k=0;if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
   view();startUi();
 }
 function hostJoin(m){
@@ -1039,7 +1039,7 @@ function lobbyRoom(host){
 }
 function finView(){
   const rows=S.pl.map((p,i)=>({p,i})).sort((a,b)=>b.p.s-a.p.s);const tie=rows.length>1&&rows[0].p.s===rows[1].p.s;
-  shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(rows[0].p.n)}</h2><div class="rank">${rows.map((x,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(x.p.a)}${esc(x.p.n)}${x.p.i===ME.id?' (أنت)':''}</span><span>${x.p.s} نقطة</span></div>`).join('')}</div>
+  sfx.win();shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(rows[0].p.n)}</h2><div class="rank">${rows.map((x,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(x.p.a)}${esc(x.p.n)}${x.p.i===ME.id?' (أنت)':''}</span><span>${x.p.s} نقطة</span></div>`).join('')}</div>
   ${room.host?'<button class="btn big" data-o="again">العب تاني بنفس الغرفة</button>':'<p class="warn">صاحب الغرفة ممكن يبدأ جولة جديدة...</p>'}<button class="btn ghost" data-o="leave">خروج</button></div>`);
 }
 function updateBar(){
@@ -1051,6 +1051,14 @@ function startUi(){
   uiTimer=setInterval(()=>{if(!S)return;updateBar();const r=remain();if(['q','wr','vt'].includes(S.ph)&&r<=5&&r>0.2&&Math.abs(r-Math.round(r))<0.12)sfx.tick();},200);
 }
 
+
+// ---------- navigation history ----------
+let VH=[],CURV=null,NAVING=false;
+function goBack(){const p=VH.pop();if(!p)return home();NAVING=true;try{p.f();}finally{NAVING=false;}}
+function trk(n,fn,reset){return function(...a){if(reset){VH=[];CURV=null;}else if(!NAVING){if(CURV&&CURV.n!==n){VH.push(CURV);try{history.pushState({v:1},'')}catch(e){}}}CURV={n,f:()=>fn.apply(null,a)};return fn.apply(this,a);}}
+home=trk('home',home,true);setup=trk('setup',setup);catsBrowser=trk('cats',catsBrowser);profileView=trk('me',profileView);installView=trk('inst',installView);howto=trk('how',howto);
+try{const _o=ONL.open;ONL.open=trk('onl',_o);}catch(e){}
+window.addEventListener('popstate',()=>{if(VH.length)goBack();});
 // ---------- events ----------
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t||!t.dataset.o)return;
@@ -1067,7 +1075,7 @@ document.addEventListener('click',e=>{
     case 'again':{const h=H;h.ph='lobby';h.r=0;h.items=[];h.ends=0;h.players.forEach(p=>{p.score=0;p.right=0});return hostBroadcast();}
     case 'mode':H.cfg.mode=v;return hostBroadcast();
     case 'rminus':case 'rplus':{const st=[5,10,15,20];let i=st.indexOf(H.cfg.n);i+=a==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));H.cfg.n=st[i];return hostBroadcast();}
-    case 'mp':H.cfg.maxP=Math.max(2,Math.min(8,H.cfg.maxP+(+v)));return hostBroadcast();
+    case 'mp':H.cfg.maxP=Math.max(2,Math.min(16,H.cfg.maxP+(+v)));return hostBroadcast();
     case 'appr':H.cfg.appr=v==='1';return hostBroadcast();
     case 'cats':return X.catsBrowser({get:()=>H.cfg.cats,set:c=>{H.cfg.cats=c;try{localStorage.setItem('lo3ba_cats',JSON.stringify(c))}catch(e){}},onDone:()=>hostBroadcast()});
     case 'ok':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];let nm=pj.name,k=2;while(H.players.some(x=>x.name===nm))nm=pj.name.slice(0,12)+' '+k++;H.players.push({id:pj.id,name:nm,av:pj.av,score:0,right:0});return hostBroadcast();}
@@ -1269,8 +1277,11 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 const norm=t=>String(t).toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/[ىئ]/g,'ي').replace(/ؤ/g,'و').replace(/[^\u0621-\u064Aa-z0-9 ]/g,'').replace(/\s+/g,' ').trim().replace(/^ال/,'').replace(/ ال/g,' ');
 const store={get(k,d){try{const v=localStorage.getItem('lo3ba_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('lo3ba_'+k,JSON.stringify(v))}catch(e){}}};
 let audioCtx=null;
-function beep(f,d=0.12,type='sine'){try{if(!store.get('sound',true))return;audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=f;g.gain.value=0.08;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+d);}catch(e){}}
-const sfx={ok(){beep(660);setTimeout(()=>beep(880),110);window.burst&&window.burst(14)},bad(){beep(200,0.3,'sawtooth');window.shake&&window.shake()},tick(){beep(440,0.05)}};
+function actx(){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state!=='running')audioCtx.resume();}catch(e){}return audioCtx;}
+['pointerdown','touchstart','click','keydown'].forEach(ev=>document.addEventListener(ev,()=>actx(),{passive:true}));
+function tone(f,t0,d,type,vol,f2){try{if(!store.get('sound',true))return;const c=actx();if(!c)return;const o=c.createOscillator(),g=c.createGain();const t=c.currentTime+t0;o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.25,t+0.015);g.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+0.03);}catch(e){}}
+function beep(f,d=0.12,type='sine'){tone(f,0,d,type,0.25);}
+const sfx={tap(){tone(520,0,0.06,'triangle',0.18,380)},tick(){tone(880,0,0.04,'square',0.08)},ok(){tone(660,0,0.12,'triangle',0.3);tone(880,0.1,0.12,'triangle',0.3);tone(1175,0.2,0.22,'triangle',0.3);window.burst&&window.burst(14)},bad(){tone(220,0,0.18,'sawtooth',0.22,150);tone(150,0.16,0.28,'sawtooth',0.22,90);window.shake&&window.shake()},round(){tone(523,0,0.14,'sine',0.28);tone(659,0.14,0.14,'sine',0.28);tone(784,0.28,0.3,'sine',0.28)},win(){[523,659,784,1047].forEach((f,k)=>tone(f,k*0.13,0.2,'triangle',0.3));tone(1047,0.55,0.5,'triangle',0.3);tone(1319,0.55,0.5,'sine',0.2)}};
 
 // ---------- state ----------
 const CFG={mode:'classic',players:['لاعب 1'],cats:(store.get('cats',[])||[]).filter(k=>CATS[k]),diff:0,rounds:10};const MINCATS=6;
@@ -1308,16 +1319,16 @@ function tabsHtml(){
   const t=(k,l)=>`<button class="tab ${TAB===k?'on':''}" data-tab="${k}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg><span>${l}</span></button>`;
   return `<div class="tabs">${t('home','الرئيسية')}${t('cats','الفئات')}${t('online','أونلاين')}${t('me','حسابي')}</div>`;
 }
-function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="home" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>فلتة</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
+function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="back" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>فلتة</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
 const AVS=['🦊','🐼','🐯','🦁','🐸','🐵','🐰','🐻','🐨','🐙','🦄','🐧','🦉','🐲','🐱','🐶'];
 const avOK=a=>AVS.includes(a)?a:'🙂';
 const avh=(a,c)=>`<span class="av ${c||''}">${avOK(a)}</span>`;
 let PF=null;
-const pfValid=()=>!!(PF&&PF.name&&PF.av&&PF.g);
-function profileOk(){return !!(store.get('myname','')&&store.get('myav','')&&store.get('mygender',''));}
+const pfValid=()=>!!(PF&&PF.name&&PF.av);
+function profileOk(){return !!(store.get('myname','')&&store.get('myav',''));}
 function profileForm(first){
   clearTimer();if(typeof ONL!=='undefined'&&ONL)ONL.leave();
-  if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav',''),g:store.get('mygender','')};
+  if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav','')};
   TAB=first?'':'me';
   const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
   const extra=first?'':`<div class="cards">
@@ -1326,7 +1337,6 @@ function profileForm(first){
    <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button></div>`;
   shell(`<div class="panel pf center">${first?'<img src="logo.svg" alt="" width="72" height="72"><h2>أهلاً بيك في فلتة!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'avxl')}</div><h2>بروفايلي</h2>`}
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
-  <h3>إنت؟</h3><div class="seg" style="width:100%"><button class="${PF.g==='m'?'on':''}" data-pf="g" data-v="m" style="flex:1">👦 ولد</button><button class="${PF.g==='f'?'on':''}" data-pf="g" data-v="f" style="flex:1">👧 بنت</button></div>
   <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="أفاتار ${a}">${a}</button>`).join('')}</div>
   <button class="btn big" id="pfsave" data-pf="save" ${pfValid()?'':'disabled'}>${first?'يلا نبدأ':'حفظ'}</button>
   <p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
@@ -1336,7 +1346,7 @@ function pfClick(t){
   const k=t.dataset.pf,v=t.dataset.v;
   if(k==='g'){PF.g=v;return profileForm(PF.first);}
   if(k==='av'){PF.av=v;return profileForm(PF.first);}
-  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);store.set('mygender',PF.g);PF=null;return home();}
+  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);PF=null;return home();}
 }
 function home(){
   clearTimer();G=null;if(typeof ONL!=='undefined'&&ONL)ONL.leave();
@@ -1346,7 +1356,7 @@ function home(){
   <button class="cta" data-act="online">🌐 يلا نلعب أونلاين</button>
   <div class="sec"><span>طرق اللعب</span><span>${Q.length} سؤال • ${R.length} لغز</span></div>
   <div class="cards">
-   ${card('','🌐','العب أونلاين','اعمل غرفة وابعت الكود لصحابك، لحد 8 لاعبين. سباق إجابات أو بلوف.','hot')}
+   ${card('','🌐','العب أونلاين','اعمل غرفة وابعت الكود لصحابك، لحد 16 لاعب. سباق إجابات أو بلوف.','hot')}
    ${card('riddle','🧩','ألغاز','لوحدك: اكتب الإجابة بنفسك، ومعاك تلميح بنص النقط.')}
   </div>
   <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});
@@ -1529,7 +1539,7 @@ function finish(){
   const sorted=G.players.map((p,i)=>({...p,i})).sort((a,b)=>b.score-a.score);
   const top=sorted[0];const tie=sorted.length>1&&sorted[1].score===top.score;
   const maxPts=G.mode==='bluff'?'':'';
-  shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(top.name)}</h2>
+  sfx.win();shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(top.name)}</h2>
   <div class="rank">${sorted.map((p,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(store.get('myav',''))}${esc(p.name)}</span><span>${p.score} نقطة • ${p.right} صح${G.mode==='classic'?` • أطول ستريك ${p.best}`:''}</span></div>`).join('')}</div>
   <button class="btn big" data-act="again">العب تاني</button><button class="btn ghost" data-act="home">القائمة</button></div>`);
   window.__last={mode:G.mode,scores:G.players.map(p=>p.score)};setTimeout(()=>window.burst&&window.burst(40),250);
@@ -1538,6 +1548,7 @@ function finish(){
 // ---------- events ----------
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
+  if(!t.dataset.pick&&!t.dataset.bv&&!t.dataset.o)sfx.tap();
   if(t.dataset.pf)return pfClick(t);
   if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return ONL.open();if(k==='me')return profileView();return;}
   if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
@@ -1559,7 +1570,7 @@ document.addEventListener('click',e=>{
     case 'catsedit':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>setup(CFG.mode)});
     case 'catsdone':{const o=catBr;catBr=null;if(o&&o.onDone)return o.onDone();return home();}
     case 'rminus':case 'rplus':{const st=RSTEP[CFG.mode];let i=st.indexOf(CFG.rounds);i+=t.dataset.act==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));CFG.rounds=st[i];return setup(CFG.mode);}
-    case 'home':return home();case 'howto':return howto();
+    case 'back':return goBack();case 'home':return home();case 'howto':return howto();
     case 'sound':store.set('sound',!store.get('sound',true));if(TAB==='me')return profileView();t.textContent=store.get('sound',true)?'🔊':'🔇';return;
     case 'padd':CFG.players.push('لاعب '+(CFG.players.length+1));return setup(CFG.mode);
     case 'pdel':CFG.players.pop();return setup(CFG.mode);
