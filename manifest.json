@@ -8,10 +8,20 @@
   "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
-  "background_color": "#0b0b12",
-  "theme_color": "#0b0b12",
+  "background_color": "#efece3",
+  "theme_color": "#efece3",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
   ]
 }
