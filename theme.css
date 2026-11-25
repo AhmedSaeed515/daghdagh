@@ -212,3 +212,5 @@ html,body{background:#0b0b12}
 .big-av{display:flex;justify-content:center;margin-bottom:6px}
 .pf input#pfname{text-align:center}
 .pill.who{justify-content:center}
+.pcard .btn{width:auto;flex:none;white-space:nowrap;margin:0;padding-inline:16px}
+.pcard b{min-width:0;word-break:normal;overflow-wrap:break-word}
