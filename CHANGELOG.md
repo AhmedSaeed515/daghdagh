@@ -2,6 +2,25 @@
 
 All notable changes to this project are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.1.0] - 2026-11-25
+
+### Changed
+- Question count is a free choice from 10 to 30.
+- Difficulty picker removed. Every game mixes easy, medium and hard questions at random.
+- Points by difficulty: easy 5, medium 10, hard 20.
+- Category picker starts empty with a select-all button. A game needs at least 6 categories.
+- Flags category now covers 225 countries and territories, embedded so it works offline.
+- Docs updated to the new name.
+
+## [2.0.0] - 2026-11-25
+
+### Changed
+- Renamed the game to Falta (فلتة) with a new logo.
+- New playful pop redesign.
+
+### Added
+- Picture categories: flags, landmark photos, date cards, emoji movies.
+
 ## [1.2.1] - 2026-11-25
 
 ### Changed
