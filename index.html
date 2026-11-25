@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>بوم | لعبة الأسئلة والألغاز</title>
-<meta name="description" content="لعبة أسئلة وألغاز بالمصري: حوالي ٧٠٠ سؤال في ٣٢ تصنيف، ولعب أونلاين مع صحابك كل واحد من موبايله">
+<title>فلتة | لعبة الأسئلة والصور والألغاز</title>
+<meta name="description" content="لعبة أسئلة وألغاز بالمصري: حوالي ٨٥٠ سؤال في ٣٦ تصنيف، فيها أعلام ومعالم بالصور، ولعب أونلاين مع صحابك كل واحد من موبايله">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#150b2e">
+<meta name="theme-color" content="#0b0b12">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="بوم">
+<meta name="apple-mobile-web-app-title" content="فلتة">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <style>
@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="stylesheet" href="theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=8"><script src="qx.js?v=8"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -1005,18 +1005,18 @@ function view(){
   const bar=(S.ph==='rv')?'':`<div class="bar"><i id="obar"></i></div>`;
   let body='';
   if(S.ph==='q'){
-    body=`<div class="q">${esc(q.t)}</div><div class="opts">${S.o.map((o,k)=>`<button class="opt ${mine.k===k?'picked':''}" data-o="ans" data-k="${k}" ${mine.k!==undefined?'disabled':''}>${esc(o)}</button>`).join('')}</div>${mine.k!==undefined?'<div class="res wait">اتسجلت إجابتك. مستني الباقي...</div>':''}`;
+    body=`${qbox(q.t)}<div class="opts">${S.o.map((o,k)=>`<button class="opt ${mine.k===k?'picked':''}" data-o="ans" data-k="${k}" ${mine.k!==undefined?'disabled':''}>${esc(o)}</button>`).join('')}</div>${mine.k!==undefined?'<div class="res wait">اتسجلت إجابتك. مستني الباقي...</div>':''}`;
   }else if(S.ph==='wr'){
-    body=`<div class="q">${esc(q.t)}</div>${mine.fk?`<div class="res wait">إجابتك المضروبة: <b>${esc(mine.fk)}</b><br>مستني الباقي...</div>`:`<div class="panel center"><p>اكتب إجابة مزيفة مقنعة. الباقي هيشوفوها وسط الإجابة الصح.</p><div class="ans"><input id="ofake" maxlength="40" placeholder="إجابتك المضروبة" autocomplete="off"><button class="btn" data-o="fake">ابعت</button></div><div class="warn">${mine.rej?'دي قريبة أوي من الإجابة الصح أو فاضية. اكتب حاجة تانية.':''}</div></div>`}`;
+    body=`${qbox(q.t)}${mine.fk?`<div class="res wait">إجابتك المضروبة: <b>${esc(mine.fk)}</b><br>مستني الباقي...</div>`:`<div class="panel center"><p>اكتب إجابة مزيفة مقنعة. الباقي هيشوفوها وسط الإجابة الصح.</p><div class="ans"><input id="ofake" maxlength="40" placeholder="إجابتك المضروبة" autocomplete="off"><button class="btn" data-o="fake">ابعت</button></div><div class="warn">${mine.rej?'دي قريبة أوي من الإجابة الصح أو فاضية. اكتب حاجة تانية.':''}</div></div>`}`;
   }else if(S.ph==='vt'){
     const own=mine.fk||'';
-    body=`<div class="q">${esc(q.t)}</div><p class="center" style="color:var(--mut)">اختار الإجابة اللي شايفها صح</p><div class="opts">${S.o.map((o,k)=>{const isMine=own&&norm(o)===norm(own);return `<button class="opt ${mine.k===k?'picked':''}" data-o="vote" data-k="${k}" ${(mine.k!==undefined||isMine)?'disabled':''}>${esc(o)}${isMine?'<small>(إجابتك)</small>':''}</button>`}).join('')}</div>${mine.k!==undefined?'<div class="res wait">اتسجل اختيارك. مستني الباقي...</div>':''}`;
+    body=`${qbox(q.t)}<p class="center" style="color:var(--mut)">اختار الإجابة اللي شايفها صح</p><div class="opts">${S.o.map((o,k)=>{const isMine=own&&norm(o)===norm(own);return `<button class="opt ${mine.k===k?'picked':''}" data-o="vote" data-k="${k}" ${(mine.k!==undefined||isMine)?'disabled':''}>${esc(o)}${isMine?'<small>(إجابتك)</small>':''}</button>`}).join('')}</div>${mine.k!==undefined?'<div class="res wait">اتسجل اختيارك. مستني الباقي...</div>':''}`;
   }else if(S.ph==='rv'){
     const my=myIndex();
     const rows=S.pl.map((p,i)=>({p,i,pt:S.pt[i],pk:S.pk[i]})).sort((a,b)=>b.pt-a.pt);
     const opts=S.o.map((o,k)=>{let cls='opt';if(k===S.right)cls+=' right';else if(S.pk[my]===k)cls+=' wrong';const by=S.by&&S.by[k]&&S.by[k].length?`<small>كتبها: ${S.by[k].map(j=>esc(S.pl[j].n)).join('، ')}</small>`:(S.by&&k!==S.right?'<small>إجابة جاهزة من اللعبة</small>':'');const vs=S.pl.filter((p,i)=>S.pk[i]===k).map(p=>esc(p.n));return `<div class="${cls}" style="cursor:default">${esc(o)}${by}${vs.length?`<small>اختارها: ${vs.join('، ')}</small>`:''}</div>`}).join('');
     const ok=S.pt[my]>0;
-    body=`<div class="q">${esc(q.t)}</div><div class="opts">${opts}</div><div class="res ${ok?'good':'bad'}">${S.pk[my]<0?'ملحقتش تجاوب. ':''}${ok?`صح! +${S.pt[my]} نقطة`:'مفيش نقط الجولة دي'}</div>
+    body=`${qbox(q.t)}<div class="opts">${opts}</div><div class="res ${ok?'good':'bad'}">${S.pk[my]<0?'ملحقتش تجاوب. ':''}${ok?`صح! +${S.pt[my]} نقطة`:'مفيش نقط الجولة دي'}</div>
     <div class="rank">${rows.map(x=>`<div class="rk"><span>${esc(x.p.n)}</span><span>+${x.pt}</span></div>`).join('')}</div>${room.host?'<button class="btn big" data-o="skip">التالي ⏭️</button>':'<div class="center" style="color:var(--mut)">الجولة الجاية بعد ثواني...</div>'}`;
   }
   shell(`${sbHtml()}${meta}${bar}${body}`);
@@ -1235,7 +1235,7 @@ const Q=[
 ['gen',3,'ما الدولة التي تُلقّب بأرض الشمس المشرقة؟','اليابان','الصين','كوريا','تايلاند'],
 ];
 // [question, [accepted answers], hint]
-Q.push(...Q2,...Q3);Object.assign(CATS,CATS2,CATS3);
+Q.push(...Q2,...Q3);Object.assign(CATS,CATS2,CATS3);if(window.QX){Q.push(...QX.rows);Object.assign(CATS,QX.cats);}
 const R=[
 ['حاجة كل ما تاخد منها تكبر. إيه هي؟',['الحفرة','حفرة','الحفره'],'بتعملها في الأرض'],
 ['ليه أسنان ومبيعضش. إيه هو؟',['المشط','مشط'],'بتسرّح بيه شعرك'],
@@ -1270,7 +1270,7 @@ const norm=t=>String(t).toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'')
 const store={get(k,d){try{const v=localStorage.getItem('lo3ba_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('lo3ba_'+k,JSON.stringify(v))}catch(e){}}};
 let audioCtx=null;
 function beep(f,d=0.12,type='sine'){try{if(!store.get('sound',true))return;audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=f;g.gain.value=0.08;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+d);}catch(e){}}
-const sfx={ok(){beep(660);setTimeout(()=>beep(880),110)},bad(){beep(200,0.3,'sawtooth')},tick(){beep(440,0.05)}};
+const sfx={ok(){beep(660);setTimeout(()=>beep(880),110);window.burst&&window.burst(14)},bad(){beep(200,0.3,'sawtooth');window.shake&&window.shake()},tick(){beep(440,0.05)}};
 
 // ---------- state ----------
 const CFG={mode:'classic',players:['لاعب 1'],cats:Object.keys(CATS),diff:0,rounds:10};
@@ -1304,16 +1304,17 @@ function pickRiddles(n){
 // ---------- views ----------
 let TAB='home';
 function tabsHtml(){
-  const t=(k,ic,l)=>`<button class="tab ${TAB===k?'on':''}" data-tab="${k}"><i>${ic}</i>${l}</button>`;
-  return `<div class="tabs">${t('home','🏠','الرئيسية')}${t('cats','🗂️','الفئات')}${t('online','🌐','أونلاين')}${t('me','👤','حسابي')}</div>`;
+  const I={home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/>',cats:'<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>',online:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/>'};
+  const t=(k,l)=>`<button class="tab ${TAB===k?'on':''}" data-tab="${k}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg><span>${l}</span></button>`;
+  return `<div class="tabs">${t('home','الرئيسية')}${t('cats','الفئات')}${t('online','أونلاين')}${t('me','حسابي')}</div>`;
 }
-function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="home" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>بوم</b><span>BOOM</span></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
+function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="home" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>فلتة</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
 function home(){
   clearTimer();G=null;if(typeof ONL!=='undefined'&&ONL)ONL.leave();
   TAB='home';
   const best=store.get('best',0),played=store.get('played',0);
-  const card=(mode,ic,t,d,hot)=>`<button class="mode ${hot||''}" ${mode?`data-mode="${mode}"`:'data-act="online"'}><span class="ic">${ic}</span><span class="tx"><b>${t}</b><small>${d}</small></span><span class="ch">‹</span></button>`;
-  shell(`<div class="hero center"><img src="logo.svg" alt="بوم"><h1>بوم</h1><p>أسئلة وألغاز وتحديات مع صحابك، على موبايل واحد أو كل واحد من موبايله.</p>${best?`<div class="pill">🏆 أعلى نتيجة: ${best}</div>`:''}</div>
+  const card=(mode,ic,t,d,hot)=>`<button class="mode c-${mode||'online'} ${hot||''}" ${mode?`data-mode="${mode}"`:'data-act="online"'}><span class="ic">${ic}</span><span class="tx"><b>${t}</b><small>${d}</small></span><span class="ch">‹</span></button>`;
+  shell(`<div class="hero center"><img src="logo.svg" alt="فلتة"><h1>إنت فلتة؟ ورّينا!</h1><p>أعلام ومعالم وأسئلة وألغاز، العب لوحدك أو مع صحابك.</p>${best?`<div class="pill">🏆 أعلى نتيجة: ${best}</div>`:''}</div>
   <button class="cta" data-mode="classic">⚡ يلا نلعب</button>
   <div class="sec"><span>طرق اللعب</span><span>${Q.length} سؤال • ${R.length} لغز</span></div>
   <div class="cards">
@@ -1425,7 +1426,7 @@ function renderClassic(res){
   const L=p.lifes;
   const opts=it.opts.map((o,k)=>{let cls='opt';if(it.removed.includes(k))cls+=' gone';if(res){if(o===it.right)cls+=' right';else if(k===res.pick)cls+=' wrong';}return `<button class="${cls}" data-pick="${k}" ${res||it.removed.includes(k)?'disabled':''}>${esc(o)}</button>`}).join('');
   shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span><span>${'⭐'.repeat(it.diff)}</span><span>${G.i+1}/${G.n}</span></div><div class="bar"><i id="bar"></i></div>
-  <div class="q">${esc(it.text)}</div><div class="opts">${opts}</div>
+  ${qbox(it.text)}<div class="opts">${opts}</div>
   ${res?`<div class="res ${res.ok?'good':'bad'}">${res.msg}</div><button class="btn big" data-act="nextq">${G.i+1>=G.n?'النتيجة':'السؤال الجاي'}</button>`:`<div class="row life"><button class="btn sm ghost" data-life="half" ${L.half?'':'disabled'}>✂️ 50/50</button><button class="btn sm ghost" data-life="skip" ${L.skip?'':'disabled'}>⏭️ تخطي</button><button class="btn sm ghost" data-life="time" ${L.time?'':'disabled'}>⏱️ +10ث</button></div>`}`);
   updateBar();
 }
@@ -1455,7 +1456,7 @@ function riddleView(res){
   if(!res&&!it.started){it.started=true;it.tries=2;it.hint=false;it.t0=Date.now();it.limit=40;it.done=false;clearTimer();timer=setInterval(()=>{if(it.done){clearTimer();return}updateBar();if(remaining()<=0)giveUp(true)},100);}
   const hintTxt=it.hint?`<div class="hint">💡 ${esc(it.hintText)}</div>`:'';
   shell(`${scoreboard()}<div class="qmeta"><span>🧩 لغز</span><span>محاولات: ${it.tries||0}</span><span>${G.i+1}/${G.n}</span></div><div class="bar"><i id="bar"></i></div>
-  <div class="q">${esc(it.text)}</div>${it.hint?hintTxt:''}
+  ${qbox(it.text)}${it.hint?hintTxt:''}
   ${res?`<div class="res ${res.ok?'good':'bad'}">${res.msg}</div><button class="btn big" data-act="nextq">${G.i+1>=G.n?'النتيجة':'اللغز الجاي'}</button>`:`<div class="ans"><input id="rans" placeholder="اكتب إجابتك" autocomplete="off" aria-label="الإجابة"><button class="btn" data-act="rsend">إجابة</button></div><div class="row"><button class="btn sm ghost" data-act="rhint" ${it.hint?'disabled':''}>💡 تلميح (−50%)</button><button class="btn sm ghost" data-act="rgive">أستسلم</button></div><div id="msg" class="warn"></div>`}`);
   updateBar();const inp=$('#rans');if(inp)inp.focus();
 }
@@ -1484,7 +1485,7 @@ function bluffPass(){
 }
 function bluffWrite(msg){
   const it=G.items[G.i],p=G.players[it.who];
-  shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span><span>جولة ${G.i+1}/${G.n}</span></div><div class="q">${esc(it.text)}</div><p class="center">اكتب إجابة مزيفة تخلّي غيرك يصدّقها، يا ${esc(p.name)}</p>
+  shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span><span>جولة ${G.i+1}/${G.n}</span></div>${qbox(it.text)}<p class="center">اكتب إجابة مزيفة تخلّي غيرك يصدّقها، يا ${esc(p.name)}</p>
   <div class="ans"><input id="fake" maxlength="40" placeholder="إجابتك المزيفة" autocomplete="off" aria-label="إجابة مزيفة"><button class="btn" data-act="bsend">تمام</button></div><div id="msg" class="warn">${msg||''}</div>`);
   $('#fake').focus();
 }
@@ -1502,7 +1503,7 @@ function bluffVotePass(){
 }
 function bluffVote(){
   const it=G.items[G.i],p=G.players[it.who];
-  shell(`${scoreboard()}<div class="q">${esc(it.text)}</div><p class="center">${esc(p.name)}، أي إجابة هي الصح؟ (إجابتك المزيفة متقفلة)</p><div class="opts">${it.options.map((o,k)=>`<button class="opt" data-bv="${k}" ${o.by===it.who?'disabled':''}>${esc(o.text)}</button>`).join('')}</div>`);
+  shell(`${scoreboard()}${qbox(it.text)}<p class="center">${esc(p.name)}، أي إجابة هي الصح؟ (إجابتك المزيفة متقفلة)</p><div class="opts">${it.options.map((o,k)=>`<button class="opt" data-bv="${k}" ${o.by===it.who?'disabled':''}>${esc(o.text)}</button>`).join('')}</div>`);
 }
 function bluffPick(k){
   const it=G.items[G.i];it.votes.push({voter:it.who,opt:k});it.who++;
@@ -1514,7 +1515,7 @@ function bluffReveal(){
   it.votes.forEach(v=>{const o=it.options[v.opt];if(o.by===-1){gains[v.voter]+=2;G.players[v.voter].right++;}else if(o.by>=0){gains[o.by]+=1;}});
   G.players.forEach((p,i)=>p.score+=gains[i]);
   const rows=it.options.map((o,k)=>{const voters=it.votes.filter(v=>v.opt===k).map(v=>esc(G.players[v.voter].name));const author=o.by===-1?'✅ الإجابة الصح':o.by===-2?'🏠 إجابة البيت':'✍️ '+esc(G.players[o.by].name);return `<div class="opt ${o.by===-1?'right':''}" style="cursor:default"><b>${esc(o.text)}</b><small>${author}${voters.length?' | اختارها: '+voters.join('، '):''}</small></div>`}).join('');
-  shell(`${scoreboard()}<div class="q">${esc(it.text)}</div><div class="opts">${rows}</div><div class="res good">${G.players.map((p,i)=>`${esc(p.name)} +${gains[i]}`).join(' • ')}</div><button class="btn big" data-act="bnext">${G.i+1>=G.n?'النتيجة':'الجولة الجاية'}</button>`);
+  shell(`${scoreboard()}${qbox(it.text)}<div class="opts">${rows}</div><div class="res good">${G.players.map((p,i)=>`${esc(p.name)} +${gains[i]}`).join(' • ')}</div><button class="btn big" data-act="bnext">${G.i+1>=G.n?'النتيجة':'الجولة الجاية'}</button>`);
   sfx.ok();
 }
 
@@ -1528,7 +1529,7 @@ function finish(){
   shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(top.name)}</h2>
   <div class="rank">${sorted.map((p,k)=>`<div class="rk"><span>${k+1}. ${esc(p.name)}</span><span>${p.score} نقطة • ${p.right} صح${G.mode==='classic'?` • أطول ستريك ${p.best}`:''}</span></div>`).join('')}</div>
   <button class="btn big" data-act="again">العب تاني</button><button class="btn ghost" data-act="home">القائمة</button></div>`);
-  window.__last={mode:G.mode,scores:G.players.map(p=>p.score)};
+  window.__last={mode:G.mode,scores:G.players.map(p=>p.score)};setTimeout(()=>window.burst&&window.burst(40),250);
 }
 
 // ---------- events ----------
