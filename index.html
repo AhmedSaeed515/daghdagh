@@ -1372,7 +1372,7 @@ function installView(){
   <button class="btn big" data-act="home">تمام</button></div>`);
 }
 function setup(mode){
-  if(mode!=='riddle')return ONL.open();
+  if(mode!=='riddle')return openOnline();
   CFG.mode='riddle';TAB='';CFG.players=[store.get('myname','')||'لاعب'];
   CFG.rounds=Math.max(10,Math.min(30,CFG.rounds|0||10));CFG.diff=0;
   shell(`<div class="panel"><h3>عدد الألغاز</h3>
@@ -1401,7 +1401,7 @@ function catsView(){
 // ---------- profile ----------
 function profileView(){PF=null;profileForm(false);}
 function startGame(){
-  if(CFG.mode!=='riddle')return ONL.open();
+  if(CFG.mode!=='riddle')return openOnline();
   const names=[String(store.get('myname','')).trim()||'لاعب'];
   G={mode:CFG.mode,players:names.map(n=>({name:n,score:0,streak:0,best:0,right:0,lifes:{half:1,skip:1,time:1}})),i:0,n:CFG.rounds,turn:0,log:[]};
   if(G.mode==='riddle')G.items=pickRiddles(G.n);else G.items=pickQuestions(G.n);
@@ -1539,11 +1539,11 @@ function finish(){
 }
 
 // ---------- navigation history ----------
-let VH=[],CURV=null,NAVING=false;
+var openOnline=function(){return openOnline();};let VH=[],CURV=null,NAVING=false;
 function goBack(){const p=VH.pop();if(!p)return home();NAVING=true;try{p.f();}finally{NAVING=false;}}
 function trk(n,fn,reset){return function(...a){if(reset){VH=[];CURV=null;}else if(!NAVING){if(CURV&&CURV.n!==n){VH.push(CURV);try{history.pushState({v:1},'')}catch(e){}}}CURV={n,f:()=>fn.apply(null,a)};return fn.apply(this,a);}}
 home=trk('home',home,true);setup=trk('setup',setup);catsBrowser=trk('cats',catsBrowser);profileView=trk('me',profileView);installView=trk('inst',installView);howto=trk('how',howto);
-CURV={n:'home',f:()=>home()};try{const _o=ONL.open;ONL.open=trk('onl',_o);}catch(e){}
+CURV={n:'home',f:()=>home()};const _ool=()=>ONL.open();openOnline=trk('onl',_ool);
 window.addEventListener('popstate',()=>{if(VH.length)goBack();});
 
 // ---------- events ----------
@@ -1551,7 +1551,7 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
   if(!t.dataset.pick&&!t.dataset.bv&&!t.dataset.o)sfx.tap();
   if(t.dataset.pf)return pfClick(t);
-  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return ONL.open();if(k==='me')return profileView();return;}
+  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return openOnline();if(k==='me')return profileView();return;}
   if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
   if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){sel.splice(i,1);}else sel.push(c);catBr.set(sel);return catsView();}
   if(t.dataset.mode)return setup(t.dataset.mode);
@@ -1562,7 +1562,7 @@ document.addEventListener('click',e=>{
   if(t.dataset.life)return useLife(t.dataset.life);
   if(t.dataset.bv!==undefined)return bluffPick(+t.dataset.bv);
   switch(t.dataset.act){
-    case 'online':return ONL.open();
+    case 'online':return openOnline();
     case 'me':return profileView();
     case 'install':return installView();
     case 'catsall2':{const sel=catBr.get();const all=Object.keys(CATS);const on=sel.length>=all.length;sel.length=0;if(!on)all.forEach(k=>sel.push(k));catBr.set(sel);return catsView();}
