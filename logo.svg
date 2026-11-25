@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 440" width="400" height="440">
-<rect x="4" y="4" width="396" height="436" rx="26" fill="#151515"/><rect width="396" height="436" rx="26" fill="#efece3" stroke="#151515" stroke-width="5"/><g transform="translate(200,250) scale(.9)"><defs><clipPath id="cl"><path d="M-400-200H-6L8-48L-8-26L8-4L-8 18L8 40L-4 70V200H-400Z"/></clipPath><clipPath id="cr"><path d="M400-200H-6L8-48L-8-26L8-4L-8 18L8 40L-4 70V200H400Z"/></clipPath></defs>
+<g transform="translate(200,250) scale(.9)"><defs><clipPath id="cl"><path d="M-400-200H-6L8-48L-8-26L8-4L-8 18L8 40L-4 70V200H-400Z"/></clipPath><clipPath id="cr"><path d="M400-200H-6L8-48L-8-26L8-4L-8 18L8 40L-4 70V200H400Z"/></clipPath></defs>
 <g transform="translate(-26,16) rotate(-9)"><g clip-path="url(#cl)"><g>
 <path d="M-110-48H110A40 40 0 0 1 150-8V4A46 46 0 0 1 104 50H96A46 46 0 0 1 58 26H-58A46 46 0 0 1 -96 50H-104A46 46 0 0 1 -150 4V-8A40 40 0 0 1 -110-48Z" fill="#c9c4b5" transform="translate(0,9)" stroke="#151515" stroke-width="5" stroke-linejoin="round"/>
 <path d="M-110-48H110A40 40 0 0 1 150-8V4A46 46 0 0 1 104 50H96A46 46 0 0 1 58 26H-58A46 46 0 0 1 -96 50H-104A46 46 0 0 1 -150 4V-8A40 40 0 0 1 -110-48Z" fill="#fff" stroke="#151515" stroke-width="5" stroke-linejoin="round"/>
