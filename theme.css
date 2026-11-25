@@ -214,3 +214,5 @@ html,body{background:#0b0b12}
 .pill.who{justify-content:center}
 .pcard .btn{width:auto;flex:none;white-space:nowrap;margin:0;padding-inline:16px}
 .pcard b{min-width:0;word-break:normal;overflow-wrap:break-word}
+.lg .pcard .btn.sm{width:auto;flex:none;white-space:nowrap;margin:0;padding-inline:16px;min-width:0}
+.lg .pcard b{min-width:0;flex:1;overflow-wrap:anywhere}
