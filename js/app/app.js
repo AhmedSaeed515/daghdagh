@@ -1,3 +1,4 @@
+const dpill=d=>`<span class="dp d${d}">${['','سهل','متوسط','صعب'][d]||''} <i>+${(window.PTS||{})[d]||10}</i></span>`;
 // Game shell: views, classic and bluff modes, navigation, events.
 let booted=false;
 function boot(){
@@ -30,6 +31,8 @@ const avh=(a,c)=>`<span class="av ${c||''}" role="img" aria-label="${(window.AVN
 let PF=null;
 const pfValid=()=>!!(PF&&PF.name&&PF.av);
 function profileOk(){return !!(store.get('myname','')&&store.get('myav',''));}
+function statsBox(){const st=store.get('stats',{gp:0,w:0,l:0,d:0,vs:{}});const vs=Object.entries(st.vs||{}).sort((x,y)=>(y[1].w+y[1].l+y[1].d)-(x[1].w+x[1].l+x[1].d)).slice(0,30);
+return `<div class="sbox"><h3>📊 سجل نتايجي</h3><div class="sg"><div><b>${st.gp}</b><small>لعبت</small></div><div class="w"><b>${st.w}</b><small>فزت</small></div><div class="l"><b>${st.l}</b><small>خسرت</small></div><div><b>${st.d||0}</b><small>تعادل</small></div></div>${vs.length?`<div class="svs">${vs.map(([n,v])=>`<div class="rk"><span class="who">${esc(n)}</span><span>فزت ${v.w} • خسرت ${v.l}${v.d?' • تعادل '+v.d:''}</span></div>`).join('')}</div>`:'<p style="color:var(--mut);font-size:13px">العب أونلاين مع صحابك وهتظهر هنا نتايجك ضد كل واحد. بتتحفظ على جهازك بس.</p>'}</div>`;}
 function profileForm(first){
   clearTimer();if(typeof ONL!=='undefined'&&ONL)ONL.leave();
   if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav','')};
@@ -44,7 +47,7 @@ function profileForm(first){
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
   <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="${window.AVNAME[a]}">${window.AVSVG[a]}</button>`).join('')}</div>
   <button class="btn big" id="pfsave" data-pf="save" ${pfValid()?'':'disabled'}>${first?'يلا نبدأ':'حفظ'}</button>
-  <p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
+  ${first?'':statsBox()}<p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
 }
 function pfClick(t){
   const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
@@ -148,9 +151,9 @@ function renderClassic(res){
   const it=G.items[G.i],p=G.players[G.turn];
   const L=p.lifes;
   const opts=it.opts.map((o,k)=>{let cls='opt';if(it.removed.includes(k))cls+=' gone';if(res){if(o===it.right)cls+=' right';else if(k===res.pick)cls+=' wrong';}return `<button class="${cls}" data-pick="${k}" ${res||it.removed.includes(k)?'disabled':''}>${esc(o)}</button>`}).join('');
-  shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span><span>${'⭐'.repeat(it.diff)} +${PTS[it.diff]||10}</span><span>${G.i+1}/${G.n}</span></div><div class="bar"><i id="bar"></i></div>
+  shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span>${dpill(it.diff)}<span>${G.i+1}/${G.n}</span></div><div class="bar"><i id="bar"></i></div>
   ${qbox(it.text)}<div class="opts">${opts}</div>
-  ${res?`<div class="res ${res.ok?'good':'bad'}">${res.msg}</div><button class="btn big" data-act="nextq">${G.i+1>=G.n?'النتيجة':'السؤال الجاي'}</button>`:`<div class="row life"><button class="btn sm ghost" data-life="half" ${L.half?'':'disabled'}>✂️ 50/50</button><button class="btn sm ghost" data-life="skip" ${L.skip?'':'disabled'}>⏭️ تخطي</button><button class="btn sm ghost" data-life="time" ${L.time?'':'disabled'}>⏱️ +10ث</button></div>`}`);
+  ${res?`<div class="res ${res.ok?'good':'bad'}">${res.msg}</div><button class="btn big" data-act="nextq">${G.i+1>=G.n?'النتيجة':'السؤال الجاي'}</button>`:`<div class="llbox"><div class="llt">🛟 وسائل مساعدة</div><div class="llr"><button class="ll" data-life="half" ${L.half?'':'disabled'}><b class="llc">${L.half?1:0}</b>✂️ 50/50</button><button class="ll" data-life="skip" ${L.skip?'':'disabled'}><b class="llc">${L.skip?1:0}</b>⏭️ تخطي</button><button class="ll" data-life="time" ${L.time?'':'disabled'}><b class="llc">${L.time?1:0}</b>⏱️ +10ث</button></div></div>`}`);
   updateBar();
 }
 function remaining(){const it=G.items[G.i];return Math.max(0,it.limit-(Date.now()-it.t0)/1000);}
