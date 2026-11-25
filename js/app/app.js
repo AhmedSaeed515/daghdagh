@@ -291,6 +291,6 @@ document.addEventListener('input',e=>{
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='fake')bluffSend();});
 
 const ONL=initOnline({app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,avh,avOK,setTab:k=>{TAB=k},catsOpen:()=>!!catBr});
-window.__ONL=ONL;window.__lgHome=home;
+window.__ONL=ONL;window.__lgHome=home;window.shell=shell;window.CATS=CATS;
 JR?linkJoin():(profileOk()?home():profileForm(true));
 }
