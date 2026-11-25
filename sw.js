@@ -1,5 +1,5 @@
-const CACHE='falta-v8';
-const ASSETS=['./','./index.html','./theme.css?v=8','./qx.js?v=8','./manifest.json','./icon.svg','./logo.svg'];
+const CACHE='falta-v9';
+const ASSETS=['./','./index.html','./theme.css?v=9','./qx.js?v=9','./flags1.js?v=9','./flags2.js?v=9','./flags3.js?v=9','./manifest.json','./icon.svg','./logo.svg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{
