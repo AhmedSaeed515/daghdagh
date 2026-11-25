@@ -10,9 +10,12 @@ Formerly "Logz+". Arabic-first trivia and riddles game, shipped as an installabl
 
 - 698 trivia questions across 32 categories, plus 35 riddles
 - Game modes: classic, riddles, bluff
+- Category browser with live search, filters and per-category question counts
+- Room settings: number of rounds, max players, and host-approved joins
+- Player profile with saved name, best score and games played
 - Lifelines, per-question timer, scoring
 - Online rooms: friends join from their own phones with a room code
-- Dark neon gaming look: glowing cards, gradient accents, animated logo
+- Native-app feel: bottom tab bar, steppers, violet-and-lime "midnight arcade" look
 - Arabic (Egyptian dialect), right-to-left layout, mobile-first
 - Installable (Add to Home Screen) and works offline after the first load
 - Progress and settings stored locally on the device
@@ -35,7 +38,7 @@ python3 -m http.server 8080
 | `index.html` | The whole app: markup, styles, question bank and game logic |
 | `manifest.json` | PWA manifest (name, RTL, theme, icons) |
 | `sw.js` | Service worker: offline cache for the app shell |
-| `theme.css` | Dark neon theme, loaded after the base styles |
+| `theme.css` | Midnight arcade theme (violet + lime), loaded after the base styles |
 | `logo.svg` | Logo emblem used in the app header and this README |
 | `icon.svg` | App icon |
 | `docs/ARCHITECTURE.md` | How the app is built and how online rooms work |
