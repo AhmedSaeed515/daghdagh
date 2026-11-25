@@ -1,4 +1,4 @@
-const dpill=d=>`<span class="dp d${d}">${['','سهل','متوسط','صعب'][d]||''} <i>+${(window.PTS||{})[d]||10}</i></span>`;
+const dpO=d=>`<span class="dp d${d}">${['','سهل','متوسط','صعب'][d]||''} <i>+${(window.PTS||{})[d]||10}</i></span>`;
 // @ts-nocheck
 // Online rooms: each player on their own phone. The room owner's phone runs the game
 // and relays messages through a public ntfy topic (plain HTTPS, works inside the hosted viewer).
@@ -306,7 +306,7 @@ function view(){
   if(S.ph==='fin')return finView();
   if(S.mode==='imp')return impView(host);
   const q=S.q,cat=CATS[q.c]||'';
-  const meta=`<div class="qmeta"><span>${cat}</span>${dpill(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
+  const meta=`<div class="qmeta"><span>${cat}</span>${dpO(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
   const bar=(S.ph==='rv')?'':`<div class="bar"><i id="obar"></i></div>`;
   let body='';
   if(S.ph==='q'){
@@ -375,7 +375,7 @@ function tvView(){
     return shell(`${S.ph==='ir'?'':bar}${tmb}${sb}${inner}`,{back:false});
   }
   const q=S.q;if(!q)return;
-  const meta=`<div class="qmeta"><span>${CATS[q.c]||''}</span>${dpill(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
+  const meta=`<div class="qmeta"><span>${CATS[q.c]||''}</span>${dpO(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
   let opts='';
   if(S.o&&S.ph!=='wr')opts=`<div class="opts">${S.o.map((o,k)=>`<div class="opt ${S.ph==='rv'&&k===S.right?'right':''}" style="cursor:default">${esc(o)}</div>`).join('')}</div>`;
   else opts='<p class="center">اللاعبين بيكتبوا إجابات مزيفة...</p>';
