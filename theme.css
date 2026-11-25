@@ -1,4 +1,4 @@
-/* Daghdagh - "playful pop" theme v3. Loaded after the inline styles in index.html. */
+/* Daghdagh - "pixel game-over" theme v3. Loaded after the inline styles in index.html. */
 .lg{
   --bg:#0b0b12;--card:#15151f;--card2:#1e1e2c;--card3:#2a2a3d;
   --y:#ffd23f;--y2:#c99a00;--p:#ff5c8a;--g:#2ee6a6;--b:#4d9dff;--v:#8b5cff;
@@ -257,3 +257,108 @@ html,body{background:#0b0b12}
 
 .lg .hero .slg{color:var(--y);font-size:18px;font-weight:800;margin:6px 0 12px}
 .lg .hero h1{font-size:44px;margin-top:6px}
+
+/* ===== Daghdagh pixel "Game Over" theme (paper, black outlines, one red accent) ===== */
+.lg{--bg:#efece3;--card:#faf8f2;--card2:#ffffff;--card3:#e4e0d3;--y:#ff4a36;--y2:#151515;--p:#151515;--g:#1fa34a;--b:#151515;--v:#151515;--ac:#ff4a36;--ac2:#151515;--ok:#1fa34a;--bad:#d6281a;--tx:#151515;--mut:#5c5a52;--line:#151515;--ink:#151515;
+ background:#efece3 radial-gradient(#d8d3c4 2px,transparent 2.2px) 0 0/16px 16px!important;color:#151515}
+html,body{background:#efece3!important}
+.lg .top{margin-bottom:14px}
+.lg .icon{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:3px 3px 0 #151515;width:44px;height:44px}
+.lg .logo b{color:#151515;font-weight:900;font-size:26px;letter-spacing:0}
+.lg .tlt{color:#151515;font-weight:900}
+.lg .hero img{width:176px;height:176px;border-radius:0;image-rendering:pixelated;box-shadow:none;filter:none}
+.lg .hero h1{display:none}
+.lg .hero .slg{color:#b52a1c;font-size:20px;font-weight:900;margin:6px 0 12px}
+.lg .pill{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:3px 3px 0 #151515;font-weight:900}
+.lg .cta{background:#ff4a36;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515;animation:none;font-weight:900}
+.lg .cta:active{transform:translate(4px,4px);box-shadow:1px 1px 0 #151515}
+.lg .btn{background:#ff4a36;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:4px 4px 0 #151515;font-weight:900}
+.lg .btn:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 #151515}
+.lg .btn:disabled{background:#cfcabb;color:#7a776c;box-shadow:none;border-color:#8a867a}
+.lg .btn.ghost,.lg .btn.vio{background:#fff;color:#151515;border:3px solid #151515;box-shadow:4px 4px 0 #151515}
+.lg .btn.y,.lg .rbtns .btn.y{background:#ff4a36;color:#151515;box-shadow:4px 4px 0 #151515}
+.lg .sec{color:#151515}.lg .sec span+span{color:#5c5a52}
+.lg .mode,.lg .mode[class*="c-"]{border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515;color:#151515}
+.lg .mode.c-classic{background:#ff4a36;color:#151515}
+.lg .mode.c-bluff{background:#151515;color:#fff;box-shadow:5px 5px 0 #ff4a36}
+.lg .mode.c-bluff small{color:#e6e2d6;opacity:1}
+.lg .mode small{color:#151515;opacity:.85;font-weight:700}
+.lg .mode .ic{background:#fff;border:3px solid #151515;border-radius:0;color:#151515}
+.lg .foot,.lg .foot .link{color:#151515;font-weight:800}
+.lg .tabs{background:#fff;border:3px solid #151515;border-radius:0;box-shadow:4px 4px 0 #151515;backdrop-filter:none;-webkit-backdrop-filter:none}
+.lg .tab{color:#5c5a52;border-radius:0}
+.lg .tab.on{background:#ff4a36;color:#151515;border:0}
+.lg .panel,.lg .pcard{background:#faf8f2;border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515;color:#151515}
+.lg .panel h2,.lg .panel h3,.lg .panel p{color:#151515}
+.lg .panel p,.lg p{color:#3b3a34}
+.lg input[type=text],.lg input:not([type]),.lg input:not([type=range]){background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:inset 3px 3px 0 #d8d3c4}
+.lg ::placeholder{color:#7a776c}
+.lg .chip{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:3px 3px 0 #151515}
+.lg .chip.on{background:#151515;color:#fff}
+.lg .chip.alln{background:#ff4a36;color:#151515;box-shadow:3px 3px 0 #151515}
+.lg .seg{background:transparent}
+.lg .seg button{background:#fff;color:#151515;border:3px solid #151515;border-radius:0}
+.lg .seg button.on{background:#151515;color:#fff}
+.lg .srow{background:#fff;border:3px solid #151515;border-radius:0}
+.lg .stepper button{background:#ff4a36;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:2px 2px 0 #151515}
+.lg .lb,.lg .srow b,.lg .rv{color:#151515}
+.lg input.rng{background:#fff;border:3px solid #151515;border-radius:0;height:18px}
+.lg input.rng::-webkit-slider-thumb{border-radius:0;background:#ff4a36;border:3px solid #151515;box-shadow:none;width:26px;height:30px}
+.lg input.rng::-moz-range-thumb{border-radius:0;background:#ff4a36;border:3px solid #151515}
+.lg .rngl{color:#5c5a52}
+.lg .catc{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:3px 3px 0 #151515}
+.lg .catc small{color:#5c5a52}
+.lg .catc.on{background:#ffd9d3;border-color:#151515}
+.lg .catc .ck{border:3px solid #151515;border-radius:0;background:#fff;color:#fff}
+.lg .catc.on .ck{background:#ff4a36;border-color:#151515;color:#151515}
+.lg .footbar{background:linear-gradient(transparent,#efece3 55%)}
+.lg .roomc{background:#ff4a36;border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515}
+.lg .roomc small{color:#151515;font-weight:900}
+.lg .roomc .code{color:#151515;letter-spacing:8px}
+.lg .roomc .btn.ghost{background:#fff}
+.lg .pl{background:#fff;border:3px solid #151515;border-radius:0;color:#151515}
+.lg .pl em{color:#151515;background:#e4e0d3;border:2px solid #151515;border-radius:0;padding:1px 8px;font-style:normal}
+.lg .pl em.rd{background:#c9f0d3}
+.lg .pl em.you{background:#ff4a36;color:#151515}
+.lg .hrow i{color:#5c5a52;font-style:normal}
+.lg .empty{border:3px dashed #151515;border-radius:0;color:#5c5a52}
+.lg .av,.lg .avl,.lg .avb{border:3px solid #151515;border-radius:0;box-shadow:none}
+.lg .avb.on{background:#ffd9d3;border-color:#151515}
+.lg .sp{background:#fff;border:3px solid #151515;border-radius:0;color:#151515}
+.lg .sp.cur{background:#ffd9d3;border-color:#151515}
+.lg .qmeta{color:#3b3a34}.lg .qmeta span:first-child{background:#151515;color:#fff;border-radius:0}
+.lg .bar{background:#fff;border:3px solid #151515;border-radius:0;height:20px}
+.lg .bar i{background:repeating-linear-gradient(90deg,#ff4a36 0 10px,#d6281a 10px 12px);border-radius:0}
+.lg .qbox{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515}
+.lg .qmedia,.lg .qmedia.date{border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515;background:#fff;color:#151515}
+.lg .opt{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:4px 4px 0 #151515}
+.lg .opt::before{background:#151515;color:#fff;border-radius:0}
+.lg .opt:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 #151515;border:3px solid #151515}
+.lg .opt.picked{background:#151515;color:#fff;box-shadow:4px 4px 0 #ff4a36}
+.lg .opt.picked::before{background:#ff4a36;color:#151515}
+.lg .opt.right{background:#1fa34a;color:#fff;box-shadow:4px 4px 0 #151515}
+.lg .opt.right::before{background:#fff;color:#151515}
+.lg .opt.wrong{background:#d6281a;color:#fff;box-shadow:4px 4px 0 #151515}
+.lg .opt.wrong::before{background:#fff;color:#151515}
+.lg .opt small{color:inherit;opacity:.85}
+.lg .res{border:3px solid #151515;border-radius:0;color:#151515}
+.lg .res.good{background:#c9f0d3;color:#0d5a26}
+.lg .res.bad{background:#ffd0ca;color:#8a1a10}
+.lg .res.wait{background:#fff;color:#3b3a34}
+.lg .hint{background:#fff3b0;border:3px solid #151515;border-radius:0;color:#151515}
+.lg .rk{background:#fff;border:3px solid #151515;border-radius:0;color:#151515}
+.lg .rk:first-child{background:#ff4a36;color:#151515;border:3px solid #151515}
+.lg .rk.pend{background:#fff3b0}
+.lg .warn{color:#b52a1c;font-weight:800}
+.lg .big-emoji{filter:none}
+.lg .who{color:inherit}
+.lg .link{color:#151515;text-decoration:underline}
+.lg .q{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:5px 5px 0 #151515}
+.lg .btn.big,.lg .btn.sm{border-radius:0}
+.lg .sb{flex-wrap:wrap}.lg .sp{flex:1 1 calc(33% - 6px);min-width:96px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.lg .sp .who{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px;min-width:0}
+.lg .logo img{border-radius:0;box-shadow:none;filter:none}
+.lg .roomc .btn{border-radius:0}
+.lg .opt{border-radius:0}
+.lg .big-emoji.trophy{filter:grayscale(1)}
+.lg .sp{flex:1 1 calc(50% - 6px);min-width:130px}
