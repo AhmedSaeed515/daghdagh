@@ -7,7 +7,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 ### Changed
 - Renamed the game from Logz+ to ZAKA ARENA (ذكاء أرينا).
 - New dark neon gaming theme (`theme.css`) and new logo and app icon.
-- Service worker cache bumped to `logz-plus-v4` and now caches the theme and logo.
+- Service worker cache bumped to `logz-plus-v5` and now caches the theme and logo.
 - Added project documentation, MIT license, and contributing guide.
 
 ## [1.0.0] - 2026-11-25
