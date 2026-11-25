@@ -201,11 +201,11 @@ html,body{background:#0b0b12}
 .lg .warn{margin:10px 0 0;font-size:14px}
 
 /* v10 profile + avatars */
-.av{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,#a78bfa,#ff5c8a);font-size:18px;line-height:1;flex:none;box-shadow:0 2px 0 rgba(0,0,0,.25)}
-.av.lg{width:46px;height:46px;font-size:27px}.av.xl{width:84px;height:84px;font-size:50px}
+.av{display:inline-flex;aspect-ratio:1/1;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,#a78bfa,#ff5c8a);font-size:18px;line-height:1;flex:none;box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.av.avl{width:46px;height:46px;font-size:27px}.av.avxl{width:84px;height:84px;font-size:50px}
 .lg .who,.who{display:inline-flex;align-items:center;gap:8px}
 .pcard{display:flex;align-items:center;gap:12px;background:var(--card2);border-radius:18px;padding:10px 14px;margin:10px 0;font-weight:900}
-.pcard b{flex:1;text-align:start}
+.pcard b{flex:1;min-width:0;text-align:start;overflow-wrap:anywhere}
 .avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 14px}
 .avb{font-size:30px;line-height:1;padding:10px 0;border-radius:18px;border:3px solid transparent;background:var(--card2);cursor:pointer}
 .avb.on{border-color:var(--y);background:#2a2614;transform:scale(1.06)}
