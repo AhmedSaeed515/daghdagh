@@ -1,5 +1,5 @@
-const CACHE='daghdagh-v32';
-const ASSETS=['./','./index.html','./theme.css?v=20','./avatars.js?v=13','./qx.js?v=13','./flags1.js?v=13','./flags2.js?v=13','./flags3.js?v=13','./qb2a.js?v=13','./qb3a.js?v=13','./qb4a.js?v=13','./qb5a.js?v=13','./qb6a.js?v=13','./qb1a.js?v=13','./qb1b.js?v=13','./qb1c.js?v=13','./manifest.json','./icon.svg','./logo.svg'];
+const CACHE='daghdagh-v33';
+const ASSETS=['./','./index.html','./css/base.css?v=21','./css/theme.css?v=21','./js/data/flags1.js?v=21','./js/data/flags2.js?v=21','./js/data/flags3.js?v=21','./js/data/avatars.js?v=21','./js/data/qx.js?v=21','./js/data/questions/qb2a.js?v=21','./js/data/questions/qb3a.js?v=21','./js/data/questions/qb4a.js?v=21','./js/data/questions/qb5a.js?v=21','./js/data/questions/qb6a.js?v=21','./js/data/questions/qb1a.js?v=21','./js/data/questions/qb1b.js?v=21','./js/data/questions/qb1c.js?v=21','./js/data/extra-categories.js?v=21','./js/data/core-questions.js?v=21','./js/lib/util.js?v=21','./js/lib/store.js?v=21','./js/lib/sound.js?v=21','./js/online/online.js?v=21','./js/app/app.js?v=21','./js/main.js?v=21','./manifest.json','./assets/icon.svg','./assets/logo.svg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{
