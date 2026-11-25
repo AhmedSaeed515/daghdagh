@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=12"><script src="flags1.js?v=13"></script><script src="flags2.js?v=13"></script><script src="flags3.js?v=13"></script><script src="qx.js?v=13"></script><script src="qb2a.js?v=13"></script><script src="qb3a.js?v=13"></script><script src="qb4a.js?v=13"></script><script src="qb5a.js?v=13"></script><script src="qb1a.js?v=13"></script><script src="qb1b.js?v=13"></script><script src="qb1c.js?v=13"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=13"><script src="flags1.js?v=13"></script><script src="flags2.js?v=13"></script><script src="flags3.js?v=13"></script><script src="qx.js?v=13"></script><script src="qb2a.js?v=13"></script><script src="qb3a.js?v=13"></script><script src="qb4a.js?v=13"></script><script src="qb5a.js?v=13"></script><script src="qb1a.js?v=13"></script><script src="qb1b.js?v=13"></script><script src="qb1c.js?v=13"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -1543,7 +1543,7 @@ let VH=[],CURV=null,NAVING=false;
 function goBack(){const p=VH.pop();if(!p)return home();NAVING=true;try{p.f();}finally{NAVING=false;}}
 function trk(n,fn,reset){return function(...a){if(reset){VH=[];CURV=null;}else if(!NAVING){if(CURV&&CURV.n!==n){VH.push(CURV);try{history.pushState({v:1},'')}catch(e){}}}CURV={n,f:()=>fn.apply(null,a)};return fn.apply(this,a);}}
 home=trk('home',home,true);setup=trk('setup',setup);catsBrowser=trk('cats',catsBrowser);profileView=trk('me',profileView);installView=trk('inst',installView);howto=trk('how',howto);
-try{const _o=ONL.open;ONL.open=trk('onl',_o);}catch(e){}
+CURV={n:'home',f:()=>home()};try{const _o=ONL.open;ONL.open=trk('onl',_o);}catch(e){}
 window.addEventListener('popstate',()=>{if(VH.length)goBack();});
 
 // ---------- events ----------
