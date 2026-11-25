@@ -1,15 +1,15 @@
 {
-  "name": "بوم | BOOM",
-  "short_name": "بوم",
-  "description": "لعبة أسئلة وألغاز بالمصري: حوالي ٧٠٠ سؤال في ٣٢ تصنيف، ولعب أونلاين مع صحابك",
+  "name": "فلتة | Falta",
+  "short_name": "فلتة",
+  "description": "لعبة أسئلة وألغاز بالمصري: حوالي ٨٥٠ سؤال في ٣٦ تصنيف، فيها أعلام ومعالم بالصور، ولعب أونلاين مع صحابك",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
-  "background_color": "#150b2e",
-  "theme_color": "#150b2e",
+  "background_color": "#0b0b12",
+  "theme_color": "#0b0b12",
   "icons": [
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
