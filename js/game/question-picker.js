@@ -5,7 +5,7 @@ class QuestionPicker {
   pick(cats,diff,n){
     const {Q,store,norm,shuffle}=this;
     const seen=new Set(this.store.get('seen',[]));
-    const pool=this.Q.map((q,i)=>({q,i})).filter(({q})=>!(window.QuestionReport&&QuestionReport.isFlagged(q[2]))&&cats.includes(q[0])&&(diff===0||q[1]===diff));
+    const pool=this.Q.map((q,i)=>({q,i})).filter(({q})=>!(window.QuestionReport&&QuestionReport.isHidden(q))&&cats.includes(q[0])&&(diff===0||q[1]===diff));
     let fresh=pool.filter(p=>!seen.has(p.i));
     if(fresh.length<n){ // reset seen for this pool
       const ids=new Set(pool.map(p=>p.i));this.store.set('seen',[...seen].filter(i=>!ids.has(i)));fresh=pool;
