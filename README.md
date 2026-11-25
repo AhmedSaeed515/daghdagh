@@ -1,6 +1,6 @@
-<p align="center"><img src="logo.svg" alt="Falta logo" width="120"></p>
+<p align="center"><img src="logo.svg" alt="Daghdagh logo" width="120"></p>
 
-# فلتة (Falta)
+# دغدغ (Daghdagh)
 
 Formerly "Logz+", ZAKA ARENA and BOOM. Arabic-first trivia and riddles game, shipped as an installable, offline-capable Progressive Web App (PWA). Single-page, no build step, no backend to run.
 
