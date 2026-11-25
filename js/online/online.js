@@ -163,7 +163,7 @@ function hostJoin(m){
 }
 function hostBye(id){const h=H;if(h.ph!=='lobby')return;const i=h.players.findIndex(p=>p.id===id);if(i>0){h.players.splice(i,1);hostBroadcast();}}
 function pickItems(cfg){
-  let pool=Q.filter(q=>!QuestionReport.isFlagged(q[2])&&cfg.cats.includes(q[0])&&(cfg.diff===0||q[1]===cfg.diff));
+  let pool=Q.filter(q=>!QuestionReport.isHidden(q)&&cfg.cats.includes(q[0])&&(cfg.diff===0||q[1]===cfg.diff));
   if(pool.length<cfg.n)pool=Q.filter(q=>cfg.cats.includes(q[0]));
   return shuffle(pool).slice(0,cfg.n).map(q=>({cat:q[0],diff:q[1],text:q[2],right:q[3],wrong:q.slice(4)}));
 }
