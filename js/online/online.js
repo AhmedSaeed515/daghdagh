@@ -103,6 +103,7 @@ function onNet(m){
     if(m.t==='fk')return hostFake(m.id,m.r,m.x);
     if(m.t==='vt')return hostVote(m.id,m.r,m.k);
     if(m.t==='bye')return hostBye(m.id);
+    if(m.t==='rp')return hostRep(m.r);
     if(m.t==='hp')return hostHelp(m.id,m.r,m.k);
     return;
   }
@@ -113,7 +114,7 @@ function onNet(m){
 }
 function applyState(s,now,seq){
   const prev=S;S=s;S.seq=seq;off=now-Date.now();lastSt=Date.now();clearTimeout(joinT);
-  if(!prev||prev.r!==s.r)mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
+  if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
   if(!s.pl.some(p=>p.i===ME.id)){ // not accepted (game already started?)
     if(s.ph!=='lobby'){leave();msg='اللعبة بدأت بالفعل في الغرفة دي.';return lobbyView();}
   }
@@ -146,7 +147,7 @@ function hostBroadcast(){
   const now=Date.now();
   if(NET)NET.send({t:'st',seq:h.seq,s,now});
   const prev=S;S=s;S.seq=h.seq;off=0;lastSt=now;
-  if(!prev||prev.r!==s.r)mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
+  if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
   if(prev&&s.ph==='rv'&&prev.ph!=='rv'){setTimeout(()=>sfx.round(),900);const k=0;if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
   view();startUi();
 }
@@ -181,6 +182,19 @@ function hostNext(){
   }else{h.ph='wr';h.opts=[];h.lim=LIM.wr;}
   h.ends=Date.now()+h.lim*1000;hostBroadcast();
 }
+// A player starred the current question: swap it for a fresh one in the same round (before answers are revealed).
+function hostRep(r){
+  const h=H;if(!h||r!==h.r||(h.ph!=='q'&&h.ph!=='wr'))return;
+  const used=new Set(h.items.map(i=>i.text));
+  let pool=Q.filter(q=>!QuestionReport.isHidden(q)&&h.cfg.cats.includes(q[0])&&!used.has(q[2]));
+  if(!pool.length)return;
+  const q=shuffle(pool)[0];h.items[h.r]={cat:q[0],diff:q[1],text:q[2],right:q[3],wrong:q.slice(4)};
+  h.r--;hostNext();
+}
+document.addEventListener('qreport',e=>{
+  if(typeof room==='undefined'||!room||!S||!S.q||S.q.t!==e.detail||(S.ph!=='q'&&S.ph!=='wr'))return;
+  if(room.host)hostRep(S.r);else NET.send({t:'rp',id:ME.id,r:S.r});
+});
 function hostAns(id,r,k){
   const h=H;if(h.ph!=='q'||r!==h.r||h.ans[id]||!h.players.some(p=>p.id===id)||!(k>=0&&k<4))return;
   h.ans[id]={k,left:Math.max(0,(h.ends-Date.now())/1000)};
