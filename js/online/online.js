@@ -1,3 +1,4 @@
+const dpill=d=>`<span class="dp d${d}">${['','سهل','متوسط','صعب'][d]||''} <i>+${(window.PTS||{})[d]||10}</i></span>`;
 // @ts-nocheck
 // Online rooms: each player on their own phone. The room owner's phone runs the game
 // and relays messages through a public ntfy topic (plain HTTPS, works inside the hosted viewer).
@@ -305,13 +306,13 @@ function view(){
   if(S.ph==='fin')return finView();
   if(S.mode==='imp')return impView(host);
   const q=S.q,cat=CATS[q.c]||'';
-  const meta=`<div class="qmeta"><span>${cat}</span><span>${'⭐'.repeat(q.d)} +${PTS[q.d]||10}</span><span>${S.r+1}/${S.n}</span></div>`;
+  const meta=`<div class="qmeta"><span>${cat}</span>${dpill(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
   const bar=(S.ph==='rv')?'':`<div class="bar"><i id="obar"></i></div>`;
   let body='';
   if(S.ph==='q'){
     const my0=myIndex(),hm=my0>=0?(S.pl[my0].h||0):0,hd=mine.hide||[],U=mine.used||{};
-    const hbar=mine.k===undefined?`<div class="hps"><button class="hp" data-o="help" data-v="f" ${(hm&1)&&!U.f?'':'disabled'}>🎯 ٥٠/٥٠</button><button class="hp" data-o="help" data-v="s" ${(hm&2)&&!U.s?'':'disabled'}>⏭️ تخطي</button><button class="hp ${mine.x?'on':''}" data-o="help" data-v="x" ${(hm&4)&&!U.x?'':'disabled'}>✖️٢ نقط</button></div>`:'';
-    body=`${qbox(q.t)}${hbar}<div class="opts">${S.o.map((o,k)=>`<button class="opt ${mine.k===k?'picked':''} ${hd.includes(k)?'gone':''}" data-o="ans" data-k="${k}" ${mine.k!==undefined||hd.includes(k)?'disabled':''}>${esc(o)}</button>`).join('')}</div>${mine.k!==undefined?'<div class="res wait">اتسجلت إجابتك. مستني الباقي...</div>':''}`;
+    const hbar=mine.k===undefined?`<div class="llbox"><div class="llt">🛟 وسائل مساعدة</div><div class="llr"><button class="ll" data-o="help" data-v="f" ${(hm&1)&&!U.f?'':'disabled'}><b class="llc">${(hm&1)&&!U.f?1:0}</b>🎯 ٥٠/٥٠</button><button class="ll" data-o="help" data-v="s" ${(hm&2)&&!U.s?'':'disabled'}><b class="llc">${(hm&2)&&!U.s?1:0}</b>⏭️ تخطي</button><button class="ll ${mine.x?'on':''}" data-o="help" data-v="x" ${(hm&4)&&!U.x?'':'disabled'}><b class="llc">×٢</b>✖️ نقط مضاعفة</button></div></div>`:'';
+    body=`${qbox(q.t)}<div class="opts">${S.o.map((o,k)=>`<button class="opt ${mine.k===k?'picked':''} ${hd.includes(k)?'gone':''}" data-o="ans" data-k="${k}" ${mine.k!==undefined||hd.includes(k)?'disabled':''}>${esc(o)}</button>`).join('')}</div>${hbar}${mine.k!==undefined?'<div class="res wait">اتسجلت إجابتك. مستني الباقي...</div>':''}`;
   }else if(S.ph==='wr'){
     body=`${qbox(q.t)}${mine.fk?`<div class="res wait">إجابتك المضروبة: <b>${esc(mine.fk)}</b><br>مستني الباقي...</div>`:`<div class="panel center"><p>اكتب إجابة مزيفة مقنعة. الباقي هيشوفوها وسط الإجابة الصح.</p><div class="ans"><input id="ofake" maxlength="40" placeholder="إجابتك المضروبة" autocomplete="off"><button class="btn" data-o="fake">ابعت</button></div><div class="warn">${mine.rej?'دي قريبة أوي من الإجابة الصح أو فاضية. اكتب حاجة تانية.':''}</div></div>`}`;
   }else if(S.ph==='vt'){
@@ -374,7 +375,7 @@ function tvView(){
     return shell(`${S.ph==='ir'?'':bar}${tmb}${sb}${inner}`,{back:false});
   }
   const q=S.q;if(!q)return;
-  const meta=`<div class="qmeta"><span>${CATS[q.c]||''}</span><span>${'⭐'.repeat(q.d)} +${PTS[q.d]||10}</span><span>${S.r+1}/${S.n}</span></div>`;
+  const meta=`<div class="qmeta"><span>${CATS[q.c]||''}</span>${dpill(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
   let opts='';
   if(S.o&&S.ph!=='wr')opts=`<div class="opts">${S.o.map((o,k)=>`<div class="opt ${S.ph==='rv'&&k===S.right?'right':''}" style="cursor:default">${esc(o)}</div>`).join('')}</div>`;
   else opts='<p class="center">اللاعبين بيكتبوا إجابات مزيفة...</p>';
@@ -396,7 +397,12 @@ function impView(host){
   }
   shell(`${S.ph==='ir'?'':bar}${sbHtml()}${meta}${body}`);
 }
+function recStats(){try{if(!S||S.ph!=='fin'||S.__rec===S.rid+'|'+S.n)return;const key=(room&&room.code||'')+'|'+(S.pl.map(p=>p.s).join(','));if(window.__recKey===key)return;window.__recKey=key;
+const me=S.pl.find(p=>p.i===ME.id);if(!me||S.pl.length<2)return;const st=X.store.get('stats',{gp:0,w:0,l:0,d:0,vs:{}});st.gp++;const best=Math.max(...S.pl.map(p=>p.s));const uniq=S.pl.filter(p=>p.s===best).length===1;
+if(me.s===best&&uniq)st.w++;else if(me.s<best)st.l++;else st.d++;
+S.pl.forEach(p=>{if(p.i===ME.id)return;const v=st.vs[p.n]||(st.vs[p.n]={w:0,l:0,d:0});if(me.s>p.s)v.w++;else if(me.s<p.s)v.l++;else v.d++;});X.store.set('stats',st);}catch(e){}}
 function finView(){
+  recStats();
   const rows=S.pl.map((p,i)=>({p,i})).sort((a,b)=>b.p.s-a.p.s);const tie=rows.length>1&&rows[0].p.s===rows[1].p.s;
   sfx.win();shell(`<div class="panel center"><div class="big-emoji trophy">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(rows[0].p.n)}</h2>${S.tn?(()=>{const t=tmTotals(S.pl,S.tn).map((v,k)=>({v,k})).sort((a,b)=>b.v-a.v);return `<div class="rank">${t.map((x,j)=>`<div class="rk" style="border-inline-start:6px solid ${TM[x.k][1]}"><span class="who">${j+1}. فريق ${TM[x.k][0]}</span><span>${x.v} نقطة</span></div>`).join('')}</div>`;})():''}<div class="rank">${rows.map((x,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(x.p.a)}${esc(x.p.n)}${x.p.i===ME.id?' (أنت)':''}</span><span>${x.p.s} نقطة</span></div>`).join('')}</div>
   ${room.host?'<button class="btn big" data-o="again">العب تاني بنفس الغرفة</button>':'<p class="warn">صاحب الغرفة ممكن يبدأ جولة جديدة...</p>'}<button class="btn ghost" data-o="leave">خروج</button></div>`);
