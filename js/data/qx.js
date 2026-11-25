@@ -20,7 +20,7 @@ const dn=DT.map(x=>x[1]);
 DT.forEach(([dt,n,d])=>rows.push(['dt',d,'§D:'+dt+'§إيه الحدث اللي حصل في التاريخ ده؟',n,...wrongs(dn,n,3)]));
 const en=EM.map(x=>x[1]);
 EM.forEach(([e,n,d])=>rows.push(['emo',d,'§E:'+e+'§خمّن الفيلم من الإيموجي',n,...wrongs(en,n,3)]));
-window.QX={cats:{flg:'🚩 أعلام الدول (صور)',lmk:'📸 معالم (صور)',dt:'📅 أي حدث ده؟',emo:'🎬 فيلم بالإيموجي'},rows};
+window.QX={cats:{flg:'🚩 خمّن العلم (صور)',lmk:'📸 معالم (صور)',dt:'📅 أي حدث ده؟',emo:'🎬 فيلم بالإيموجي'},rows};
 })();
 (function(){
 window.PTS={1:5,2:10,3:20};
