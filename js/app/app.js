@@ -50,7 +50,7 @@ function profileForm(first){
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
   <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="${window.AVNAME[a]}">${window.AVSVG[a]}</button>`).join('')}</div>
   <button class="btn big" id="pfsave" data-pf="save" ${pfValid()?'':'disabled'}>${first?'يلا نبدأ':'حفظ'}</button>
-  ${first?'':statsBox()}<p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
+  ${first?'':statsBox()}${first?'':'<p style="color:var(--mut);font-size:12px">بعض الأسئلة مقتبسة ومترجمة من <a href="https://opentdb.com" target="_blank" rel="noopener">Open Trivia DB</a> بترخيص <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. البيانات: data/opentdb-derived.json</p>'}<p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
 }
 function pfClick(t){
   const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
