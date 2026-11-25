@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=8"><script src="qx.js?v=8"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=9"><script src="flags1.js?v=9"></script><script src="flags2.js?v=9"></script><script src="flags3.js?v=9"></script><script src="qx.js?v=9"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -787,7 +787,7 @@ const rid=n=>Array.from({length:n},()=>ALPH[Math.floor(Math.random()*ALPH.length
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const ME={id:rid(8),name:''};
 const LIM={q:20,wr:45,vt:30,rv:7};
-let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:Object.keys(CATS),diff:0,n:10,maxP:8,appr:false};
+let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:(JSON.parse(localStorage.getItem('lo3ba_cats')||'[]')||[]).filter(k=>CATS[k]),diff:0,n:10,maxP:8,appr:false};
 let joinTries=0,joinT=null,lastSt=0;
 
 // ---------- transport ----------
@@ -928,7 +928,7 @@ function pickItems(cfg){
   return shuffle(pool).slice(0,cfg.n).map(q=>({cat:q[0],diff:q[1],text:q[2],right:q[3],wrong:q.slice(4)}));
 }
 function hostStart(){
-  const h=H;if(h.players.length<2){return;}
+  const h=H;if(h.players.length<2||h.cfg.cats.length<6){return;}
   h.items=pickItems(h.cfg);h.r=-1;h.players.forEach(p=>{p.score=0;p.right=0});
   hostNext();
 }
@@ -971,7 +971,7 @@ function hostVote(id,r,k){
 function hostReveal(){
   const h=H;const n=h.players.length;h.picks=new Array(n).fill(-1);h.pts=new Array(n).fill(0);
   if(h.cfg.mode==='classic'){
-    h.players.forEach((p,i)=>{const a=h.ans[p.id];if(!a)return;h.picks[i]=a.k;if(a.k===h.right){h.pts[i]=100+Math.round(50*a.left/h.lim);p.right++;}});
+    h.players.forEach((p,i)=>{const a=h.ans[p.id];if(!a)return;h.picks[i]=a.k;if(a.k===h.right){h.pts[i]=PTS[(h.items[h.r]||{}).diff]||10;p.right++;}});
   }else{
     h.players.forEach((p,i)=>{const k=h.votes[p.id];if(k===undefined)return;h.picks[i]=k;if(k===h.right){h.pts[i]+=200;p.right++;}else h.owners[k].forEach(pid=>{const j=h.players.findIndex(x=>x.id===pid);if(j>=0)h.pts[j]+=100;});});
   }
@@ -1001,7 +1001,7 @@ function view(){
   if(S.ph==='lobby')return lobbyRoom(host);
   if(S.ph==='fin')return finView();
   const q=S.q,cat=CATS[q.c]||'';
-  const meta=`<div class="qmeta"><span>${cat}</span><span>${'⭐'.repeat(q.d)}</span><span>${S.r+1}/${S.n}</span></div>`;
+  const meta=`<div class="qmeta"><span>${cat}</span><span>${'⭐'.repeat(q.d)} +${PTS[q.d]||10}</span><span>${S.r+1}/${S.n}</span></div>`;
   const bar=(S.ph==='rv')?'':`<div class="bar"><i id="obar"></i></div>`;
   let body='';
   if(S.ph==='q'){
@@ -1025,9 +1025,8 @@ function view(){
 function lobbyRoom(host){
   const c=lobbyCfg,hc=H?H.cfg:c;
   const cfgHtml=host?`<h3>نوع اللعب</h3><div class="chips"><button class="chip ${hc.mode==='classic'?'on':''}" data-o="mode" data-v="classic">🎯 سباق إجابات</button><button class="chip ${hc.mode==='bluff'?'on':''}" data-o="mode" data-v="bluff">🎭 بلوف</button></div>
-  <h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${hc.cats.length} من ${Object.keys(CATS).length} فئة مختارة</span><button class="btn sm ghost" data-o="cats">تعديل</button></div>
-  <h3>المستوى</h3><div class="chips">${[[0,'مختلط'],[1,'سهل'],[2,'متوسط'],[3,'صعب']].map(([d,l])=>`<button class="chip ${hc.diff===d?'on':''}" data-o="diff" data-v="${d}">${l}</button>`).join('')}</div>
-  <h3>عدد الأسئلة</h3><div class="srow"><span class="lb"><span class="e">🔁</span>الجولات</span><span class="stepper"><button data-o="rminus">−</button><b>${hc.n}</b><button data-o="rplus">+</button></span></div>
+  <h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${hc.cats.length?hc.cats.length+' من '+Object.keys(CATS).length+' فئة مختارة':'ماختارتش فئات لسه'}</span><button class="btn sm ghost" data-o="cats">${hc.cats.length?'تعديل':'اختار'}</button></div>
+  <h3>عدد الأسئلة</h3><div class="srow slider"><span class="lb"><span class="e">🔁</span>عدد الأسئلة</span><b id="orv" class="rv">${hc.n}</b></div><input type="range" id="orng" min="10" max="30" step="1" value="${hc.n}" class="rng"><div class="rngl"><span>١٠</span><span>٣٠</span></div>
   <div class="srow"><span class="lb"><span class="e">👥</span>الحد الأقصى للاعبين</span><span class="stepper"><button data-o="mp" data-v="-1">−</button><b>${hc.maxP}</b><button data-o="mp" data-v="1">+</button></span></div>
   <h3>مين يقدر ينضم؟</h3><div class="seg" style="width:100%"><button class="${hc.appr?'':'on'}" data-o="appr" data-v="0" style="flex:1">أي حد معاه الكود</button><button class="${hc.appr?'on':''}" data-o="appr" data-v="1" style="flex:1">بموافقتي 🔒</button></div>`
   :`<p class="center">${S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات'} • ${S.n} سؤال • ${S.cats.length} فئة</p>`;
@@ -1035,7 +1034,7 @@ function lobbyRoom(host){
   <h3>اللاعبين (${S.pl.length})</h3><div class="rank">${S.pl.map((p,i)=>`<div class="rk"><span>${esc(p.n)}${p.i===ME.id?' (أنت)':''}</span><span>${i===0?'👑 صاحب الغرفة':'✅ جاهز'}</span></div>`).join('')}</div>
   ${host&&H.pending.length?`<h3>طلبات انضمام 🙋</h3><div class="rank">${H.pending.map(p=>`<div class="rk pend"><span>${esc(p.name)}</span><span style="display:flex;gap:6px"><button class="btn sm" data-o="ok" data-v="${p.id}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${p.id}">رفض</button></span></div>`).join('')}</div>`:''}
   ${cfgHtml}
-  ${host?`<div class="warn">${S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':''}</div><button class="btn big" data-o="start" ${S.pl.length<2?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
+  ${host?`<div class="warn">${S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':S.cats.length<6?'اختار 6 فئات على الأقل ('+S.cats.length+'/6)':''}</div><button class="btn big" data-o="start" ${S.pl.length<2||S.cats.length<6?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
   <button class="btn ghost" data-o="leave">خروج</button></div>`);
 }
 function finView(){
@@ -1070,7 +1069,7 @@ document.addEventListener('click',e=>{
     case 'rminus':case 'rplus':{const st=[5,10,15,20];let i=st.indexOf(H.cfg.n);i+=a==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));H.cfg.n=st[i];return hostBroadcast();}
     case 'mp':H.cfg.maxP=Math.max(2,Math.min(8,H.cfg.maxP+(+v)));return hostBroadcast();
     case 'appr':H.cfg.appr=v==='1';return hostBroadcast();
-    case 'cats':return X.catsBrowser({get:()=>H.cfg.cats,set:c=>{H.cfg.cats=c;},onDone:()=>hostBroadcast()});
+    case 'cats':return X.catsBrowser({get:()=>H.cfg.cats,set:c=>{H.cfg.cats=c;try{localStorage.setItem('lo3ba_cats',JSON.stringify(c))}catch(e){}},onDone:()=>hostBroadcast()});
     case 'ok':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];let nm=pj.name,k=2;while(H.players.some(x=>x.name===nm))nm=pj.name.slice(0,12)+' '+k++;H.players.push({id:pj.id,name:nm,score:0,right:0});return hostBroadcast();}
     case 'no':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];NET.send({t:'kick',to:pj.id,why:'صاحب الغرفة رفض طلبك.'});return view();}
     case 'diff':H.cfg.diff=+v;return hostBroadcast();
@@ -1080,6 +1079,7 @@ document.addEventListener('click',e=>{
   }
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='ofake')doFake();if(e.target.id==='oname'||e.target.id==='ocode'){const c=(document.getElementById('ocode')||{}).value;c?join():create();}});
+document.addEventListener('change',e=>{if(e.target.id==='orng'&&H&&H.ph==='lobby'){H.cfg.n=Math.max(10,Math.min(30,+e.target.value||10));hostBroadcast();}});
 return {open,leave,debug:()=>({S,H,room})};
 }
 
@@ -1273,7 +1273,7 @@ function beep(f,d=0.12,type='sine'){try{if(!store.get('sound',true))return;audio
 const sfx={ok(){beep(660);setTimeout(()=>beep(880),110);window.burst&&window.burst(14)},bad(){beep(200,0.3,'sawtooth');window.shake&&window.shake()},tick(){beep(440,0.05)}};
 
 // ---------- state ----------
-const CFG={mode:'classic',players:['لاعب 1'],cats:Object.keys(CATS),diff:0,rounds:10};
+const CFG={mode:'classic',players:['لاعب 1'],cats:(store.get('cats',[])||[]).filter(k=>CATS[k]),diff:0,rounds:10};const MINCATS=6;
 let G=null,timer=null;
 function clearTimer(){if(timer){clearInterval(timer);timer=null}}
 
@@ -1328,8 +1328,8 @@ function home(){
   <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});
 }
 function howto(){shell(`<div class="panel"><h2>إزاي ألعب؟</h2>
-<p><b>🎯 كلاسيك:</b> كل سؤال ليه 4 اختيارات و20 ثانية. الإجابة الصح = 100 نقطة + بونص سرعة (لحد 50) + بونص ستريك. معاك مرة واحدة من كل مساعدة: ✂️ حذف إجابتين، ⏭️ تخطي، ⏱️ +10 ثواني.</p>
-<p><b>🧩 ألغاز:</b> اكتب الإجابة. التلميح بيقلّل النقط للنص. لو فاضل عندك وقت جرّب تاني، عندك محاولتين.</p>
+<p><b>🎯 كلاسيك:</b> كل سؤال ليه 4 اختيارات و20 ثانية. النقط على حسب صعوبة السؤال: سهل 5 نقط، متوسط 10، صعب 20. معاك مرة واحدة من كل مساعدة: ✂️ حذف إجابتين، ⏭️ تخطي، ⏱️ +10 ثواني.</p>
+<p><b>🧩 ألغاز:</b> اكتب الإجابة. الصح بـ 10 نقط، ولو استخدمت التلميح بـ 5. عندك محاولتين.</p>
 <p><b>🎭 بلوف:</b> بتظهر لكم سؤال من غير إجابة. كل لاعب في دوره يكتب إجابة مزيفة مقنعة (باقي اللاعبين مش شايفين). بعدها كل واحد يختار الإجابة اللي شايفها صح، ومينفعش يختار إجابته. اللي يختار الصح +2، واللي إجابته المزيفة تخدع حد +1 عن كل واحد خدعه.</p>
 <p><b>🌐 أونلاين:</b> واحد يعمل غرفة ويبعت الكود لصحابه، وكل واحد يدخل بموبايله. سباق إجابات (الأسرع والأصح يكسب أكتر) أو بلوف. صاحب الغرفة لازم يسيب شاشته مفتوحة.</p><p>مع أكتر من لاعب: بيتمرروا الموبايل بالدور. الأسئلة بتتغيّر ومبتتكررش لحد ما تخلص الأسئلة المتاحة.</p><button class="btn" data-act="home">تمام</button></div>`)}
 function installView(){
@@ -1348,19 +1348,18 @@ function setup(mode){
   CFG.mode=mode;TAB='';
   if(mode==='bluff'&&CFG.players.length<2)CFG.players=['لاعب 1','لاعب 2'];
   if(mode!=='bluff'&&CFG.players.length>4)CFG.players=CFG.players.slice(0,4);
-  if(!RSTEP[mode].includes(CFG.rounds))CFG.rounds=RSTEP[mode][1];
-  const t={classic:'كلاسيك',riddle:'ألغاز',bluff:'بلوف'}[mode];
+  CFG.rounds=Math.max(10,Math.min(30,CFG.rounds|0||10));CFG.diff=0;
+  const t={classic:'كلاسيك',riddle:'ألغاز',bluff:'بلوف'}[mode];const need=mode!=='riddle'&&CFG.cats.length<MINCATS;
   const maxP=mode==='bluff'?6:4,minP=mode==='bluff'?2:1;
   const players=CFG.players.map((p,i)=>`<input class="pn" data-i="${i}" value="${esc(p)}" maxlength="14" aria-label="اسم لاعب ${i+1}">`).join('');
-  const cats=mode==='riddle'?'':`<h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${CFG.cats.length} من ${Object.keys(CATS).length} فئة مختارة</span><button class="btn sm ghost" data-act="catsedit">تعديل</button></div>
-   <h3>المستوى</h3><div class="chips">${[[0,'مختلط'],[1,'سهل ⭐'],[2,'متوسط ⭐⭐'],[3,'صعب ⭐⭐⭐']].map(([d,l])=>`<button class="chip ${CFG.diff===d?'on':''}" data-diff="${d}">${l}</button>`).join('')}</div>`;
+  const cats=mode==='riddle'?'':`<h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${CFG.cats.length?CFG.cats.length+' من '+Object.keys(CATS).length+' فئة مختارة':'ماختارتش فئات لسه'}</span><button class="btn sm ghost" data-act="catsedit">${CFG.cats.length?'تعديل':'اختار'}</button></div>`;
   shell(`<div class="panel"><h3>اللاعبين</h3>
    <div class="srow"><span class="lb"><span class="e">👥</span>عدد اللاعبين</span><span class="stepper"><button data-act="pdel" ${CFG.players.length<=minP?'disabled':''}>−</button><b>${CFG.players.length}</b><button data-act="padd" ${CFG.players.length>=maxP?'disabled':''}>+</button></span></div>
    <div class="pl" style="margin-top:10px">${players}</div>
    ${cats}
    <h3>عدد ${mode==='riddle'?'الألغاز':'الأسئلة'}</h3>
-   <div class="srow"><span class="lb"><span class="e">🔁</span>الجولات</span><span class="stepper"><button data-act="rminus">−</button><b>${CFG.rounds}</b><button data-act="rplus">+</button></span></div>
-   <button class="btn big" data-act="start">يلا نبدأ</button></div>`,{title:t});
+   <div class="srow slider"><span class="lb"><span class="e">🔁</span>عدد الأسئلة</span><b id="rv" class="rv">${CFG.rounds}</b></div><input type="range" id="rng" min="10" max="30" step="1" value="${CFG.rounds}" class="rng" aria-label="عدد الأسئلة"><div class="rngl"><span>١٠</span><span>٣٠</span></div>
+   ${need?`<div class="warn">اختار ${MINCATS} فئات على الأقل عشان تبدأ (${CFG.cats.length}/${MINCATS})</div>`:''}<button class="btn big" data-act="start" ${need?'disabled':''}>يلا نبدأ</button></div>`,{title:t});
 }
 
 // ---------- category browser ----------
@@ -1368,7 +1367,7 @@ let catBr=null,catQ='',catF='all';
 function catsBrowser(o){catBr=o;catQ='';catF='all';catsView();}
 function catsView(){
   if(!catBr)return;TAB=catBr.tab||'';
-  const sel=catBr.get();
+  const sel=catBr.get();const allOn=sel.length>=Object.keys(CATS).length;
   const counts={};Q.forEach(q=>{counts[q[0]]=(counts[q[0]]||0)+1});
   const normq=norm(catQ);
   let list=Object.entries(CATS);
@@ -1376,9 +1375,9 @@ function catsView(){
   if(normq)list=list.filter(([k,v])=>norm(v).includes(normq));
   const cards=list.map(([k,v])=>{const em=v.split(' ')[0],nm=v.slice(em.length).trim();return `<button class="catc ${sel.includes(k)?'on':''}" data-catt="${k}"><span class="ck">✓</span><span class="em">${em}</span><b>${nm}</b><small>${counts[k]||0} سؤال</small></button>`}).join('');
   shell(`<div class="search"><input id="catq" placeholder="ابحث عن فئة..." value="${esc(catQ)}" autocomplete="off"></div>
-  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">الكل (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button></div>
+  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">الكل (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button><button class="chip alln" data-act="catsall2">${allOn?'إلغاء الكل':'اختيار الكل ✓'}</button></div>
   <div class="catgrid">${cards||'<p class="center" style="grid-column:1/-1;color:var(--mut)">مفيش فئات مطابقة</p>'}</div>
-  <div class="footbar"${catBr.tab?' style="bottom:66px"':''}><button class="btn big" data-act="catsdone">اعتمد ${sel.length} ${sel.length===1?'فئة':'فئات'}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
+  <div class="footbar"${catBr.tab?' style="bottom:66px"':''}><button class="btn big" data-act="catsdone" ${sel.length<MINCATS?'disabled':''}>${sel.length<MINCATS?`اختار ${MINCATS-sel.length} فئات كمان (${sel.length}/${MINCATS})`:`اعتمد ${sel.length} فئة`}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
 }
 
 // ---------- profile ----------
@@ -1394,7 +1393,7 @@ function profileView(){
   </div>`,{title:'حسابي',nav:true});
 }
 function startGame(){
-  if(!CFG.cats.length)CFG.cats=Object.keys(CATS);
+  if(CFG.mode!=='riddle'&&CFG.cats.length<MINCATS)return setup(CFG.mode);
   const names=CFG.players.map((p,i)=>(p||'').trim()||('لاعب '+(i+1)));
   G={mode:CFG.mode,players:names.map(n=>({name:n,score:0,streak:0,best:0,right:0,lifes:{half:1,skip:1,time:1}})),i:0,n:CFG.rounds,turn:0,log:[]};
   if(G.mode==='riddle')G.items=pickRiddles(G.n);else G.items=pickQuestions(G.n);
@@ -1425,7 +1424,7 @@ function renderClassic(res){
   const it=G.items[G.i],p=G.players[G.turn];
   const L=p.lifes;
   const opts=it.opts.map((o,k)=>{let cls='opt';if(it.removed.includes(k))cls+=' gone';if(res){if(o===it.right)cls+=' right';else if(k===res.pick)cls+=' wrong';}return `<button class="${cls}" data-pick="${k}" ${res||it.removed.includes(k)?'disabled':''}>${esc(o)}</button>`}).join('');
-  shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span><span>${'⭐'.repeat(it.diff)}</span><span>${G.i+1}/${G.n}</span></div><div class="bar"><i id="bar"></i></div>
+  shell(`${scoreboard()}<div class="qmeta"><span>${CATS[it.cat]}</span><span>${'⭐'.repeat(it.diff)} +${PTS[it.diff]||10}</span><span>${G.i+1}/${G.n}</span></div><div class="bar"><i id="bar"></i></div>
   ${qbox(it.text)}<div class="opts">${opts}</div>
   ${res?`<div class="res ${res.ok?'good':'bad'}">${res.msg}</div><button class="btn big" data-act="nextq">${G.i+1>=G.n?'النتيجة':'السؤال الجاي'}</button>`:`<div class="row life"><button class="btn sm ghost" data-life="half" ${L.half?'':'disabled'}>✂️ 50/50</button><button class="btn sm ghost" data-life="skip" ${L.skip?'':'disabled'}>⏭️ تخطي</button><button class="btn sm ghost" data-life="time" ${L.time?'':'disabled'}>⏱️ +10ث</button></div>`}`);
   updateBar();
@@ -1436,7 +1435,7 @@ function tickClassic(){const it=G.items[G.i];if(!it||it.locked){clearTimer();ret
 function answerClassic(k){
   const it=G.items[G.i];if(it.locked)return;it.locked=true;clearTimer();
   const p=G.players[G.turn];const ok=k>=0&&it.opts[k]===it.right;let msg;
-  if(ok){const left=remaining();p.streak++;p.best=Math.max(p.best,p.streak);p.right++;const speed=Math.round(50*left/it.limit);const sb=Math.min(50,(p.streak-1)*10);const pts=100+speed+sb;p.score+=pts;msg=`صح! +${pts} نقطة${sb?` (ستريك ${p.streak} 🔥)`:''}`;sfx.ok();}
+  if(ok){const left=remaining();p.streak++;p.best=Math.max(p.best,p.streak);p.right++;const speed=Math.round(50*left/it.limit);const sb=0;const pts=PTS[it.diff]||10;p.score+=pts;msg=`صح! +${pts} نقطة${sb?` (ستريك ${p.streak} 🔥)`:''}`;sfx.ok();}
   else{p.streak=0;msg=k<0?`الوقت خلص. الإجابة: ${esc(it.right)}`:`غلط. الإجابة الصح: ${esc(it.right)}`;sfx.bad();}
   G.log.push({q:it.text,ok});
   renderClassic({pick:k,ok,msg});
@@ -1464,7 +1463,7 @@ function riddleSubmit(){
   const it=G.items[G.i],p=G.players[G.turn];if(it.done)return;
   const v=$('#rans').value;if(!v.trim())return;
   if(riddleMatch(v,it.answers)){
-    it.done=true;clearTimer();const base=it.hint?50:100;const pts=base+Math.round(30*remaining()/it.limit);p.score+=pts;p.right++;p.streak++;p.best=Math.max(p.best,p.streak);sfx.ok();G.log.push({q:it.text,ok:true});
+    it.done=true;clearTimer();const pts=it.hint?5:10;p.score+=pts;p.right++;p.streak++;p.best=Math.max(p.best,p.streak);sfx.ok();G.log.push({q:it.text,ok:true});
     riddleView({ok:true,msg:`برافو! الإجابة: ${esc(it.answers[0])} (+${pts})`});
   }else{it.tries--;sfx.bad();if(it.tries<=0)return giveUp(false);riddleView();$('#msg').textContent='لأ مش دي. جرّب تاني.';}
 }
@@ -1535,9 +1534,9 @@ function finish(){
 // ---------- events ----------
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return ONL.open();if(k==='me')return profileView();return;}
+  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return ONL.open();if(k==='me')return profileView();return;}
   if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
-  if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){if(sel.length>1){sel.splice(i,1);}}else sel.push(c);catBr.set(sel);return catsView();}
+  if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){sel.splice(i,1);}else sel.push(c);catBr.set(sel);return catsView();}
   if(t.dataset.mode)return setup(t.dataset.mode);
   if(t.dataset.cat){const c=t.dataset.cat;const i=CFG.cats.indexOf(c);if(i>=0){if(CFG.cats.length>1)CFG.cats.splice(i,1);}else CFG.cats.push(c);return setup(CFG.mode);}
   if(t.dataset.diff!==undefined){CFG.diff=+t.dataset.diff;return setup(CFG.mode);}
@@ -1548,9 +1547,10 @@ document.addEventListener('click',e=>{
   switch(t.dataset.act){
     case 'online':return ONL.open();
     case 'install':return installView();
+    case 'catsall2':{const sel=catBr.get();const all=Object.keys(CATS);const on=sel.length>=all.length;sel.length=0;if(!on)all.forEach(k=>sel.push(k));catBr.set(sel);return catsView();}
     case 'catsall':CFG.cats=Object.keys(CATS);return setup(CFG.mode);
     case 'catsnone':CFG.cats=[];return setup(CFG.mode);
-    case 'catsedit':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;},onDone:()=>setup(CFG.mode)});
+    case 'catsedit':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>setup(CFG.mode)});
     case 'catsdone':{const o=catBr;catBr=null;if(o&&o.onDone)return o.onDone();return home();}
     case 'rminus':case 'rplus':{const st=RSTEP[CFG.mode];let i=st.indexOf(CFG.rounds);i+=t.dataset.act==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));CFG.rounds=st[i];return setup(CFG.mode);}
     case 'home':return home();case 'howto':return howto();
@@ -1573,6 +1573,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{
   if(e.target.classList.contains('pn'))CFG.players[+e.target.dataset.i]=e.target.value;
   if(e.target.id==='catq'){catQ=e.target.value;catsView();const el=document.getElementById('catq');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}}
+  if(e.target.id==='rng'){CFG.rounds=+e.target.value;const r=document.getElementById('rv');if(r)r.textContent=CFG.rounds;}
+  if(e.target.id==='orng'){const r=document.getElementById('orv');if(r)r.textContent=e.target.value;}
   if(e.target.id==='pfname')store.set('myname',e.target.value.trim().slice(0,14));
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='rans')riddleSubmit();if(e.target.id==='fake')bluffSend();});
