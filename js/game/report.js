@@ -15,7 +15,7 @@ class QuestionReport {
   static toggle(btn){
     const text=decodeURIComponent(btn.dataset.rep);let l=QuestionReport.list();
     l=l.includes(text)?l.filter(t=>t!==text):[...l,text];store.set('flagged',l);
-    const on=l.includes(text);btn.classList.toggle('on',on);btn.textContent=QuestionReport.label(on);
+    const on=l.includes(text);if(on)document.dispatchEvent(new CustomEvent('qreport',{detail:text}));btn.classList.toggle('on',on);btn.textContent=QuestionReport.label(on);
   }
   static plain(q){return q[2].replace(/^\u00a7[A-Z]:([^\u00a7]*)\u00a7/,(m,v)=>'['+v+'] ');}
   static card(){
