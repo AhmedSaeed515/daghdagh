@@ -178,7 +178,7 @@ function catsBrowser(o){catBr=o;catQ='';catF='all';catG='';catsView();}
 function catGroupsList(){const used=new Set();const g=CAT_GROUPS.map(x=>({...x,keys:x.keys.filter(k=>CATS[k]&&!used.has(k)&&used.add(k))}));const rest=Object.keys(CATS).filter(k=>!used.has(k));if(rest.length)g.push({id:'ot',name:'أخرى',keys:rest});return g.filter(x=>x.keys.length);}
 function catsSync(){if(!catBr)return;const sel=catBr.get();const all=Object.keys(CATS);const allOn=sel.length>=all.length;
 document.querySelectorAll('.catc').forEach(c=>{const on=sel.includes(c.dataset.catt);c.classList.toggle('on',on);c.style.animation='none';if(catF==='sel'&&!on)c.remove();});
-document.querySelectorAll('.catsec').forEach(s=>{if(!s.querySelector('.catc'))s.remove();});
+document.querySelectorAll('.catsec').forEach(s=>{if(!s.querySelector('.catc')){s.remove();return;}const g=catGroupsList().find(x=>x.name===s.querySelector('h3').textContent);const n=s.querySelector('.cathd span');if(g&&n)n.textContent=g.keys.filter(k=>sel.includes(k)).length+'/'+g.keys.length;});
 const cs=document.querySelector('[data-catf="sel"]');if(cs)cs.textContent='المختارة ('+sel.length+')';
 const an=document.querySelector('[data-act="catsall2"]');if(an)an.textContent=allOn?'إلغاء الكل':'اختيار الكل ✓';
 const sc=document.getElementById('catcount');if(sc)sc.textContent=sel.length+' مختارة';
