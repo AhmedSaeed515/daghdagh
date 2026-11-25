@@ -7,7 +7,7 @@ The site is served by GitHub Pages from the `main` branch, root folder (`Setting
 ## Release steps
 
 1. Make and test changes locally (`python3 -m http.server 8080`).
-2. If any cached file changed, bump `CACHE` in `sw.js` (for example `logz-plus-v4`).
+2. If any cached file changed, bump `CACHE` in `sw.js` (for example `logz-plus-v5`).
 3. Add an entry to `CHANGELOG.md`.
 4. Commit and push to `main`.
 5. Wait for the Pages build (usually under two minutes) and open the live URL. Reload twice so the new service worker takes over.
