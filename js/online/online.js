@@ -64,7 +64,7 @@ function readName(){ME.name=String(X.store.get('myname','')).trim().slice(0,14);
 function warn(t){msg=t;const e=document.getElementById('omsg');if(e)e.textContent=t;}
 
 async function create(){
-  if(!readName())return warn('اكتب اسمك الأول');
+  if(!readName())return warn('اكتب اسمك الأول');if(window.lgzBad&&window.lgzBad(ME.name))return warn('الاسم ده مش مناسب، غيّره.');
   warn('بجهّز الغرفة...');
   let idx=-1;for(let i=0;i<SERVERS.length;i++){if(await probe(SERVERS[i])){idx=i;break}}
   if(idx<0)return warn('معرفتش أوصل لخدمة الاتصال دلوقتي. جرّب تاني بعد شوية.');
@@ -80,7 +80,7 @@ function join(){
   return joinCode(code);
 }
 function joinCode(code){
-  if(!readName())return warn('اكتب اسمك الأول');
+  if(!readName())return warn('اكتب اسمك الأول');if(window.lgzBad&&window.lgzBad(ME.name))return warn('الاسم ده مش مناسب، غيّره.');
   code=String(code||'').trim().toUpperCase();
   if(!/^[1-3][A-Z2-9]{4}$/.test(code))return warn('الكود لازم يكون 5 حروف وأرقام زي 1K7QZ');
   leave(true);room={code,host:false};NET=connect(code);joinTries=0;lastSt=0;
@@ -157,8 +157,8 @@ function hostJoin(m){
   if(p){hostBroadcast();return;}
   if(h.ph!=='lobby'){NET.send({t:'kick',to:m.id,why:'اللعبة بدأت بالفعل في الغرفة دي.'});return;}
   if(h.players.length>=h.cfg.maxP){NET.send({t:'kick',to:m.id,why:'الغرفة مليانة ('+h.cfg.maxP+' لاعبين).'});return;}
-  if(h.cfg.appr){if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:String(m.name).slice(0,14),av:avOK(m.av)});view();}return;}
-  let nm=String(m.name).slice(0,14),k=2;while(h.players.some(x=>x.name===nm))nm=String(m.name).slice(0,12)+' '+k++;
+  if(h.cfg.appr){if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:(window.lgzBad&&window.lgzBad(String(m.name))?'لاعب '+(h.players.length+h.pending.length+1):String(m.name).slice(0,14)),av:avOK(m.av)});view();}return;}
+  let nm=String(m.name).slice(0,14);if(window.lgzBad&&window.lgzBad(nm))nm='لاعب '+(h.players.length+1);let k=2;while(h.players.some(x=>x.name===nm))nm=String(m.name).slice(0,12)+' '+k++;
   h.players.push({id:m.id,name:nm,av:avOK(m.av),score:0,right:0});
   hostBroadcast();
 }
@@ -203,7 +203,7 @@ function hostAns(id,r,k){
 function hostFake(id,r,x){
   const h=H;if(h.ph!=='wr'||r!==h.r||!h.players.some(p=>p.id===id))return;
   x=String(x||'').trim().slice(0,40);const it=h.items[h.r];
-  if(!x||norm(x)===norm(it.right)){NET.send({t:'rj',to:id,r:h.r});if(id===ME.id){mine.rej=true;mine.fk=null;view();}return;}
+  if(!x||norm(x)===norm(it.right)||(window.lgzBad&&window.lgzBad(x))){NET.send({t:'rj',to:id,r:h.r});if(id===ME.id){mine.rej=true;mine.fk=null;view();}return;}
   h.fakes[id]=x;
   if(h.players.every(p=>h.fakes[p.id]))hostVoteStart();
 }
