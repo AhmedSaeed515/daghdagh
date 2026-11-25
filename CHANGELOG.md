@@ -2,6 +2,21 @@
 
 All notable changes to this project are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.0.0] - 2026-11-25
+
+### Changed
+- The game is now called Daghdagh (دغدغ). Earlier entries below use the names it had at the time (Logz+, ZAKA ARENA, BOOM, Falta).
+- Repository renamed to `daghdagh`; the live site moved to https://ahmedsaeed515.github.io/daghdagh/.
+- Retro paper-and-ink look with a red accent; new animated controller logo (a fist breaks a controller in two).
+- Riddles mode removed.
+- Question banks expanded (Egypt governorates, science, capitals, flags and more).
+
+### Added
+- Slogan: العب، اتحدّى، دغدغ.
+- Join by invite link or QR code with a nickname only.
+- Helpers in online classic games: 50/50, skip, double points.
+- Host board: skip the current question, end the game, remove a player.
+
 ## [2.1.0] - 2026-11-25
 
 ### Changed
