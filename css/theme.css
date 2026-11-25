@@ -378,3 +378,6 @@ html,body{background:#efece3!important}
 .kx{margin-inline-start:auto;font:inherit;font-weight:900;background:#fff;border:2px solid #151515;color:#151515;width:28px;height:28px;cursor:pointer;padding:0}
 .rbtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .rbtns .btn{flex:1 1 40%;min-width:120px}
+
+/* category picker: keep the last row clear of the fixed confirm bar */
+.lg .catgrid{padding-bottom:170px}
