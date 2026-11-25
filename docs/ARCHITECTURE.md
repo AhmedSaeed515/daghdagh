@@ -2,7 +2,7 @@
 
 ## Overview
 
-ZAKA ARENA (formerly Logz+) is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
+BOOM (formerly Logz+ and ZAKA ARENA) is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
 
 ```
 index.html   UI, base styles, question bank, game engine, online-room client
