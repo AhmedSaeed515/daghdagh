@@ -404,3 +404,4 @@ html,body{background:#efece3!important}
 .tmb{border:0;font-family:inherit;font-style:normal;font-size:12px;color:#fff;padding:2px 8px;border-radius:10px;margin-inline-start:6px;cursor:default}
 .tmbar{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0}
 .tmc{color:#fff;font-size:13px;padding:3px 10px;border-radius:12px}
+.lg .rbtns{flex-wrap:wrap;justify-content:center}.lg .rbtns .btn{flex:1 1 42%!important;white-space:normal!important;font-size:15px!important;padding:10px 6px!important;min-width:0!important}
