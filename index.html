@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=9"><script src="flags1.js?v=9"></script><script src="flags2.js?v=9"></script><script src="flags3.js?v=9"></script><script src="qx.js?v=9"></script><script src="qb1a.js?v=10"></script><script src="qb1b.js?v=10"></script><script src="qb1c.js?v=10"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=10"><script src="flags1.js?v=10"></script><script src="flags2.js?v=10"></script><script src="flags3.js?v=10"></script><script src="qx.js?v=10"></script><script src="qb1a.js?v=10"></script><script src="qb1b.js?v=10"></script><script src="qb1c.js?v=10"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -780,12 +780,12 @@ const Q3=[...Object.entries(D3x).flatMap(([c,rows])=>rows.map(r=>[c,...r])),...O
 // Online rooms: each player on their own phone. The room owner's phone runs the game
 // and relays messages through a public ntfy topic (plain HTTPS, works inside the hosted viewer).
 function initOnline(X){
-const {esc,shuffle,norm,Q,CATS,shell,sfx,app}=X;
+const {esc,shuffle,norm,Q,CATS,shell,sfx,app,avh,avOK}=X;
 const SERVERS=['ntfy.envs.net','ntfy.adminforge.de','ntfy.sh'];
 const ALPH='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 const rid=n=>Array.from({length:n},()=>ALPH[Math.floor(Math.random()*ALPH.length)]).join('');
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const ME={id:rid(8),name:''};
+const ME={id:rid(8),name:'',av:'',g:''};
 const LIM={q:20,wr:45,vt:30,rv:7};
 let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:(JSON.parse(localStorage.getItem('lo3ba_cats')||'[]')||[]).filter(k=>CATS[k]),diff:0,n:10,maxP:8,appr:false};
 let joinTries=0,joinT=null,lastSt=0;
@@ -831,13 +831,13 @@ function leave(quiet){
 function lobbyView(){
   X.setTab&&X.setTab('online');
   shell(`<div class="panel center"><div class="big-emoji">🌐</div><h2>لعب أونلاين</h2><p>كل واحد بموبايله. واحد يعمل غرفة ويدّي الكود لصحابه، وهما يدخلوا بنفس الكود.</p>
-  <h3>اسمك</h3><input id="oname" maxlength="14" value="${esc(ME.name||X.store.get('myname',''))}" placeholder="اكتب اسمك">
+  <div class="pcard">${avh(X.store.get('myav',''),'lg')}<b>${esc(X.store.get('myname',''))}</b><button class="btn sm ghost" data-act="me">تعديل</button></div>
   <div id="omsg" class="warn">${esc(msg)}</div>
   <button class="btn big" data-o="create">🎮 اعمل غرفة جديدة</button>
   <h3>أو ادخل غرفة صاحبك</h3><input id="ocode" maxlength="5" placeholder="كود الغرفة" style="text-align:center;letter-spacing:6px;text-transform:uppercase">
   <button class="btn ghost" data-o="join">ادخل الغرفة</button></div>`,{title:'أونلاين',nav:true});
 }
-function readName(){const v=(document.getElementById('oname')||{}).value||'';ME.name=v.trim().slice(0,14);if(ME.name)X.store.set('myname',ME.name);return ME.name;}
+function readName(){ME.name=String(X.store.get('myname','')).trim().slice(0,14);ME.av=avOK(X.store.get('myav',''));ME.g=X.store.get('mygender','');return ME.name;}
 function warn(t){msg=t;const e=document.getElementById('omsg');if(e)e.textContent=t;}
 
 async function create(){
@@ -847,7 +847,7 @@ async function create(){
   if(idx<0)return warn('معرفتش أوصل لخدمة الاتصال دلوقتي. جرّب تاني بعد شوية.');
   const code=(idx+1)+rid(4);
   room={code,host:true};
-  H={players:[{id:ME.id,name:ME.name,score:0,right:0}],pending:[],cfg:{...lobbyCfg,cats:lobbyCfg.cats.slice()},r:0,ph:'lobby',seq:0,items:[],ans:{},fakes:{},votes:{},opts:[],owners:[],right:-1,ends:0};
+  H={players:[{id:ME.id,name:ME.name,av:ME.av,score:0,right:0}],pending:[],cfg:{...lobbyCfg,cats:lobbyCfg.cats.slice()},r:0,ph:'lobby',seq:0,items:[],ans:{},fakes:{},votes:{},opts:[],owners:[],right:-1,ends:0};
   NET=connect(code);
   hostTimer=setInterval(hostTick,300);
   hostBroadcast();
@@ -863,7 +863,7 @@ function join(){
 function sendJoin(){
   if(!room||room.host||S)return;
   if(joinTries++>=15){leave();msg='الغرفة مردتش. اتأكد من الكود وإن صاحبها لسه فاتح اللعبة.';return lobbyView();}
-  NET.send({t:'join',id:ME.id,name:ME.name});
+  NET.send({t:'join',id:ME.id,name:ME.name,av:ME.av});
   joinT=setTimeout(sendJoin,4000);
 }
 
@@ -895,7 +895,7 @@ function applyState(s,now,seq){
 // ---------- host engine ----------
 function pubState(extra){
   const h=H;
-  const s={code:room.code,ph:h.ph,r:h.r,n:h.cfg.n,mode:h.cfg.mode,cats:h.cfg.cats,diff:h.cfg.diff,pl:h.players.map(p=>({i:p.id,n:p.name,s:p.score})),ends:h.ends,lim:h.lim||0};
+  const s={code:room.code,ph:h.ph,r:h.r,n:h.cfg.n,mode:h.cfg.mode,cats:h.cfg.cats,diff:h.cfg.diff,pl:h.players.map(p=>({i:p.id,n:p.name,s:p.score,a:p.av||''})),ends:h.ends,lim:h.lim||0};
   if(h.ph==='q'||h.ph==='rv'||h.ph==='wr'||h.ph==='vt'){const it=h.items[h.r];s.q={c:it.cat,d:it.diff,t:it.text};}
   if(h.ph==='q'||h.ph==='vt'||h.ph==='rv')s.o=h.opts;
   if(h.ph==='rv'){s.right=h.right;s.pk=h.picks;s.pt=h.pts;s.rs=h.rscore;if(h.mode==='bluff'||h.cfg.mode==='bluff')s.by=h.owners.map(a=>a.map(pid=>h.players.findIndex(p=>p.id===pid)));}
@@ -916,9 +916,9 @@ function hostJoin(m){
   if(p){hostBroadcast();return;}
   if(h.ph!=='lobby'){NET.send({t:'kick',to:m.id,why:'اللعبة بدأت بالفعل في الغرفة دي.'});return;}
   if(h.players.length>=h.cfg.maxP){NET.send({t:'kick',to:m.id,why:'الغرفة مليانة ('+h.cfg.maxP+' لاعبين).'});return;}
-  if(h.cfg.appr){if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:String(m.name).slice(0,14)});view();}return;}
+  if(h.cfg.appr){if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:String(m.name).slice(0,14),av:avOK(m.av)});view();}return;}
   let nm=String(m.name).slice(0,14),k=2;while(h.players.some(x=>x.name===nm))nm=String(m.name).slice(0,12)+' '+k++;
-  h.players.push({id:m.id,name:nm,score:0,right:0});
+  h.players.push({id:m.id,name:nm,av:avOK(m.av),score:0,right:0});
   hostBroadcast();
 }
 function hostBye(id){const h=H;if(h.ph!=='lobby')return;const i=h.players.findIndex(p=>p.id===id);if(i>0){h.players.splice(i,1);hostBroadcast();}}
@@ -994,7 +994,7 @@ function doVote(k){if(mine.k!==undefined)return;mine.k=k;if(room.host)hostVote(M
 
 // ---------- views ----------
 function remain(){if(!S||!S.ends)return 0;return Math.max(0,(S.ends-(Date.now()+off))/1000);}
-function sbHtml(){return `<div class="sb">${S.pl.map(p=>`<div class="sp ${p.i===ME.id?'cur':''}"><span>${esc(p.n)}</span><b>${p.s}</b></div>`).join('')}</div>`;}
+function sbHtml(){return `<div class="sb">${S.pl.map(p=>`<div class="sp ${p.i===ME.id?'cur':''}"><span class="who">${avh(p.a)}${esc(p.n)}</span><b>${p.s}</b></div>`).join('')}</div>`;}
 function view(){
   if(!S||!room)return;
   const host=room.host;
@@ -1017,7 +1017,7 @@ function view(){
     const opts=S.o.map((o,k)=>{let cls='opt';if(k===S.right)cls+=' right';else if(S.pk[my]===k)cls+=' wrong';const by=S.by&&S.by[k]&&S.by[k].length?`<small>كتبها: ${S.by[k].map(j=>esc(S.pl[j].n)).join('، ')}</small>`:(S.by&&k!==S.right?'<small>إجابة جاهزة من اللعبة</small>':'');const vs=S.pl.filter((p,i)=>S.pk[i]===k).map(p=>esc(p.n));return `<div class="${cls}" style="cursor:default">${esc(o)}${by}${vs.length?`<small>اختارها: ${vs.join('، ')}</small>`:''}</div>`}).join('');
     const ok=S.pt[my]>0;
     body=`${qbox(q.t)}<div class="opts">${opts}</div><div class="res ${ok?'good':'bad'}">${S.pk[my]<0?'ملحقتش تجاوب. ':''}${ok?`صح! +${S.pt[my]} نقطة`:'مفيش نقط الجولة دي'}</div>
-    <div class="rank">${rows.map(x=>`<div class="rk"><span>${esc(x.p.n)}</span><span>+${x.pt}</span></div>`).join('')}</div>${room.host?'<button class="btn big" data-o="skip">التالي ⏭️</button>':'<div class="center" style="color:var(--mut)">الجولة الجاية بعد ثواني...</div>'}`;
+    <div class="rank">${rows.map(x=>`<div class="rk"><span class="who">${avh(x.p.a)}${esc(x.p.n)}</span><span>+${x.pt}</span></div>`).join('')}</div>${room.host?'<button class="btn big" data-o="skip">التالي ⏭️</button>':'<div class="center" style="color:var(--mut)">الجولة الجاية بعد ثواني...</div>'}`;
   }
   shell(`${sbHtml()}${meta}${bar}${body}`);
   updateBar();
@@ -1031,15 +1031,15 @@ function lobbyRoom(host){
   <h3>مين يقدر ينضم؟</h3><div class="seg" style="width:100%"><button class="${hc.appr?'':'on'}" data-o="appr" data-v="0" style="flex:1">أي حد معاه الكود</button><button class="${hc.appr?'on':''}" data-o="appr" data-v="1" style="flex:1">بموافقتي 🔒</button></div>`
   :`<p class="center">${S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات'} • ${S.n} سؤال • ${S.cats.length} فئة</p>`;
   shell(`<div class="panel center"><p style="margin:0;color:var(--mut)">كود الغرفة</p><div class="code">${esc(S.code)}</div><p style="margin:4px 0 0">ادّي الكود لصحابك، وهما يدخلوا من "لعب أونلاين" ويكتبوه.</p>
-  <h3>اللاعبين (${S.pl.length})</h3><div class="rank">${S.pl.map((p,i)=>`<div class="rk"><span>${esc(p.n)}${p.i===ME.id?' (أنت)':''}</span><span>${i===0?'👑 صاحب الغرفة':'✅ جاهز'}</span></div>`).join('')}</div>
-  ${host&&H.pending.length?`<h3>طلبات انضمام 🙋</h3><div class="rank">${H.pending.map(p=>`<div class="rk pend"><span>${esc(p.name)}</span><span style="display:flex;gap:6px"><button class="btn sm" data-o="ok" data-v="${p.id}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${p.id}">رفض</button></span></div>`).join('')}</div>`:''}
+  <h3>اللاعبين (${S.pl.length})</h3><div class="rank">${S.pl.map((p,i)=>`<div class="rk"><span class="who">${avh(p.a)}${esc(p.n)}${p.i===ME.id?' (أنت)':''}</span><span>${i===0?'👑 صاحب الغرفة':'✅ جاهز'}</span></div>`).join('')}</div>
+  ${host&&H.pending.length?`<h3>طلبات انضمام 🙋</h3><div class="rank">${H.pending.map(p=>`<div class="rk pend"><span class="who">${avh(p.av)}${esc(p.name)}</span><span style="display:flex;gap:6px"><button class="btn sm" data-o="ok" data-v="${p.id}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${p.id}">رفض</button></span></div>`).join('')}</div>`:''}
   ${cfgHtml}
   ${host?`<div class="warn">${S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':S.cats.length<6?'اختار 6 فئات على الأقل ('+S.cats.length+'/6)':''}</div><button class="btn big" data-o="start" ${S.pl.length<2||S.cats.length<6?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
   <button class="btn ghost" data-o="leave">خروج</button></div>`);
 }
 function finView(){
   const rows=S.pl.map((p,i)=>({p,i})).sort((a,b)=>b.p.s-a.p.s);const tie=rows.length>1&&rows[0].p.s===rows[1].p.s;
-  shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(rows[0].p.n)}</h2><div class="rank">${rows.map((x,k)=>`<div class="rk"><span>${k+1}. ${esc(x.p.n)}${x.p.i===ME.id?' (أنت)':''}</span><span>${x.p.s} نقطة</span></div>`).join('')}</div>
+  shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(rows[0].p.n)}</h2><div class="rank">${rows.map((x,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(x.p.a)}${esc(x.p.n)}${x.p.i===ME.id?' (أنت)':''}</span><span>${x.p.s} نقطة</span></div>`).join('')}</div>
   ${room.host?'<button class="btn big" data-o="again">العب تاني بنفس الغرفة</button>':'<p class="warn">صاحب الغرفة ممكن يبدأ جولة جديدة...</p>'}<button class="btn ghost" data-o="leave">خروج</button></div>`);
 }
 function updateBar(){
@@ -1070,7 +1070,7 @@ document.addEventListener('click',e=>{
     case 'mp':H.cfg.maxP=Math.max(2,Math.min(8,H.cfg.maxP+(+v)));return hostBroadcast();
     case 'appr':H.cfg.appr=v==='1';return hostBroadcast();
     case 'cats':return X.catsBrowser({get:()=>H.cfg.cats,set:c=>{H.cfg.cats=c;try{localStorage.setItem('lo3ba_cats',JSON.stringify(c))}catch(e){}},onDone:()=>hostBroadcast()});
-    case 'ok':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];let nm=pj.name,k=2;while(H.players.some(x=>x.name===nm))nm=pj.name.slice(0,12)+' '+k++;H.players.push({id:pj.id,name:nm,score:0,right:0});return hostBroadcast();}
+    case 'ok':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];let nm=pj.name,k=2;while(H.players.some(x=>x.name===nm))nm=pj.name.slice(0,12)+' '+k++;H.players.push({id:pj.id,name:nm,av:pj.av,score:0,right:0});return hostBroadcast();}
     case 'no':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];NET.send({t:'kick',to:pj.id,why:'صاحب الغرفة رفض طلبك.'});return view();}
     case 'diff':H.cfg.diff=+v;return hostBroadcast();
     case 'rounds':H.cfg.n=+v;return hostBroadcast();
@@ -1309,29 +1309,54 @@ function tabsHtml(){
   return `<div class="tabs">${t('home','الرئيسية')}${t('cats','الفئات')}${t('online','أونلاين')}${t('me','حسابي')}</div>`;
 }
 function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="home" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>فلتة</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
+const AVS=['🦊','🐼','🐯','🦁','🐸','🐵','🐰','🐻','🐨','🐙','🦄','🐧','🦉','🐲','🐱','🐶'];
+const avOK=a=>AVS.includes(a)?a:'🙂';
+const avh=(a,c)=>`<span class="av ${c||''}">${avOK(a)}</span>`;
+let PF=null;
+const pfValid=()=>!!(PF&&PF.name&&PF.av&&PF.g);
+function profileOk(){return !!(store.get('myname','')&&store.get('myav','')&&store.get('mygender',''));}
+function profileForm(first){
+  clearTimer();if(typeof ONL!=='undefined'&&ONL)ONL.leave();
+  if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav',''),g:store.get('mygender','')};
+  TAB=first?'':'me';
+  const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
+  const extra=first?'':`<div class="cards">
+   <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
+   <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد اللعب.</small></span><span class="ch">‹</span></button>
+   <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button></div>`;
+  shell(`<div class="panel pf center">${first?'<img src="logo.svg" alt="" width="72" height="72"><h2>أهلاً بيك في فلتة!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'xl')}</div><h2>بروفايلي</h2>`}
+  <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
+  <h3>إنت؟</h3><div class="seg" style="width:100%"><button class="${PF.g==='m'?'on':''}" data-pf="g" data-v="m" style="flex:1">👦 ولد</button><button class="${PF.g==='f'?'on':''}" data-pf="g" data-v="f" style="flex:1">👧 بنت</button></div>
+  <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="أفاتار ${a}">${a}</button>`).join('')}</div>
+  <button class="btn big" id="pfsave" data-pf="save" ${pfValid()?'':'disabled'}>${first?'يلا نبدأ':'حفظ'}</button>
+  <p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
+}
+function pfClick(t){
+  const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
+  const k=t.dataset.pf,v=t.dataset.v;
+  if(k==='g'){PF.g=v;return profileForm(PF.first);}
+  if(k==='av'){PF.av=v;return profileForm(PF.first);}
+  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);store.set('mygender',PF.g);PF=null;return home();}
+}
 function home(){
   clearTimer();G=null;if(typeof ONL!=='undefined'&&ONL)ONL.leave();
   TAB='home';
-  const best=store.get('best',0),played=store.get('played',0);
   const card=(mode,ic,t,d,hot)=>`<button class="mode c-${mode||'online'} ${hot||''}" ${mode?`data-mode="${mode}"`:'data-act="online"'}><span class="ic">${ic}</span><span class="tx"><b>${t}</b><small>${d}</small></span><span class="ch">‹</span></button>`;
-  shell(`<div class="hero center"><img src="logo.svg" alt="فلتة"><h1>إنت فلتة؟ ورّينا!</h1><p>أعلام ومعالم وأسئلة وألغاز، العب لوحدك أو مع صحابك.</p>${best?`<div class="pill">🏆 أعلى نتيجة: ${best}</div>`:''}</div>
-  <button class="cta" data-mode="classic">⚡ يلا نلعب</button>
+  shell(`<div class="hero center"><img src="logo.svg" alt="فلتة"><h1>إنت فلتة؟ ورّينا!</h1><p>أعلام ومعالم وأسئلة وألغاز. اللعب الجماعي أونلاين، كل واحد بموبايله.</p><div class="pill who">${avh(store.get('myav',''))}أهلاً ${esc(store.get('myname',''))}</div></div>
+  <button class="cta" data-act="online">🌐 يلا نلعب أونلاين</button>
   <div class="sec"><span>طرق اللعب</span><span>${Q.length} سؤال • ${R.length} لغز</span></div>
   <div class="cards">
    ${card('','🌐','العب أونلاين','اعمل غرفة وابعت الكود لصحابك، لحد 8 لاعبين. سباق إجابات أو بلوف.','hot')}
-   ${card('classic','🎯','كلاسيك','اختار الإجابة الصح قبل الوقت. نقاط سرعة وستريك ووسائل مساعدة.')}
-   ${card('riddle','🧩','ألغاز','اكتب الإجابة بنفسك، ومعاك تلميح بنص النقط.')}
-   ${card('bluff','🎭','بلوف','ألّف إجابة مضروبة وخدع صحابك. من 2 لـ 6 لاعبين.')}
+   ${card('riddle','🧩','ألغاز','لوحدك: اكتب الإجابة بنفسك، ومعاك تلميح بنص النقط.')}
   </div>
-  <div class="sec"><span>إحصائياتك</span></div>
-  <div class="statgrid"><div class="stat"><b>${played}</b><span>جولة لعبتها</span></div><div class="stat"><b>${best}</b><span>أعلى نتيجة</span></div><div class="stat"><b>${Object.keys(CATS).length}</b><span>تصنيف</span></div></div>
   <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});
 }
 function howto(){shell(`<div class="panel"><h2>إزاي ألعب؟</h2>
-<p><b>🎯 كلاسيك:</b> كل سؤال ليه 4 اختيارات و20 ثانية. النقط على حسب صعوبة السؤال: سهل 5 نقط، متوسط 10، صعب 20. معاك مرة واحدة من كل مساعدة: ✂️ حذف إجابتين، ⏭️ تخطي، ⏱️ +10 ثواني.</p>
-<p><b>🧩 ألغاز:</b> اكتب الإجابة. الصح بـ 10 نقط، ولو استخدمت التلميح بـ 5. عندك محاولتين.</p>
-<p><b>🎭 بلوف:</b> بتظهر لكم سؤال من غير إجابة. كل لاعب في دوره يكتب إجابة مزيفة مقنعة (باقي اللاعبين مش شايفين). بعدها كل واحد يختار الإجابة اللي شايفها صح، ومينفعش يختار إجابته. اللي يختار الصح +2، واللي إجابته المزيفة تخدع حد +1 عن كل واحد خدعه.</p>
-<p><b>🌐 أونلاين:</b> واحد يعمل غرفة ويبعت الكود لصحابه، وكل واحد يدخل بموبايله. سباق إجابات (الأسرع والأصح يكسب أكتر) أو بلوف. صاحب الغرفة لازم يسيب شاشته مفتوحة.</p><p>مع أكتر من لاعب: بيتمرروا الموبايل بالدور. الأسئلة بتتغيّر ومبتتكررش لحد ما تخلص الأسئلة المتاحة.</p><button class="btn" data-act="home">تمام</button></div>`)}
+<p><b>🌐 أونلاين:</b> واحد يعمل غرفة ويبعت الكود لصحابه، وكل واحد يدخل بموبايله. صاحب الغرفة يختار النوع والفئات (6 على الأقل) وعدد الأسئلة من 10 لـ 30. صاحب الغرفة لازم يسيب شاشته مفتوحة.</p>
+<p><b>🎯 سباق إجابات:</b> كل سؤال ليه 4 اختيارات و20 ثانية. الأسئلة سهلة ومتوسطة وصعبة بالعشوائي: سهل 5 نقط، متوسط 10، صعب 20.</p>
+<p><b>🎭 بلوف:</b> بيظهر سؤال من غير إجابات. كل لاعب يكتب إجابة مزيفة مقنعة، وبعدها الكل يختار الإجابة اللي شايفها صح. اللي يختار الصح ياخد نقط، واللي إجابته المزيفة تخدع حد ياخد نقط عن كل واحد خدعه.</p>
+<p><b>🧩 ألغاز:</b> لعب فردي. اكتب الإجابة. الصح بـ 10 نقط، ولو استخدمت التلميح بـ 5. عندك محاولتين.</p>
+<p>النقط بتفضل طول اللعبة بس. أول ما تقفل اللعبة بتتمسح، ومفيش حاجة بتتحفظ غير اسمك وأفاتارك.</p><button class="btn" data-act="home">تمام</button></div>`)}
 function installView(){
   const ua=navigator.userAgent||'';const ios=/iPhone|iPad|iPod/.test(ua);
   shell(`<div class="panel"><h2>📲 ثبّت اللعبة على موبايلك</h2>
@@ -1343,23 +1368,13 @@ function installView(){
   <p>⚠️ اللعبة محتاجة نت عشان تفتح، ومفيش نسخة على متاجر التطبيقات لسه.</p>
   <button class="btn big" data-act="home">تمام</button></div>`);
 }
-const RSTEP={classic:[5,10,15,20],riddle:[5,10,15],bluff:[5,10,15,20]};
 function setup(mode){
-  CFG.mode=mode;TAB='';
-  if(mode==='bluff'&&CFG.players.length<2)CFG.players=['لاعب 1','لاعب 2'];
-  if(mode!=='bluff'&&CFG.players.length>4)CFG.players=CFG.players.slice(0,4);
+  if(mode!=='riddle')return ONL.open();
+  CFG.mode='riddle';TAB='';CFG.players=[store.get('myname','')||'لاعب'];
   CFG.rounds=Math.max(10,Math.min(30,CFG.rounds|0||10));CFG.diff=0;
-  const t={classic:'كلاسيك',riddle:'ألغاز',bluff:'بلوف'}[mode];const need=mode!=='riddle'&&CFG.cats.length<MINCATS;
-  const maxP=mode==='bluff'?6:4,minP=mode==='bluff'?2:1;
-  const players=CFG.players.map((p,i)=>`<input class="pn" data-i="${i}" value="${esc(p)}" maxlength="14" aria-label="اسم لاعب ${i+1}">`).join('');
-  const cats=mode==='riddle'?'':`<h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${CFG.cats.length?CFG.cats.length+' من '+Object.keys(CATS).length+' فئة مختارة':'ماختارتش فئات لسه'}</span><button class="btn sm ghost" data-act="catsedit">${CFG.cats.length?'تعديل':'اختار'}</button></div>`;
-  shell(`<div class="panel"><h3>اللاعبين</h3>
-   <div class="srow"><span class="lb"><span class="e">👥</span>عدد اللاعبين</span><span class="stepper"><button data-act="pdel" ${CFG.players.length<=minP?'disabled':''}>−</button><b>${CFG.players.length}</b><button data-act="padd" ${CFG.players.length>=maxP?'disabled':''}>+</button></span></div>
-   <div class="pl" style="margin-top:10px">${players}</div>
-   ${cats}
-   <h3>عدد ${mode==='riddle'?'الألغاز':'الأسئلة'}</h3>
-   <div class="srow slider"><span class="lb"><span class="e">🔁</span>عدد الأسئلة</span><b id="rv" class="rv">${CFG.rounds}</b></div><input type="range" id="rng" min="10" max="30" step="1" value="${CFG.rounds}" class="rng" aria-label="عدد الأسئلة"><div class="rngl"><span>١٠</span><span>٣٠</span></div>
-   ${need?`<div class="warn">اختار ${MINCATS} فئات على الأقل عشان تبدأ (${CFG.cats.length}/${MINCATS})</div>`:''}<button class="btn big" data-act="start" ${need?'disabled':''}>يلا نبدأ</button></div>`,{title:t});
+  shell(`<div class="panel"><h3>عدد الألغاز</h3>
+   <div class="srow slider"><span class="lb"><span class="e">🔁</span>عدد الألغاز</span><b id="rv" class="rv">${CFG.rounds}</b></div><input type="range" id="rng" min="10" max="30" step="1" value="${CFG.rounds}" class="rng" aria-label="عدد الألغاز"><div class="rngl"><span>١٠</span><span>٣٠</span></div>
+   <p style="color:var(--mut);font-size:13px">لو الألغاز المتاحة أقل من العدد، هتلعب كلها.</p><button class="btn big" data-act="start">يلا نبدأ</button></div>`,{title:'ألغاز'});
 }
 
 // ---------- category browser ----------
@@ -1381,27 +1396,17 @@ function catsView(){
 }
 
 // ---------- profile ----------
-function profileView(){
-  TAB='me';
-  const best=store.get('best',0),played=store.get('played',0),nm=store.get('myname','');
-  shell(`<div class="panel"><h3>👤 اسمك</h3><input id="pfname" maxlength="14" value="${esc(nm)}" placeholder="اكتب اسمك"><p style="color:var(--mut);font-size:13px;margin:6px 0 0">بيظهر لصحابك في اللعب الأونلاين.</p></div>
-  <div class="statgrid"><div class="stat"><b>${played}</b><span>جولة لعبتها</span></div><div class="stat"><b>${best}</b><span>أعلى نتيجة</span></div><div class="stat"><b>${store.get('sound',true)?'🔊':'🔇'}</b><span>الصوت</span></div></div>
-  <div class="cards">
-   <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
-   <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد كل وضع من أوضاع اللعب.</small></span><span class="ch">‹</span></button>
-   <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button>
-  </div>`,{title:'حسابي',nav:true});
-}
+function profileView(){PF=null;profileForm(false);}
 function startGame(){
-  if(CFG.mode!=='riddle'&&CFG.cats.length<MINCATS)return setup(CFG.mode);
-  const names=CFG.players.map((p,i)=>(p||'').trim()||('لاعب '+(i+1)));
+  if(CFG.mode!=='riddle')return ONL.open();
+  const names=[String(store.get('myname','')).trim()||'لاعب'];
   G={mode:CFG.mode,players:names.map(n=>({name:n,score:0,streak:0,best:0,right:0,lifes:{half:1,skip:1,time:1}})),i:0,n:CFG.rounds,turn:0,log:[]};
   if(G.mode==='riddle')G.items=pickRiddles(G.n);else G.items=pickQuestions(G.n);
   G.n=G.items.length;
   if(G.mode==='bluff')return bluffRound();
   next();
 }
-function scoreboard(){return `<div class="sb">${G.players.map((p,i)=>`<div class="sp ${i===G.turn&&G.mode!=='bluff'?'cur':''}"><span>${esc(p.name)}</span><b>${p.score}</b></div>`).join('')}</div>`;}
+function scoreboard(){return `<div class="sb">${G.players.map((p,i)=>`<div class="sp ${i===G.turn&&G.mode!=='bluff'?'cur':''}"><span class="who">${avh(store.get('myav',''))}${esc(p.name)}</span><b>${p.score}</b></div>`).join('')}</div>`;}
 function next(){
   if(G.i>=G.n)return finish();
   G.turn=G.i%G.players.length;
@@ -1520,13 +1525,12 @@ function bluffReveal(){
 
 // ---- results ----
 function finish(){
-  clearTimer();store.set('played',store.get('played',0)+1);
+  clearTimer();
   const sorted=G.players.map((p,i)=>({...p,i})).sort((a,b)=>b.score-a.score);
   const top=sorted[0];const tie=sorted.length>1&&sorted[1].score===top.score;
-  if(G.mode!=='bluff'&&top.score>store.get('best',0))store.set('best',top.score);
   const maxPts=G.mode==='bluff'?'':'';
   shell(`<div class="panel center"><div class="big-emoji">${tie?'🤝':'🏆'}</div><h2>${tie?'تعادل!':'الفائز: '+esc(top.name)}</h2>
-  <div class="rank">${sorted.map((p,k)=>`<div class="rk"><span>${k+1}. ${esc(p.name)}</span><span>${p.score} نقطة • ${p.right} صح${G.mode==='classic'?` • أطول ستريك ${p.best}`:''}</span></div>`).join('')}</div>
+  <div class="rank">${sorted.map((p,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(store.get('myav',''))}${esc(p.name)}</span><span>${p.score} نقطة • ${p.right} صح${G.mode==='classic'?` • أطول ستريك ${p.best}`:''}</span></div>`).join('')}</div>
   <button class="btn big" data-act="again">العب تاني</button><button class="btn ghost" data-act="home">القائمة</button></div>`);
   window.__last={mode:G.mode,scores:G.players.map(p=>p.score)};setTimeout(()=>window.burst&&window.burst(40),250);
 }
@@ -1534,6 +1538,7 @@ function finish(){
 // ---------- events ----------
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.pf)return pfClick(t);
   if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return ONL.open();if(k==='me')return profileView();return;}
   if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
   if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){sel.splice(i,1);}else sel.push(c);catBr.set(sel);return catsView();}
@@ -1546,6 +1551,7 @@ document.addEventListener('click',e=>{
   if(t.dataset.bv!==undefined)return bluffPick(+t.dataset.bv);
   switch(t.dataset.act){
     case 'online':return ONL.open();
+    case 'me':return profileView();
     case 'install':return installView();
     case 'catsall2':{const sel=catBr.get();const all=Object.keys(CATS);const on=sel.length>=all.length;sel.length=0;if(!on)all.forEach(k=>sel.push(k));catBr.set(sel);return catsView();}
     case 'catsall':CFG.cats=Object.keys(CATS);return setup(CFG.mode);
@@ -1575,13 +1581,13 @@ document.addEventListener('input',e=>{
   if(e.target.id==='catq'){catQ=e.target.value;catsView();const el=document.getElementById('catq');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}}
   if(e.target.id==='rng'){CFG.rounds=+e.target.value;const r=document.getElementById('rv');if(r)r.textContent=CFG.rounds;}
   if(e.target.id==='orng'){const r=document.getElementById('orv');if(r)r.textContent=e.target.value;}
-  if(e.target.id==='pfname')store.set('myname',e.target.value.trim().slice(0,14));
+  if(e.target.id==='pfname'&&PF){PF.name=e.target.value.trim().slice(0,14);const b=document.getElementById('pfsave');if(b)b.disabled=!pfValid();}
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='rans')riddleSubmit();if(e.target.id==='fake')bluffSend();});
 
-const ONL=initOnline({app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,setTab:k=>{TAB=k}});
+const ONL=initOnline({app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,avh,avOK,setTab:k=>{TAB=k}});
 window.__ONL=ONL;window.__lgHome=home;
-home();
+profileOk()?home():profileForm(true);
 }
 
 ;boot();
