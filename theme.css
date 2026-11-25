@@ -362,3 +362,19 @@ html,body{background:#efece3!important}
 .lg .opt{border-radius:0}
 .lg .big-emoji.trophy{filter:grayscale(1)}
 .lg .sp{flex:1 1 calc(50% - 6px);min-width:130px}
+
+/* phase A: helpers, qr, host board */
+.hps{display:flex;gap:8px;margin:0 0 10px}
+.hp{flex:1;font:inherit;font-weight:800;font-size:14px;padding:9px 4px;background:#fff;color:#151515;border:3px solid #151515;border-radius:0;box-shadow:3px 3px 0 #151515;cursor:pointer}
+.hp.on{background:#ff4a36}
+.hp:disabled{opacity:.35;box-shadow:none;cursor:default}
+.opt.gone{opacity:.25;text-decoration:line-through}
+.qr{display:flex;flex-direction:column;align-items:center;gap:4px;margin:8px 0;color:#151515}
+.qr img{background:#fff;border:3px solid #151515;padding:4px;image-rendering:pixelated}
+.qr small{font-size:12px}
+.hbw{margin-top:14px}
+.hbo{border:3px solid #151515;background:#fff;padding:10px;box-shadow:4px 4px 0 #151515}
+.hbr{display:flex;gap:8px;margin:8px 0}
+.kx{margin-inline-start:auto;font:inherit;font-weight:900;background:#fff;border:2px solid #151515;color:#151515;width:28px;height:28px;cursor:pointer;padding:0}
+.rbtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.rbtns .btn{flex:1 1 40%;min-width:120px}
