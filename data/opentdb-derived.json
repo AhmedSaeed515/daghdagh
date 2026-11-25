@@ -1,0 +1,2008 @@
+{
+ "license": "CC BY-SA 4.0",
+ "source": "https://opentdb.com",
+ "notice": "Questions adapted from the Open Trivia Database, (c) its contributors, licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). This file and any adaptation of it must stay under CC BY-SA 4.0. The game code is licensed separately.",
+ "questions": [
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه اللون اللي ما ينفعش يطلع في الورد حتى بالتعديل الوراثي؟",
+    "correct": "الأزرق",
+    "wrong": [
+     "الأسود",
+     "البرتقالي",
+     "البني"
+    ]
+   },
+   "en": {
+    "q": "Which color cannot be produced in Roses, even through genetic alteration?",
+    "correct": "Blue",
+    "wrong": [
+     "Black",
+     "Orange",
+     "Brown"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "حزام الكويكبات موجود بين أنهي كوكبين؟",
+    "correct": "المريخ والمشتري",
+    "wrong": [
+     "المشتري وزحل",
+     "عطارد والزهرة",
+     "الأرض والمريخ"
+    ]
+   },
+   "en": {
+    "q": "The asteroid belt is located between which two planets?",
+    "correct": "Mars and Jupiter",
+    "wrong": [
+     "Jupiter and Saturn",
+     "Mercury and Venus",
+     "Earth and Mars"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه أكتر عنصر موجود في الكون؟",
+    "correct": "الهيدروجين",
+    "wrong": [
+     "الهيليوم",
+     "الليثيوم",
+     "الأكسجين"
+    ]
+   },
+   "en": {
+    "q": "Which is the most abundant element in the universe?",
+    "correct": "Hydrogen",
+    "wrong": [
+     "Helium",
+     "Lithium",
+     "Oxygen"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه رمز القصدير في الجدول الدوري؟",
+    "correct": "Sn",
+    "wrong": [
+     "Ti",
+     "Ni",
+     "Na"
+    ]
+   },
+   "en": {
+    "q": "On the periodic table of elements, what is the symbol for Tin?",
+    "correct": "Sn",
+    "wrong": [
+     "Ti",
+     "Ni",
+     "Na"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "الرمز Au في الجدول الدوري بيدل على أنهي عنصر؟",
+    "correct": "الذهب",
+    "wrong": [
+     "الفضة",
+     "الأكسجين",
+     "النيكل"
+    ]
+   },
+   "en": {
+    "q": "Au on the Periodic Table refers to which element?",
+    "correct": "Gold",
+    "wrong": [
+     "Silver",
+     "Oxygen",
+     "Nickel"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 3,
+   "ar": {
+    "q": "أنهي عنصر عدد إلكتروناته 92؟",
+    "correct": "اليورانيوم",
+    "wrong": [
+     "الكبريت",
+     "الهيدروجين",
+     "الحديد"
+    ]
+   },
+   "en": {
+    "q": "What element on the periodic table has 92 electrons?",
+    "correct": "Uranium",
+    "wrong": [
+     "Sulfur",
+     "Hydrogen",
+     "Iron"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام كروموسوم في خلايا جسم الإنسان (عدد الأزواج)؟",
+    "correct": "23 زوج",
+    "wrong": [
+     "21 زوج",
+     "22 زوج",
+     "24 زوج"
+    ]
+   },
+   "en": {
+    "q": "How many chromosomes are in your body cells?",
+    "correct": "23",
+    "wrong": [
+     "21",
+     "22",
+     "24"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه الوحدة الدولية لقياس درجة الحرارة؟",
+    "correct": "كلفن",
+    "wrong": [
+     "فهرنهايت",
+     "سلزيوس",
+     "رانكين"
+    ]
+   },
+   "en": {
+    "q": "What is the standard SI unit for temperature?",
+    "correct": "Kelvin",
+    "wrong": [
+     "Fahrenheit",
+     "Celsius",
+     "Rankine"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي عظمة دي مش موجودة في ذراع الإنسان؟",
+    "correct": "الظنبوب",
+    "wrong": [
+     "العضد",
+     "الزند",
+     "الكعبرة"
+    ]
+   },
+   "en": {
+    "q": "Which of these is NOT a bone found in the human arm?",
+    "correct": "Tibia",
+    "wrong": [
+     "Humerus",
+     "Ulna",
+     "Radius"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "مرض الزهايمر بيصيب أنهي جزء في جسم الإنسان؟",
+    "correct": "المخ",
+    "wrong": [
+     "الرئتين",
+     "الجلد",
+     "القلب"
+    ]
+   },
+   "en": {
+    "q": "Alzheimer's disease primarily affects which part of the human body?",
+    "correct": "Brain",
+    "wrong": [
+     "Lungs",
+     "Skin",
+     "Heart"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "جزء المخ اللي اسمه جه من الكلمة اليونانية لحصان البحر؟",
+    "correct": "الحصين (الهيبوكامبس)",
+    "wrong": [
+     "المخيخ",
+     "المهاد",
+     "اللوزة"
+    ]
+   },
+   "en": {
+    "q": "What part of the brain takes its name from the Greek for seahorse?",
+    "correct": "Hippocampus",
+    "wrong": [
+     "Cerebellum",
+     "Thalamus",
+     "Amygdala"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "كام سن لبني عند الطفل؟",
+    "correct": "20",
+    "wrong": [
+     "10",
+     "15",
+     "25"
+    ]
+   },
+   "en": {
+    "q": "How many baby/milk teeth does a human child have in total?",
+    "correct": "20",
+    "wrong": [
+     "10",
+     "15",
+     "25"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين عالم النفس السويسري المرتبط بمفهوم الانطوائي والانبساطي؟",
+    "correct": "كارل يونج",
+    "wrong": [
+     "جان بياجيه",
+     "أليس ميلر",
+     "هيرمان رورشاخ"
+    ]
+   },
+   "en": {
+    "q": "Which Swiss psychologist is synonymous with the concepts of introvert and extrovert personalities?",
+    "correct": "Carl Jung",
+    "wrong": [
+     "Jean Piaget",
+     "Alice Miller",
+     "Hermann Rorschach"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام ضلع في الشكل السباعي؟",
+    "correct": "7",
+    "wrong": [
+     "8",
+     "6",
+     "5"
+    ]
+   },
+   "en": {
+    "q": "How many sides does a heptagon have?",
+    "correct": "7",
+    "wrong": [
+     "8",
+     "6",
+     "5"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام وجه مربع في المكعب؟",
+    "correct": "6",
+    "wrong": [
+     "4",
+     "8",
+     "10"
+    ]
+   },
+   "en": {
+    "q": "How many square faces does a cube have?",
+    "correct": "6",
+    "wrong": [
+     "4",
+     "8",
+     "10"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين عالم الرياضيات اليوناني اللي جري في شوارع سيراكيوز وهو بيقول \"وجدتها\"؟",
+    "correct": "أرشميدس",
+    "wrong": [
+     "إقليدس",
+     "هوميروس",
+     "إراتوستينس"
+    ]
+   },
+   "en": {
+    "q": "Which greek mathematician ran through the streets of Syracuse naked while shouting \"Eureka\"?",
+    "correct": "Archimedes",
+    "wrong": [
+     "Euclid",
+     "Homer",
+     "Eratosthenes"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه اسم المضلع اللي ليه 9 أضلاع؟",
+    "correct": "التساعي",
+    "wrong": [
+     "السداسي",
+     "الثماني",
+     "السباعي"
+    ]
+   },
+   "en": {
+    "q": "What is the name of a nine sided polygon?",
+    "correct": "Nonagon",
+    "wrong": [
+     "Hexagon",
+     "Octagon",
+     "Heptagon"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي نوع زاوية أكبر من 90 درجة؟",
+    "correct": "منفرجة",
+    "wrong": [
+     "حادة",
+     "قائمة",
+     "مستقيمة"
+    ]
+   },
+   "en": {
+    "q": "What type of angle is greater than 90°?",
+    "correct": "Obtuse",
+    "wrong": [
+     "Acute",
+     "Right",
+     "Straight"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين اللي أثبت نظرية فيرما الأخيرة؟",
+    "correct": "أندرو وايلز",
+    "wrong": [
+     "ليونارد أويلر",
+     "كارل جاوس",
+     "رامانوجان"
+    ]
+   },
+   "en": {
+    "q": "Who proved Fermat's Last Theorem?",
+    "correct": "Andrew Wiles",
+    "wrong": [
+     "Leonhard Euler",
+     "Carl Friedrich Gauss",
+     "Srinivasa Ramanujan"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "كام يساوي الرقم الروماني D؟",
+    "correct": "500",
+    "wrong": [
+     "50",
+     "100",
+     "10"
+    ]
+   },
+   "en": {
+    "q": "What is the Roman numeral for 500?",
+    "correct": "D",
+    "wrong": [
+     "L",
+     "C",
+     "X"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه العدد الأولي اللي بعد 19؟",
+    "correct": "23",
+    "wrong": [
+     "25",
+     "21",
+     "27"
+    ]
+   },
+   "en": {
+    "q": "What prime number comes next after 19?",
+    "correct": "23",
+    "wrong": [
+     "25",
+     "21",
+     "27"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي حرف يوناني بيستخدم للدلالة على الجمع (المجموع)؟",
+    "correct": "سيجما",
+    "wrong": [
+     "دلتا",
+     "ألفا",
+     "أوميجا"
+    ]
+   },
+   "en": {
+    "q": "What Greek letter is used to signify summation?",
+    "correct": "Sigma",
+    "wrong": [
+     "Delta",
+     "Alpha",
+     "Omega"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام درجة في الدائرة الكاملة؟",
+    "correct": "360",
+    "wrong": [
+     "180",
+     "90",
+     "720"
+    ]
+   },
+   "en": {
+    "q": "How many degrees make a full circle?",
+    "correct": "360",
+    "wrong": [
+     "180",
+     "90",
+     "720"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام جانب لشريط موبيوس؟",
+    "correct": "جانب واحد",
+    "wrong": [
+     "جانبين",
+     "3",
+     "4"
+    ]
+   },
+   "en": {
+    "q": "How many sides does a Möbius strip have?",
+    "correct": "1",
+    "wrong": [
+     "2",
+     "3",
+     "4"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام يساوي XL بالأرقام الرومانية؟",
+    "correct": "40",
+    "wrong": [
+     "60",
+     "15",
+     "90"
+    ]
+   },
+   "en": {
+    "q": "In Roman Numerals, what does XL equate to?",
+    "correct": "40",
+    "wrong": [
+     "60",
+     "15",
+     "90"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "sci",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام الجذر التربيعي لـ49؟",
+    "correct": "7",
+    "wrong": [
+     "4",
+     "12",
+     "9"
+    ]
+   },
+   "en": {
+    "q": "What's the square root of 49?",
+    "correct": "7",
+    "wrong": [
+     "4",
+     "12",
+     "9"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين إله الخمر عند اليونان القدماء؟",
+    "correct": "ديونيسوس",
+    "wrong": [
+     "هيفايستوس",
+     "ديميتر",
+     "أبولو"
+    ]
+   },
+   "en": {
+    "q": "In Greek mythology, who is the god of wine?",
+    "correct": "Dionysus",
+    "wrong": [
+     "Hephaestus",
+     "Demeter",
+     "Apollo"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام رأس لكلب الجحيم سيربيروس؟",
+    "correct": "3",
+    "wrong": [
+     "2",
+     "1",
+     "5"
+    ]
+   },
+   "en": {
+    "q": "How many heads does Cerberus have?",
+    "correct": "3",
+    "wrong": [
+     "2",
+     "1",
+     "5"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 2,
+   "ar": {
+    "q": "المينوتور نصه إنسان ونصه إيه؟",
+    "correct": "ثور",
+    "wrong": [
+     "بقرة",
+     "حصان",
+     "نسر"
+    ]
+   },
+   "en": {
+    "q": "A minotaur is half human half what?",
+    "correct": "Bull",
+    "wrong": [
+     "Cow",
+     "Horse",
+     "Eagle"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين اللي قتل أخيل في الأساطير اليونانية؟",
+    "correct": "باريس",
+    "wrong": [
+     "هيكتور",
+     "هيلين",
+     "بريكليس"
+    ]
+   },
+   "en": {
+    "q": "In Greek Mythology, who killed Achilles?",
+    "correct": "Paris",
+    "wrong": [
+     "Hector",
+     "Helen",
+     "Pericles"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 3,
+   "ar": {
+    "q": "مين بنت الملك مينوس؟",
+    "correct": "أريادني",
+    "wrong": [
+     "أثينا",
+     "آرييل",
+     "ألانا"
+    ]
+   },
+   "en": {
+    "q": "In Greek Mythology, who was the daughter of King Minos?",
+    "correct": "Ariadne",
+    "wrong": [
+     "Athena",
+     "Ariel",
+     "Alana"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه نقطة الضعف عند أخيل؟",
+    "correct": "الكعب",
+    "wrong": [
+     "الرقبة",
+     "الضهر",
+     "السمانة"
+    ]
+   },
+   "en": {
+    "q": "What weakpoint of Achilles was exploited by the Trojan prince, Paris?",
+    "correct": "Heel",
+    "wrong": [
+     "Neck",
+     "Back",
+     "Calf"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين ملك الآلهة عند اليونان القدماء؟",
+    "correct": "زيوس",
+    "wrong": [
+     "أبولو",
+     "هيرميس",
+     "بوسيدون"
+    ]
+   },
+   "en": {
+    "q": "Who was the King of Gods in Ancient Greek mythology?",
+    "correct": "Zeus",
+    "wrong": [
+     "Apollo",
+     "Hermes",
+     "Poseidon"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي مخلوق أسطوري نصه إنسان ونصه حصان؟",
+    "correct": "القنطور",
+    "wrong": [
+     "المينوتور",
+     "بيجاسوس",
+     "الجورجون"
+    ]
+   },
+   "en": {
+    "q": "Which of these mythological creatures is said to be half-man and half-horse?",
+    "correct": "Centaur",
+    "wrong": [
+     "Minotaur",
+     "Pegasus",
+     "Gorgon"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 2,
+   "ar": {
+    "q": "في الأساطير الأفريقية، أنانسي المحتال بيتشكل على شكل أنهي حيوان؟",
+    "correct": "عنكبوت",
+    "wrong": [
+     "كلب بري",
+     "قرد",
+     "تمساح"
+    ]
+   },
+   "en": {
+    "q": "In African mythology, Anansi is a trickster who takes the shape of which animal?",
+    "correct": "Spider",
+    "wrong": [
+     "Wild dog",
+     "Monkey",
+     "Crocodile"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 2,
+   "ar": {
+    "q": "في الأسطورة المصرية، مين قتل أوزوريس؟",
+    "correct": "ست",
+    "wrong": [
+     "حورس",
+     "رع",
+     "أنهور"
+    ]
+   },
+   "en": {
+    "q": "According to the Egyptian Myth of Osiris, who murdered Osiris?",
+    "correct": "Set",
+    "wrong": [
+     "Horus",
+     "Ra",
+     "Anhur"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 2,
+   "ar": {
+    "q": "برسيفوني لازم ترجع للعالم السفلي عشان أكلت أنهي حبوب؟",
+    "correct": "الرمان",
+    "wrong": [
+     "عباد الشمس",
+     "البرتقال",
+     "التين"
+    ]
+   },
+   "en": {
+    "q": "In Greek mythology, Persephone must return to the underworld because she had eaten what kind of seeds?",
+    "correct": "Pomegranate",
+    "wrong": [
+     "Sunflower",
+     "Orange",
+     "Fig"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "رمز \"عنخ\" في الهيروغليفية المصرية معناه إيه؟",
+    "correct": "الحياة",
+    "wrong": [
+     "الحب",
+     "الكره",
+     "السم"
+    ]
+   },
+   "en": {
+    "q": "An Ankh is the Egyptian Hieroglyph for what?",
+    "correct": "Life",
+    "wrong": [
+     "Love",
+     "Hatred",
+     "Poison"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين زوجة زيوس في معظم الروايات؟",
+    "correct": "هيرا",
+    "wrong": [
+     "أفروديت",
+     "أثينا",
+     "هيستيا"
+    ]
+   },
+   "en": {
+    "q": "In most traditions, who was the wife of Zeus?",
+    "correct": "Hera",
+    "wrong": [
+     "Aphrodite",
+     "Athena",
+     "Hestia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين اللي نزل للعالم السفلي عشان يرجّع زوجته يوريديس؟",
+    "correct": "أورفيوس",
+    "wrong": [
+     "هرقل",
+     "برسيوس",
+     "ديدالوس"
+    ]
+   },
+   "en": {
+    "q": "Which figure from Greek mythology traveled to the underworld to return his wife Eurydice?",
+    "correct": "Orpheus",
+    "wrong": [
+     "Hercules",
+     "Perseus",
+     "Daedalus"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين قاد الأرجونوتس للبحث عن الجزة الذهبية؟",
+    "correct": "جايسون",
+    "wrong": [
+     "كاستور",
+     "ديدالوس",
+     "أوديسيوس"
+    ]
+   },
+   "en": {
+    "q": "Who led the Argonauts in search of the Golden Fleece?",
+    "correct": "Jason",
+    "wrong": [
+     "Castor",
+     "Daedalus",
+     "Odysseus"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "my",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين إله النار عند الرومان؟",
+    "correct": "فولكان",
+    "wrong": [
+     "أبولو",
+     "جوبيتر",
+     "ميركوري"
+    ]
+   },
+   "en": {
+    "q": "Who was the Roman god of fire?",
+    "correct": "Vulcan",
+    "wrong": [
+     "Apollo",
+     "Jupiter",
+     "Mercury"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "جيانا موجودة في أنهي قارة؟",
+    "correct": "أمريكا الجنوبية",
+    "wrong": [
+     "أفريقيا",
+     "أمريكا الشمالية",
+     "آسيا"
+    ]
+   },
+   "en": {
+    "q": "Guyana is in which continent?",
+    "correct": "South America",
+    "wrong": [
+     "Africa",
+     "North America",
+     "Asia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه أكبر بحيرة في قارة أفريقيا؟",
+    "correct": "بحيرة فيكتوريا",
+    "wrong": [
+     "بحيرة تنجانيقا",
+     "بحيرة ملاوي",
+     "بحيرة توركانا"
+    ]
+   },
+   "en": {
+    "q": "What is the largest lake in the African continent?",
+    "correct": "Lake Victoria",
+    "wrong": [
+     "Lake Tanganyika",
+     "Lake Malawi",
+     "Lake Turkana"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 3,
+   "ar": {
+    "q": "نهر الأردن بيصب في أنهي بحر؟",
+    "correct": "البحر الميت",
+    "wrong": [
+     "بحر آرال",
+     "بحر قزوين",
+     "بحيرة سالتون"
+    ]
+   },
+   "en": {
+    "q": "Into which basin does the Jordan River flow into?",
+    "correct": "Dead Sea",
+    "wrong": [
+     "Aral Sea",
+     "Caspian Sea",
+     "Salton Sea"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه خامس أكبر دولة في العالم من حيث المساحة؟",
+    "correct": "البرازيل",
+    "wrong": [
+     "أمريكا",
+     "أستراليا",
+     "الهند"
+    ]
+   },
+   "en": {
+    "q": "What is the fifth largest country by area?",
+    "correct": "Brazil",
+    "wrong": [
+     "United States",
+     "Australia",
+     "India"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه عاصمة جامايكا؟",
+    "correct": "كينجستون",
+    "wrong": [
+     "سان خوان",
+     "بورت أو برنس",
+     "بريدجتاون"
+    ]
+   },
+   "en": {
+    "q": "What is the capital of Jamaica?",
+    "correct": "Kingston",
+    "wrong": [
+     "San Juan",
+     "Port-au-Prince",
+     "Bridgetown"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "كوالالمبور عاصمة أنهي دولة؟",
+    "correct": "ماليزيا",
+    "wrong": [
+     "إندونيسيا",
+     "سنغافورة",
+     "تايلاند"
+    ]
+   },
+   "en": {
+    "q": "Kuala Lumpur is the capital of which country?",
+    "correct": "Malaysia",
+    "wrong": [
+     "Indonesia",
+     "Singapore",
+     "Thailand"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه عاصمة البرازيل؟",
+    "correct": "برازيليا",
+    "wrong": [
+     "ريو دي جانيرو",
+     "ساو باولو",
+     "كوريتيبا"
+    ]
+   },
+   "en": {
+    "q": "What is the capital of Brazil?",
+    "correct": "Brasilia",
+    "wrong": [
+     "Rio de Janeiro",
+     "Sao Paulo",
+     "Curitiba"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي مدينة أوروبية بتتسمى \"مدينة النور\"؟",
+    "correct": "باريس",
+    "wrong": [
+     "روما",
+     "لندن",
+     "مدريد"
+    ]
+   },
+   "en": {
+    "q": "Which European city is known as the \"City of Light\"?",
+    "correct": "Paris",
+    "wrong": [
+     "Rome",
+     "London",
+     "Madrid"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "نهر الفولجا موجود في أنهي دولة؟",
+    "correct": "روسيا",
+    "wrong": [
+     "بلغاريا",
+     "الهند",
+     "السويد"
+    ]
+   },
+   "en": {
+    "q": "Where is the Volga River?",
+    "correct": "Russia",
+    "wrong": [
+     "Bulgaria",
+     "India",
+     "Sweden"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه عاصمة جرينلاند؟",
+    "correct": "نوك",
+    "wrong": [
+     "سيسيميوت",
+     "نارساق",
+     "مانيتسوق"
+    ]
+   },
+   "en": {
+    "q": "What is the capital of Greenland?",
+    "correct": "Nuuk",
+    "wrong": [
+     "Sisimiut",
+     "Narsaq",
+     "Maniitsoq"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه عاصمة الدنمارك؟",
+    "correct": "كوبنهاجن",
+    "wrong": [
+     "آرهوس",
+     "أودنسه",
+     "آلبورج"
+    ]
+   },
+   "en": {
+    "q": "What is the capital of Denmark?",
+    "correct": "Copenhagen",
+    "wrong": [
+     "Aarhus",
+     "Odense",
+     "Aalborg"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه عاصمة إستونيا؟",
+    "correct": "تالين",
+    "wrong": [
+     "هلسنكي",
+     "تارتو",
+     "ريجا"
+    ]
+   },
+   "en": {
+    "q": "What is the capital of Estonia?",
+    "correct": "Tallinn",
+    "wrong": [
+     "Helsinki",
+     "Tartu",
+     "Riga"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه لون الدايرة في علم اليابان؟",
+    "correct": "أحمر",
+    "wrong": [
+     "أبيض",
+     "أصفر",
+     "أسود"
+    ]
+   },
+   "en": {
+    "q": "What colour is the circle on the Japanese flag?",
+    "correct": "Red",
+    "wrong": [
+     "White",
+     "Yellow",
+     "Black"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي قارة بتعتبر الأكبر والأكتر سكانًا في العالم؟",
+    "correct": "آسيا",
+    "wrong": [
+     "أفريقيا",
+     "أوروبا",
+     "أمريكا الشمالية"
+    ]
+   },
+   "en": {
+    "q": "Which continent is considered the largest and most populous continent in the world?",
+    "correct": "Asia",
+    "wrong": [
+     "Africa",
+     "Europe",
+     "North America"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي منطقة في شرق أوروبا مشهورة بقصص مصاصي الدماء؟",
+    "correct": "ترانسيلفانيا",
+    "wrong": [
+     "سيليزيا",
+     "مقدونيا",
+     "سلوفاكيا"
+    ]
+   },
+   "en": {
+    "q": "Which area of Eastern Europe is famous for its association with vampires?",
+    "correct": "Transylvania",
+    "wrong": [
+     "Silesia",
+     "Macedonia",
+     "Slovakia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه اسم الأراضي اللي بتقوم عليها تركيا الحديثة؟",
+    "correct": "الأناضول",
+    "wrong": [
+     "برزخ العثمانيين",
+     "العثمانية",
+     "برزخ الأناضول"
+    ]
+   },
+   "en": {
+    "q": "The land mass of modern day Turkey is called what?",
+    "correct": "Anatolia",
+    "wrong": [
+     "Isthmus of Ottoman",
+     "Ottoman",
+     "Isthmus of Anatolia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "geo",
+   "difficulty": 3,
+   "ar": {
+    "q": "أنهي دولة مش موجودة في أفريقيا؟",
+    "correct": "جيانا",
+    "wrong": [
+     "السنغال",
+     "ليبيريا",
+     "الصومال"
+    ]
+   },
+   "en": {
+    "q": "Which is not a country in Africa?",
+    "correct": "Guyana",
+    "wrong": [
+     "Senegal",
+     "Liberia",
+     "Somalia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 3,
+   "ar": {
+    "q": "الثورة الفرنسية بدأت في أنهي سنة؟",
+    "correct": "1789",
+    "wrong": [
+     "1823",
+     "1756",
+     "1799"
+    ]
+   },
+   "en": {
+    "q": "When did the French Revolution begin?",
+    "correct": "1789",
+    "wrong": [
+     "1823",
+     "1756",
+     "1799"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي دولة فضلت محايدة في الحرب العالمية التانية؟",
+    "correct": "سويسرا",
+    "wrong": [
+     "بريطانيا",
+     "فرنسا",
+     "إيطاليا"
+    ]
+   },
+   "en": {
+    "q": "Which of these countries remained neutral during World War II?",
+    "correct": "Switzerland",
+    "wrong": [
+     "United Kingdom",
+     "France",
+     "Italy"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "الحادثة النووية في أوكرانيا سنة 1986 حصلت في أنهي محطة؟",
+    "correct": "تشرنوبل",
+    "wrong": [
+     "إجنالينا",
+     "مايك",
+     "كورسك"
+    ]
+   },
+   "en": {
+    "q": "The catastrophic nuclear accident in Ukraine in 1986 occurred at which power plant?",
+    "correct": "Chernobyl",
+    "wrong": [
+     "Ignalina",
+     "Mayak",
+     "Kursk"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "تمثال الحرية اتصنع في أنهي دولة وبعدين اتشحن لأمريكا؟",
+    "correct": "فرنسا",
+    "wrong": [
+     "ألمانيا",
+     "إسبانيا",
+     "إنجلترا"
+    ]
+   },
+   "en": {
+    "q": "In which country was the Statue of Liberty built and exported to the United States?",
+    "correct": "France",
+    "wrong": [
+     "Germany",
+     "Spain",
+     "England"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي دولة حصلت فيها \"الثورة البرتقالية\" بين 2004 و2005؟",
+    "correct": "أوكرانيا",
+    "wrong": [
+     "بيلاروسيا",
+     "لاتفيا",
+     "ليتوانيا"
+    ]
+   },
+   "en": {
+    "q": "Which country had an \"Orange Revolution\" between 2004 and 2005?",
+    "correct": "Ukraine",
+    "wrong": [
+     "Belarus",
+     "Latvia",
+     "Lithuania"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين الفيلسوف اليوناني المرتبط بعبارة \"أنا أعرف إني ما أعرفش حاجة\"؟",
+    "correct": "سقراط",
+    "wrong": [
+     "أرسطو",
+     "أفلاطون",
+     "فيثاغورس"
+    ]
+   },
+   "en": {
+    "q": "With which Greek philosopher would you associate the phrase \"I know that I know nothing\"?",
+    "correct": "Socrates",
+    "wrong": [
+     "Aristotle",
+     "Plato",
+     "Pythagoras"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "معركة هاستينجز حصلت في أنهي سنة؟",
+    "correct": "1066",
+    "wrong": [
+     "911",
+     "1204",
+     "1420"
+    ]
+   },
+   "en": {
+    "q": "The Battle of Hastings was fought in which year?",
+    "correct": "1066",
+    "wrong": [
+     "911",
+     "1204",
+     "1420"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "الحرب العالمية الأولى بدأت في أنهي سنة؟",
+    "correct": "1914",
+    "wrong": [
+     "1905",
+     "1919",
+     "1925"
+    ]
+   },
+   "en": {
+    "q": "What year did World War I begin?",
+    "correct": "1914",
+    "wrong": [
+     "1905",
+     "1919",
+     "1925"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "في أنهي سجن اتحبس هتلر سنة 1924؟",
+    "correct": "سجن لاندسبيرج",
+    "wrong": [
+     "سجن شبانداو",
+     "دير إيبراخ",
+     "هوهنأسبرج"
+    ]
+   },
+   "en": {
+    "q": "In what prison was Adolf Hitler held in 1924?",
+    "correct": "Landsberg Prison",
+    "wrong": [
+     "Spandau Prison",
+     "Ebrach Abbey",
+     "Hohenasperg"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي حضارة أمريكية ارتبطت بتوقع نهاية العالم في ديسمبر 2012؟",
+    "correct": "المايا",
+    "wrong": [
+     "الإنكا",
+     "الأزتك",
+     "النافاجو"
+    ]
+   },
+   "en": {
+    "q": "Which American civilization is the source of the belief that the world would end in December 2012?",
+    "correct": "The Mayans",
+    "wrong": [
+     "The Incas",
+     "The Aztecs",
+     "The Navajos"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 2,
+   "ar": {
+    "q": "كام بطولة دوري إنجليزي ممتاز كسب السير أليكس فيرجسون مع مانشستر يونايتد؟",
+    "correct": "13",
+    "wrong": [
+     "11",
+     "20",
+     "22"
+    ]
+   },
+   "en": {
+    "q": "How many premier league trophies did Sir Alex Ferguson win during his time at Manchester United?",
+    "correct": "13",
+    "wrong": [
+     "11",
+     "20",
+     "22"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي دولة استضافت كأس العالم 2022؟",
+    "correct": "قطر",
+    "wrong": [
+     "أوغندا",
+     "فيتنام",
+     "بوليفيا"
+    ]
+   },
+   "en": {
+    "q": "Which country hosted the 2022 FIFA World Cup?",
+    "correct": "Qatar",
+    "wrong": [
+     "Uganda",
+     "Vietnam",
+     "Bolivia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين كسب دوري أبطال أوروبا سنة 2016؟",
+    "correct": "ريال مدريد",
+    "wrong": [
+     "بايرن ميونخ",
+     "أتلتيكو مدريد",
+     "مانشستر سيتي"
+    ]
+   },
+   "en": {
+    "q": "Who won the UEFA Champions League in 2016?",
+    "correct": "Real Madrid C.F.",
+    "wrong": [
+     "FC Bayern Munich",
+     "Atletico Madrid",
+     "Manchester City F.C."
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 1,
+   "ar": {
+    "q": "ستيفن جيرارد كسب دوري الأبطال مع أنهي فريق؟",
+    "correct": "ليفربول",
+    "wrong": [
+     "ريال مدريد",
+     "تشيلسي",
+     "مانشستر سيتي"
+    ]
+   },
+   "en": {
+    "q": "Who did Steven Gerrard win the Champions League with?",
+    "correct": "Liverpool",
+    "wrong": [
+     "Real Madrid",
+     "Chelsea",
+     "Man City"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي منتخب كسب كأس العالم 2018 في روسيا؟",
+    "correct": "فرنسا",
+    "wrong": [
+     "كرواتيا",
+     "بلجيكا",
+     "إنجلترا"
+    ]
+   },
+   "en": {
+    "q": "Which country won the 2018 FIFA World Cup hosted in Russia?",
+    "correct": "France",
+    "wrong": [
+     "Croatia",
+     "Belgium",
+     "England"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 1,
+   "ar": {
+    "q": "ملعب الاتحاد (الاتحاد) هو ملعب أنهي فريق؟",
+    "correct": "مانشستر سيتي",
+    "wrong": [
+     "مانشستر يونايتد",
+     "آرسنال",
+     "بلاكبول"
+    ]
+   },
+   "en": {
+    "q": "Etihad Stadium is the home stadium for which team?",
+    "correct": "Manchester City",
+    "wrong": [
+     "Manchester United",
+     "Arsenal",
+     "Blackpool"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين كسب الدوري الإنجليزي موسم 2015-2016؟",
+    "correct": "ليستر سيتي",
+    "wrong": [
+     "ليفربول",
+     "تشيلسي",
+     "مانشستر يونايتد"
+    ]
+   },
+   "en": {
+    "q": "Which team won the 2015-16 English Premier League?",
+    "correct": "Leicester City",
+    "wrong": [
+     "Liverpool",
+     "Chelsea",
+     "Manchester United"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 1,
+   "ar": {
+    "q": "كانت نتيجة مباراة البرازيل وألمانيا في كأس العالم 2014؟",
+    "correct": "1-7",
+    "wrong": [
+     "1-5",
+     "1-6",
+     "2-6"
+    ]
+   },
+   "en": {
+    "q": "In the 2014 FIFA World Cup, what was the final score in the match Brazil - Germany?",
+    "correct": "1-7",
+    "wrong": [
+     "1-5",
+     "1-6",
+     "2-6"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 3,
+   "ar": {
+    "q": "أنهي فريق إنجليزي لقبه \"النمور\"؟",
+    "correct": "هال سيتي",
+    "wrong": [
+     "كارديف سيتي",
+     "بريستول سيتي",
+     "مانشستر سيتي"
+    ]
+   },
+   "en": {
+    "q": "Which English football team is nicknamed 'The Tigers'?",
+    "correct": "Hull City",
+    "wrong": [
+     "Cardiff City",
+     "Bristol City",
+     "Manchester City"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 3,
+   "ar": {
+    "q": "مين أكتر لاعب لعب مباريات مع مانشستر يونايتد؟",
+    "correct": "راين جيجز",
+    "wrong": [
+     "ديفيد بيكهام",
+     "واين روني",
+     "إريك كانتونا"
+    ]
+   },
+   "en": {
+    "q": "Who is Manchester United's leading appearance maker?",
+    "correct": "Ryan Giggs",
+    "wrong": [
+     "David Beckham",
+     "Wayne Rooney",
+     "Eric Cantona"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين أول لاعب سجل 200 هدف في الدوري الإنجليزي الممتاز؟",
+    "correct": "آلان شيرر",
+    "wrong": [
+     "واين روني",
+     "روبي فاولر",
+     "تييري هنري"
+    ]
+   },
+   "en": {
+    "q": "Who was the first footballer to score 200 goals in the English Premier League?",
+    "correct": "Alan Shearer",
+    "wrong": [
+     "Wayne Rooney",
+     "Robbie Fowler",
+     "Thierry Henry"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "fb",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين هداف مانشستر يونايتد التاريخي في الدوري الإنجليزي الممتاز؟",
+    "correct": "واين روني",
+    "wrong": [
+     "السير بوبي تشارلتون",
+     "راين جيجز",
+     "ديفيد بيكهام"
+    ]
+   },
+   "en": {
+    "q": "Who is Manchester United's top premier league goal scorer?",
+    "correct": "Wayne Rooney",
+    "wrong": [
+     "Sir Bobby Charlton",
+     "Ryan Giggs",
+     "David Beckham"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ol",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه اسم \"العصاية\" اللي بتتضرب بيها الكورة البيضا في السنوكر؟",
+    "correct": "الكيو",
+    "wrong": [
+     "مضرب",
+     "عصاية بيسبول",
+     "مطرقة"
+    ]
+   },
+   "en": {
+    "q": "What is the name of the \"tool\" used to hit the white ball in snooker or billiards?",
+    "correct": "Cue",
+    "wrong": [
+     "Racquet",
+     "Bat",
+     "Mallet"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ol",
+   "difficulty": 2,
+   "ar": {
+    "q": "بيتقال على أنهي رياضة \"رياضة الملوك\"؟",
+    "correct": "سباق الخيل",
+    "wrong": [
+     "الشطرنج",
+     "المبارزة بالرماح",
+     "المبارزة بالسيف"
+    ]
+   },
+   "en": {
+    "q": "What is \"The Sport of Kings\"?",
+    "correct": "Horse Racing",
+    "wrong": [
+     "Chess",
+     "Jousting",
+     "Fencing"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ol",
+   "difficulty": 2,
+   "ar": {
+    "q": "كام مرة كسب بيورن بورج بطولة فرنسا المفتوحة للتنس؟",
+    "correct": "6",
+    "wrong": [
+     "4",
+     "9",
+     "2"
+    ]
+   },
+   "en": {
+    "q": "How many French Open's did Björn Borg win?",
+    "correct": "6",
+    "wrong": [
+     "4",
+     "9",
+     "2"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ol",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي لعبة من دول مش في العشاري الأولمبي للرجال؟",
+    "correct": "رمي المطرقة",
+    "wrong": [
+     "القفز بالزانة",
+     "الوثب الطويل",
+     "رمي الجلة"
+    ]
+   },
+   "en": {
+    "q": "Which of these track-and-field events is NOT included in the Olympic men's decathlon?",
+    "correct": "Hammer throw",
+    "wrong": [
+     "Pole vault",
+     "Long jump",
+     "Shot put"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ol",
+   "difficulty": 2,
+   "ar": {
+    "q": "أولمبياد سوتشي الشتوي 2014 اتعمل في أنهي دولة؟",
+    "correct": "روسيا",
+    "wrong": [
+     "كوريا الجنوبية",
+     "النرويج",
+     "كندا"
+    ]
+   },
+   "en": {
+    "q": "In what country were the 2014 Winter Olympics held in the town of Sochi?",
+    "correct": "Russia",
+    "wrong": [
+     "South Korea",
+     "Norway",
+     "Canada"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة سيارات كسبت سباق لومان 24 ساعة سنة 2016؟",
+    "correct": "بورشه",
+    "wrong": [
+     "تويوتا",
+     "أودي",
+     "فيراري"
+    ]
+   },
+   "en": {
+    "q": "Which car manufacturer won the 2016 24 Hours of Le Mans?",
+    "correct": "Porsche",
+    "wrong": [
+     "Toyota",
+     "Audi",
+     "Ferrari"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  }
+ ]
+}
