@@ -6,7 +6,7 @@
 <title>ذكاء أرينا | لعبة الأسئلة والألغاز</title>
 <meta name="description" content="لعبة أسئلة وألغاز بالمصري: حوالي ٧٠٠ سؤال في ٣٢ تصنيف، ولعب أونلاين مع صحابك كل واحد من موبايله">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#05060f">
+<meta name="theme-color" content="#150b2e">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -787,7 +787,7 @@ const rid=n=>Array.from({length:n},()=>ALPH[Math.floor(Math.random()*ALPH.length
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const ME={id:rid(8),name:''};
 const LIM={q:20,wr:45,vt:30,rv:7};
-let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:Object.keys(CATS),diff:0,n:10};
+let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:Object.keys(CATS),diff:0,n:10,maxP:8,appr:false};
 let joinTries=0,joinT=null,lastSt=0;
 
 // ---------- transport ----------
@@ -829,14 +829,15 @@ function leave(quiet){
   S=null;H=null;room=null;mine={};
 }
 function lobbyView(){
+  X.setTab&&X.setTab('online');
   shell(`<div class="panel center"><div class="big-emoji">🌐</div><h2>لعب أونلاين</h2><p>كل واحد بموبايله. واحد يعمل غرفة ويدّي الكود لصحابه، وهما يدخلوا بنفس الكود.</p>
-  <h3>اسمك</h3><input id="oname" maxlength="14" value="${esc(ME.name)}" placeholder="اكتب اسمك">
+  <h3>اسمك</h3><input id="oname" maxlength="14" value="${esc(ME.name||X.store.get('myname',''))}" placeholder="اكتب اسمك">
   <div id="omsg" class="warn">${esc(msg)}</div>
   <button class="btn big" data-o="create">🎮 اعمل غرفة جديدة</button>
   <h3>أو ادخل غرفة صاحبك</h3><input id="ocode" maxlength="5" placeholder="كود الغرفة" style="text-align:center;letter-spacing:6px;text-transform:uppercase">
-  <button class="btn ghost" data-o="join">ادخل الغرفة</button></div>`);
+  <button class="btn ghost" data-o="join">ادخل الغرفة</button></div>`,{title:'أونلاين',nav:true});
 }
-function readName(){const v=(document.getElementById('oname')||{}).value||'';ME.name=v.trim().slice(0,14);return ME.name;}
+function readName(){const v=(document.getElementById('oname')||{}).value||'';ME.name=v.trim().slice(0,14);if(ME.name)X.store.set('myname',ME.name);return ME.name;}
 function warn(t){msg=t;const e=document.getElementById('omsg');if(e)e.textContent=t;}
 
 async function create(){
@@ -846,7 +847,7 @@ async function create(){
   if(idx<0)return warn('معرفتش أوصل لخدمة الاتصال دلوقتي. جرّب تاني بعد شوية.');
   const code=(idx+1)+rid(4);
   room={code,host:true};
-  H={players:[{id:ME.id,name:ME.name,score:0,right:0}],cfg:{...lobbyCfg,cats:lobbyCfg.cats.slice()},r:0,ph:'lobby',seq:0,items:[],ans:{},fakes:{},votes:{},opts:[],owners:[],right:-1,ends:0};
+  H={players:[{id:ME.id,name:ME.name,score:0,right:0}],pending:[],cfg:{...lobbyCfg,cats:lobbyCfg.cats.slice()},r:0,ph:'lobby',seq:0,items:[],ans:{},fakes:{},votes:{},opts:[],owners:[],right:-1,ends:0};
   NET=connect(code);
   hostTimer=setInterval(hostTick,300);
   hostBroadcast();
@@ -856,12 +857,12 @@ function join(){
   const code=((document.getElementById('ocode')||{}).value||'').trim().toUpperCase();
   if(!/^[1-3][A-Z2-9]{4}$/.test(code))return warn('الكود لازم يكون 5 حروف وأرقام زي 1K7QZ');
   room={code,host:false};NET=connect(code);joinTries=0;lastSt=0;
-  shell(`<div class="panel center"><div class="big-emoji">⏳</div><h2>بدخّلك الغرفة ${esc(code)}...</h2><p>لو اتأخر، اتأكد من الكود ومن إن صاحب الغرفة فاتح اللعبة.</p><button class="btn ghost" data-o="leave">رجوع</button></div>`);
+  shell(`<div class="panel center"><div class="big-emoji">⏳</div><h2>بدخّلك الغرفة ${esc(code)}...</h2><p>لو اتأخر، يمكن صاحب الغرفة بيراجع طلبات الانضمام، أو اتأكد من الكود وإنه فاتح اللعبة.</p><button class="btn ghost" data-o="leave">رجوع</button></div>`);
   sendJoin();
 }
 function sendJoin(){
   if(!room||room.host||S)return;
-  if(joinTries++>=8){leave();msg='الغرفة مردتش. اتأكد من الكود وإن صاحبها لسه فاتح اللعبة.';return lobbyView();}
+  if(joinTries++>=15){leave();msg='الغرفة مردتش. اتأكد من الكود وإن صاحبها لسه فاتح اللعبة.';return lobbyView();}
   NET.send({t:'join',id:ME.id,name:ME.name});
   joinT=setTimeout(sendJoin,4000);
 }
@@ -914,7 +915,8 @@ function hostJoin(m){
   let p=h.players.find(x=>x.id===m.id);
   if(p){hostBroadcast();return;}
   if(h.ph!=='lobby'){NET.send({t:'kick',to:m.id,why:'اللعبة بدأت بالفعل في الغرفة دي.'});return;}
-  if(h.players.length>=8){NET.send({t:'kick',to:m.id,why:'الغرفة مليانة (8 لاعبين).'});return;}
+  if(h.players.length>=h.cfg.maxP){NET.send({t:'kick',to:m.id,why:'الغرفة مليانة ('+h.cfg.maxP+' لاعبين).'});return;}
+  if(h.cfg.appr){if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:String(m.name).slice(0,14)});view();}return;}
   let nm=String(m.name).slice(0,14),k=2;while(h.players.some(x=>x.name===nm))nm=String(m.name).slice(0,12)+' '+k++;
   h.players.push({id:m.id,name:nm,score:0,right:0});
   hostBroadcast();
@@ -1023,12 +1025,15 @@ function view(){
 function lobbyRoom(host){
   const c=lobbyCfg,hc=H?H.cfg:c;
   const cfgHtml=host?`<h3>نوع اللعب</h3><div class="chips"><button class="chip ${hc.mode==='classic'?'on':''}" data-o="mode" data-v="classic">🎯 سباق إجابات</button><button class="chip ${hc.mode==='bluff'?'on':''}" data-o="mode" data-v="bluff">🎭 بلوف</button></div>
-  <h3>التصنيفات (${hc.cats.length})</h3><div class="chips"><button class="chip" data-o="catall">الكل</button>${Object.entries(CATS).map(([k,v])=>`<button class="chip ${hc.cats.includes(k)?'on':''}" data-o="cat" data-v="${k}">${v}</button>`).join('')}</div>
+  <h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${hc.cats.length} من ${Object.keys(CATS).length} فئة مختارة</span><button class="btn sm ghost" data-o="cats">تعديل</button></div>
   <h3>المستوى</h3><div class="chips">${[[0,'مختلط'],[1,'سهل'],[2,'متوسط'],[3,'صعب']].map(([d,l])=>`<button class="chip ${hc.diff===d?'on':''}" data-o="diff" data-v="${d}">${l}</button>`).join('')}</div>
-  <h3>عدد الأسئلة</h3><div class="chips">${[5,10,15,20].map(n=>`<button class="chip ${hc.n===n?'on':''}" data-o="rounds" data-v="${n}">${n}</button>`).join('')}</div>`
-  :`<p class="center">${S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات'} • ${S.n} سؤال • ${S.cats.length} تصنيف</p>`;
+  <h3>عدد الأسئلة</h3><div class="srow"><span class="lb"><span class="e">🔁</span>الجولات</span><span class="stepper"><button data-o="rminus">−</button><b>${hc.n}</b><button data-o="rplus">+</button></span></div>
+  <div class="srow"><span class="lb"><span class="e">👥</span>الحد الأقصى للاعبين</span><span class="stepper"><button data-o="mp" data-v="-1">−</button><b>${hc.maxP}</b><button data-o="mp" data-v="1">+</button></span></div>
+  <h3>مين يقدر ينضم؟</h3><div class="seg" style="width:100%"><button class="${hc.appr?'':'on'}" data-o="appr" data-v="0" style="flex:1">أي حد معاه الكود</button><button class="${hc.appr?'on':''}" data-o="appr" data-v="1" style="flex:1">بموافقتي 🔒</button></div>`
+  :`<p class="center">${S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات'} • ${S.n} سؤال • ${S.cats.length} فئة</p>`;
   shell(`<div class="panel center"><p style="margin:0;color:var(--mut)">كود الغرفة</p><div class="code">${esc(S.code)}</div><p style="margin:4px 0 0">ادّي الكود لصحابك، وهما يدخلوا من "لعب أونلاين" ويكتبوه.</p>
   <h3>اللاعبين (${S.pl.length})</h3><div class="rank">${S.pl.map((p,i)=>`<div class="rk"><span>${esc(p.n)}${p.i===ME.id?' (أنت)':''}</span><span>${i===0?'👑 صاحب الغرفة':'✅ جاهز'}</span></div>`).join('')}</div>
+  ${host&&H.pending.length?`<h3>طلبات انضمام 🙋</h3><div class="rank">${H.pending.map(p=>`<div class="rk pend"><span>${esc(p.name)}</span><span style="display:flex;gap:6px"><button class="btn sm" data-o="ok" data-v="${p.id}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${p.id}">رفض</button></span></div>`).join('')}</div>`:''}
   ${cfgHtml}
   ${host?`<div class="warn">${S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':''}</div><button class="btn big" data-o="start" ${S.pl.length<2?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
   <button class="btn ghost" data-o="leave">خروج</button></div>`);
@@ -1062,6 +1067,12 @@ document.addEventListener('click',e=>{
     case 'start':return hostStart();
     case 'again':{const h=H;h.ph='lobby';h.r=0;h.items=[];h.ends=0;h.players.forEach(p=>{p.score=0;p.right=0});return hostBroadcast();}
     case 'mode':H.cfg.mode=v;return hostBroadcast();
+    case 'rminus':case 'rplus':{const st=[5,10,15,20];let i=st.indexOf(H.cfg.n);i+=a==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));H.cfg.n=st[i];return hostBroadcast();}
+    case 'mp':H.cfg.maxP=Math.max(2,Math.min(8,H.cfg.maxP+(+v)));return hostBroadcast();
+    case 'appr':H.cfg.appr=v==='1';return hostBroadcast();
+    case 'cats':return X.catsBrowser({get:()=>H.cfg.cats,set:c=>{H.cfg.cats=c;},onDone:()=>hostBroadcast()});
+    case 'ok':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];let nm=pj.name,k=2;while(H.players.some(x=>x.name===nm))nm=pj.name.slice(0,12)+' '+k++;H.players.push({id:pj.id,name:nm,score:0,right:0});return hostBroadcast();}
+    case 'no':{const i=H.pending.findIndex(x=>x.id===v);if(i<0)return;const pj=H.pending.splice(i,1)[0];NET.send({t:'kick',to:pj.id,why:'صاحب الغرفة رفض طلبك.'});return view();}
     case 'diff':H.cfg.diff=+v;return hostBroadcast();
     case 'rounds':H.cfg.n=+v;return hostBroadcast();
     case 'catall':H.cfg.cats=Object.keys(CATS);return hostBroadcast();
@@ -1291,18 +1302,29 @@ function pickRiddles(n){
 }
 
 // ---------- views ----------
-function shell(inner,{back=true}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="home" aria-label="رجوع">🏠</button>':'<span></span>'}<div class="logo"><img src="logo.svg" alt="" width="40" height="40"><b>ذكاء</b><span>ARENA</span></div><button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}`;}
+let TAB='home';
+function tabsHtml(){
+  const t=(k,ic,l)=>`<button class="tab ${TAB===k?'on':''}" data-tab="${k}"><i>${ic}</i>${l}</button>`;
+  return `<div class="tabs">${t('home','🏠','الرئيسية')}${t('cats','🗂️','الفئات')}${t('online','🌐','أونلاين')}${t('me','👤','حسابي')}</div>`;
+}
+function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="home" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>ذكاء</b><span>ARENA</span></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
 function home(){
   clearTimer();G=null;if(typeof ONL!=='undefined'&&ONL)ONL.leave();
-  const best=store.get('best',0);
-  shell(`<div class="hero"><h1>اللعبة اللي هتخلّيك تقول "مين قال إني مش بعرف؟"</h1><p>أسئلة عامة، ألغاز، وتحدي البلوف مع صحابك على موبايل واحد.</p>${best?`<div class="pill">🏆 أعلى نتيجة: ${best}</div>`:''}</div>
+  TAB='home';
+  const best=store.get('best',0),played=store.get('played',0);
+  const card=(mode,ic,t,d,hot)=>`<button class="mode ${hot||''}" ${mode?`data-mode="${mode}"`:'data-act="online"'}><span class="ic">${ic}</span><span class="tx"><b>${t}</b><small>${d}</small></span><span class="ch">‹</span></button>`;
+  shell(`<div class="hero center"><img src="logo.svg" alt="ذكاء أرينا"><h1>ذكاء أرينا</h1><p>أسئلة وألغاز وتحديات مع صحابك، على موبايل واحد أو كل واحد من موبايله.</p>${best?`<div class="pill">🏆 أعلى نتيجة: ${best}</div>`:''}</div>
+  <button class="cta" data-mode="classic">⚡ يلا نلعب</button>
+  <div class="sec"><span>طرق اللعب</span><span>${Q.length} سؤال • ${R.length} لغز</span></div>
   <div class="cards">
-   <button class="mode" data-act="online" style="border-color:#ffb703"><b>🌐 أونلاين مع صحابك</b><small>كل واحد بموبايله. اعمل غرفة وابعت الكود، وكلكم تلعبوا سباق إجابات أو بلوف في نفس الوقت. لحد 8 لاعبين.</small></button>
-   <button class="mode" data-mode="classic"><b>🎯 كلاسيك</b><small>اختار الإجابة الصح قبل الوقت. نقاط سرعة وستريك ووسائل مساعدة.</small></button>
-   <button class="mode" data-mode="riddle"><b>🧩 ألغاز</b><small>اكتب الإجابة بنفسك. تلميح بنص النقط.</small></button>
-   <button class="mode" data-mode="bluff"><b>🎭 بلوف</b><small>كل واحد يألّف إجابة مضروبة، والباقي يخمّن مين الصح. 2 لـ 6 لاعبين.</small></button>
-   <button class="mode" data-act="install"><b>📲 ثبّتها كتطبيق</b><small>ضيف اللعبة على الشاشة الرئيسية لموبايلك وافتحها بضغطة واحدة زي أي تطبيق.</small></button>
-  </div><div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · ${Q.length} سؤال و ${R.length} لغز في ${Object.keys(CATS).length} تصنيف</div>`,{back:false});
+   ${card('','🌐','العب أونلاين','اعمل غرفة وابعت الكود لصحابك، لحد 8 لاعبين. سباق إجابات أو بلوف.','hot')}
+   ${card('classic','🎯','كلاسيك','اختار الإجابة الصح قبل الوقت. نقاط سرعة وستريك ووسائل مساعدة.')}
+   ${card('riddle','🧩','ألغاز','اكتب الإجابة بنفسك، ومعاك تلميح بنص النقط.')}
+   ${card('bluff','🎭','بلوف','ألّف إجابة مضروبة وخدع صحابك. من 2 لـ 6 لاعبين.')}
+  </div>
+  <div class="sec"><span>إحصائياتك</span></div>
+  <div class="statgrid"><div class="stat"><b>${played}</b><span>جولة لعبتها</span></div><div class="stat"><b>${best}</b><span>أعلى نتيجة</span></div><div class="stat"><b>${Object.keys(CATS).length}</b><span>تصنيف</span></div></div>
+  <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});
 }
 function howto(){shell(`<div class="panel"><h2>إزاي ألعب؟</h2>
 <p><b>🎯 كلاسيك:</b> كل سؤال ليه 4 اختيارات و20 ثانية. الإجابة الصح = 100 نقطة + بونص سرعة (لحد 50) + بونص ستريك. معاك مرة واحدة من كل مساعدة: ✂️ حذف إجابتين، ⏭️ تخطي، ⏱️ +10 ثواني.</p>
@@ -1320,20 +1342,55 @@ function installView(){
   <p>⚠️ اللعبة محتاجة نت عشان تفتح، ومفيش نسخة على متاجر التطبيقات لسه.</p>
   <button class="btn big" data-act="home">تمام</button></div>`);
 }
+const RSTEP={classic:[5,10,15,20],riddle:[5,10,15],bluff:[5,10,15,20]};
 function setup(mode){
-  CFG.mode=mode;
+  CFG.mode=mode;TAB='';
   if(mode==='bluff'&&CFG.players.length<2)CFG.players=['لاعب 1','لاعب 2'];
   if(mode!=='bluff'&&CFG.players.length>4)CFG.players=CFG.players.slice(0,4);
-  const t={classic:'🎯 كلاسيك',riddle:'🧩 ألغاز',bluff:'🎭 بلوف'}[mode];
+  if(!RSTEP[mode].includes(CFG.rounds))CFG.rounds=RSTEP[mode][1];
+  const t={classic:'كلاسيك',riddle:'ألغاز',bluff:'بلوف'}[mode];
   const maxP=mode==='bluff'?6:4,minP=mode==='bluff'?2:1;
   const players=CFG.players.map((p,i)=>`<input class="pn" data-i="${i}" value="${esc(p)}" maxlength="14" aria-label="اسم لاعب ${i+1}">`).join('');
-  const cats=mode==='riddle'?'':`<h3>التصنيفات</h3><div class="lg-row"><button class="btn sm ghost" data-act="catsall">✅ الكل</button><button class="btn sm ghost" data-act="catsnone">🚫 امسح الكل</button></div><div class="chips">${Object.entries(CATS).map(([k,v])=>`<button class="chip ${CFG.cats.includes(k)?'on':''}" data-cat="${k}">${v}</button>`).join('')}</div>
-   <h3>المستوى</h3><div class="chips">${[[0,'مختلط'],[1,'سهل'],[2,'متوسط'],[3,'صعب']].map(([d,l])=>`<button class="chip ${CFG.diff===d?'on':''}" data-diff="${d}">${l}</button>`).join('')}</div>`;
-  const rc=mode==='riddle'?[5,10,15]:[5,10,20];
-  shell(`<div class="panel"><h2>${t}</h2><h3>اللاعبين (${CFG.players.length})</h3><div class="pl">${players}</div>
-   <div class="row"><button class="btn sm" data-act="padd" ${CFG.players.length>=maxP?'disabled':''}>+ لاعب</button><button class="btn sm ghost" data-act="pdel" ${CFG.players.length<=minP?'disabled':''}>− لاعب</button></div>
-   ${cats}<h3>عدد ${mode==='riddle'?'الألغاز':'الأسئلة'}</h3><div class="chips">${rc.map(n=>`<button class="chip ${CFG.rounds===n?'on':''}" data-rounds="${n}">${n}</button>`).join('')}</div>
-   <button class="btn big" data-act="start">يلا نبدأ</button></div>`);
+  const cats=mode==='riddle'?'':`<h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${CFG.cats.length} من ${Object.keys(CATS).length} فئة مختارة</span><button class="btn sm ghost" data-act="catsedit">تعديل</button></div>
+   <h3>المستوى</h3><div class="chips">${[[0,'مختلط'],[1,'سهل ⭐'],[2,'متوسط ⭐⭐'],[3,'صعب ⭐⭐⭐']].map(([d,l])=>`<button class="chip ${CFG.diff===d?'on':''}" data-diff="${d}">${l}</button>`).join('')}</div>`;
+  shell(`<div class="panel"><h3>اللاعبين</h3>
+   <div class="srow"><span class="lb"><span class="e">👥</span>عدد اللاعبين</span><span class="stepper"><button data-act="pdel" ${CFG.players.length<=minP?'disabled':''}>−</button><b>${CFG.players.length}</b><button data-act="padd" ${CFG.players.length>=maxP?'disabled':''}>+</button></span></div>
+   <div class="pl" style="margin-top:10px">${players}</div>
+   ${cats}
+   <h3>عدد ${mode==='riddle'?'الألغاز':'الأسئلة'}</h3>
+   <div class="srow"><span class="lb"><span class="e">🔁</span>الجولات</span><span class="stepper"><button data-act="rminus">−</button><b>${CFG.rounds}</b><button data-act="rplus">+</button></span></div>
+   <button class="btn big" data-act="start">يلا نبدأ</button></div>`,{title:t});
+}
+
+// ---------- category browser ----------
+let catBr=null,catQ='',catF='all';
+function catsBrowser(o){catBr=o;catQ='';catF='all';catsView();}
+function catsView(){
+  if(!catBr)return;TAB=catBr.tab||'';
+  const sel=catBr.get();
+  const counts={};Q.forEach(q=>{counts[q[0]]=(counts[q[0]]||0)+1});
+  const normq=norm(catQ);
+  let list=Object.entries(CATS);
+  if(catF==='sel')list=list.filter(([k])=>sel.includes(k));
+  if(normq)list=list.filter(([k,v])=>norm(v).includes(normq));
+  const cards=list.map(([k,v])=>{const em=v.split(' ')[0],nm=v.slice(em.length).trim();return `<button class="catc ${sel.includes(k)?'on':''}" data-catt="${k}"><span class="ck">✓</span><span class="em">${em}</span><b>${nm}</b><small>${counts[k]||0} سؤال</small></button>`}).join('');
+  shell(`<div class="search"><input id="catq" placeholder="ابحث عن فئة..." value="${esc(catQ)}" autocomplete="off"></div>
+  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">الكل (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button></div>
+  <div class="catgrid">${cards||'<p class="center" style="grid-column:1/-1;color:var(--mut)">مفيش فئات مطابقة</p>'}</div>
+  <div class="footbar"${catBr.tab?' style="bottom:66px"':''}><button class="btn big" data-act="catsdone">اعتمد ${sel.length} ${sel.length===1?'فئة':'فئات'}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
+}
+
+// ---------- profile ----------
+function profileView(){
+  TAB='me';
+  const best=store.get('best',0),played=store.get('played',0),nm=store.get('myname','');
+  shell(`<div class="panel"><h3>👤 اسمك</h3><input id="pfname" maxlength="14" value="${esc(nm)}" placeholder="اكتب اسمك"><p style="color:var(--mut);font-size:13px;margin:6px 0 0">بيظهر لصحابك في اللعب الأونلاين.</p></div>
+  <div class="statgrid"><div class="stat"><b>${played}</b><span>جولة لعبتها</span></div><div class="stat"><b>${best}</b><span>أعلى نتيجة</span></div><div class="stat"><b>${store.get('sound',true)?'🔊':'🔇'}</b><span>الصوت</span></div></div>
+  <div class="cards">
+   <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
+   <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد كل وضع من أوضاع اللعب.</small></span><span class="ch">‹</span></button>
+   <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button>
+  </div>`,{title:'حسابي',nav:true});
 }
 function startGame(){
   if(!CFG.cats.length)CFG.cats=Object.keys(CATS);
@@ -1463,7 +1520,7 @@ function bluffReveal(){
 
 // ---- results ----
 function finish(){
-  clearTimer();
+  clearTimer();store.set('played',store.get('played',0)+1);
   const sorted=G.players.map((p,i)=>({...p,i})).sort((a,b)=>b.score-a.score);
   const top=sorted[0];const tie=sorted.length>1&&sorted[1].score===top.score;
   if(G.mode!=='bluff'&&top.score>store.get('best',0))store.set('best',top.score);
@@ -1477,6 +1534,9 @@ function finish(){
 // ---------- events ----------
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;catsView();},onDone:()=>home(),tab:'cats'});if(k==='online')return ONL.open();if(k==='me')return profileView();return;}
+  if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
+  if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){if(sel.length>1){sel.splice(i,1);}}else sel.push(c);catBr.set(sel);return catsView();}
   if(t.dataset.mode)return setup(t.dataset.mode);
   if(t.dataset.cat){const c=t.dataset.cat;const i=CFG.cats.indexOf(c);if(i>=0){if(CFG.cats.length>1)CFG.cats.splice(i,1);}else CFG.cats.push(c);return setup(CFG.mode);}
   if(t.dataset.diff!==undefined){CFG.diff=+t.dataset.diff;return setup(CFG.mode);}
@@ -1489,8 +1549,11 @@ document.addEventListener('click',e=>{
     case 'install':return installView();
     case 'catsall':CFG.cats=Object.keys(CATS);return setup(CFG.mode);
     case 'catsnone':CFG.cats=[];return setup(CFG.mode);
+    case 'catsedit':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;},onDone:()=>setup(CFG.mode)});
+    case 'catsdone':{const o=catBr;catBr=null;if(o&&o.onDone)return o.onDone();return home();}
+    case 'rminus':case 'rplus':{const st=RSTEP[CFG.mode];let i=st.indexOf(CFG.rounds);i+=t.dataset.act==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));CFG.rounds=st[i];return setup(CFG.mode);}
     case 'home':return home();case 'howto':return howto();
-    case 'sound':store.set('sound',!store.get('sound',true));t.textContent=store.get('sound',true)?'🔊':'🔇';return;
+    case 'sound':store.set('sound',!store.get('sound',true));if(TAB==='me')return profileView();t.textContent=store.get('sound',true)?'🔊':'🔇';return;
     case 'padd':CFG.players.push('لاعب '+(CFG.players.length+1));return setup(CFG.mode);
     case 'pdel':CFG.players.pop();return setup(CFG.mode);
     case 'start':return startGame();
@@ -1506,10 +1569,14 @@ document.addEventListener('click',e=>{
     case 'bnext':G.i++;return bluffRound();
   }
 });
-document.addEventListener('input',e=>{if(e.target.classList.contains('pn'))CFG.players[+e.target.dataset.i]=e.target.value;});
+document.addEventListener('input',e=>{
+  if(e.target.classList.contains('pn'))CFG.players[+e.target.dataset.i]=e.target.value;
+  if(e.target.id==='catq'){catQ=e.target.value;catsView();const el=document.getElementById('catq');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}}
+  if(e.target.id==='pfname')store.set('myname',e.target.value.trim().slice(0,14));
+});
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='rans')riddleSubmit();if(e.target.id==='fake')bluffSend();});
 
-const ONL=initOnline({app,esc,shuffle,norm,Q,CATS,shell,sfx,home});
+const ONL=initOnline({app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,setTab:k=>{TAB=k}});
 window.__ONL=ONL;window.__lgHome=home;
 home();
 }
