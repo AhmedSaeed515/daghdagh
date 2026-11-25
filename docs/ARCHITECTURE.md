@@ -31,3 +31,15 @@ Points: easy 5, medium 10, hard 20. At least 6 categories per game. 10 to 30 que
 
 ## Next
 `app.js` and `online.js` are still closures. They will be split into classes (router, game engine, room client, views) with no behavior change.
+
+## Question banks and media
+
+- Banks live in `js/data/questions/qb*.js`; each pushes rows `[cat, difficulty, text, right, wrong1, wrong2, wrong3]` into `window.QX`. New batches are added as new files and wired in `index.html` and `sw.js` (bump `?v=` and the cache name). Old banks are never removed.
+- Photo rows embed `§P:url|credit§`; portraits (text contains «صاحب») use a contain-fit box (`.pt`). Audio rows use short wav/mp3 clips.
+
+## Online modes (js/online/online.js)
+
+The host's phone is authoritative (state `H`) and broadcasts `pubState()` over the relay; clients render `S`. Phases: lobby, q/wr/vt/rv (classic, bluff), id/iv/ir (imposter), fin.
+- Teams: `cfg.teams` (0, 2-4) and `p.tm`; `tmTotals` sums member scores. Default off.
+- Imposter: the host picks theme, word and imposter from `js/data/imposter-words.js`, then sends the word privately to each non-imposter (`iw` messages, resent while discussing). Votes (`iv`) are tallied at reveal.
+- Filter: `lgzBad` in `js/data/badwords.js` checks names (host replaces a bad name with "لاعب N") and bluff answers (rejected).
