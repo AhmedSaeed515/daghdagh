@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=13"><script src="flags1.js?v=13"></script><script src="flags2.js?v=13"></script><script src="flags3.js?v=13"></script><script src="qx.js?v=13"></script><script src="qb2a.js?v=13"></script><script src="qb3a.js?v=13"></script><script src="qb4a.js?v=13"></script><script src="qb5a.js?v=13"></script><script src="qb1a.js?v=13"></script><script src="qb1b.js?v=13"></script><script src="qb1c.js?v=13"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=14"><script src="flags1.js?v=13"></script><script src="flags2.js?v=13"></script><script src="flags3.js?v=13"></script><script src="avatars.js?v=13"></script><script src="qx.js?v=13"></script><script src="qb2a.js?v=13"></script><script src="qb3a.js?v=13"></script><script src="qb4a.js?v=13"></script><script src="qb5a.js?v=13"></script><script src="qb1a.js?v=13"></script><script src="qb1b.js?v=13"></script><script src="qb1c.js?v=13"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -1313,9 +1313,10 @@ function tabsHtml(){
   return `<div class="tabs">${t('home','الرئيسية')}${t('cats','الفئات')}${t('online','أونلاين')}${t('me','حسابي')}</div>`;
 }
 function shell(inner,{back=true,nav=false,title=''}={}){app().innerHTML=`<div class="top">${back?'<button class="icon" data-act="back" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="logo.svg" alt="" width="38" height="38"><b>فلتة</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div>${inner}${nav?tabsHtml():''}`;}
-const AVS=['🦊','🐼','🐯','🦁','🐸','🐵','🐰','🐻','🐨','🐙','🦄','🐧','🦉','🐲','🐱','🐶'];
-const avOK=a=>AVS.includes(a)?a:'🙂';
-const avh=(a,c)=>`<span class="av ${c||''}">${avOK(a)}</span>`;
+const AVS=Object.keys(window.AVSVG||{});
+const avOK=a=>AVS.includes(a)?a:AVS[[...String(a||'x')].reduce((q,c)=>q+c.codePointAt(0),0)%AVS.length];
+const avh=(a,c)=>`<span class="av ${c||''}" role="img" aria-label="${(window.AVNAME||{})[avOK(a)]||''}">${window.AVSVG[avOK(a)]}</span>`;
+(()=>{const a=store.get('myav','');if(a&&!AVS.includes(a))store.set('myav',avOK(a));})();
 let PF=null;
 const pfValid=()=>!!(PF&&PF.name&&PF.av);
 function profileOk(){return !!(store.get('myname','')&&store.get('myav',''));}
@@ -1330,7 +1331,7 @@ function profileForm(first){
    <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button></div>`;
   shell(`<div class="panel pf center">${first?'<img src="logo.svg" alt="" width="72" height="72"><h2>أهلاً بيك في فلتة!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'avxl')}</div><h2>بروفايلي</h2>`}
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
-  <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="أفاتار ${a}">${a}</button>`).join('')}</div>
+  <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="${window.AVNAME[a]}">${window.AVSVG[a]}</button>`).join('')}</div>
   <button class="btn big" id="pfsave" data-pf="save" ${pfValid()?'':'disabled'}>${first?'يلا نبدأ':'حفظ'}</button>
   <p style="color:var(--mut);font-size:13px">من غير حساب ولا جوجل. الاسم والأفاتار بس بيتحفظوا، والنقط بتخلص بمجرد ما اللعبة تخلص.</p></div>${extra}`,first?{back:false,title:'بروفايل'}:{title:'حسابي',nav:true,back:false});
 }
