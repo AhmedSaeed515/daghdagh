@@ -1,4 +1,4 @@
-/* Falta - "playful pop" theme v3. Loaded after the inline styles in index.html. */
+/* Daghdagh - "playful pop" theme v3. Loaded after the inline styles in index.html. */
 .lg{
   --bg:#0b0b12;--card:#15151f;--card2:#1e1e2c;--card3:#2a2a3d;
   --y:#ffd23f;--y2:#c99a00;--p:#ff5c8a;--g:#2ee6a6;--b:#4d9dff;--v:#8b5cff;
@@ -254,3 +254,6 @@ html,body{background:#0b0b12}
 @keyframes zk-trophy{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
 @media (prefers-reduced-motion:reduce){.lg *,.lg *::before,.lg *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}}
 .lg .rbtns{display:flex;gap:10px}.lg .rbtns .btn{flex:1 1 0;min-width:0;width:auto!important;margin:0!important;padding:12px 8px;font-size:16px}
+
+.lg .hero .slg{color:var(--y);font-size:18px;font-weight:800;margin:6px 0 12px}
+.lg .hero h1{font-size:44px;margin-top:6px}
