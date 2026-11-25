@@ -1,48 +1,42 @@
-// "Report this question": flags a wrong question. The report opens a prefilled GitHub issue
-// (free, no server) and the question is hidden from this device's future games.
+// Starred ("reported") questions: tap the star under a question to put it in the reported list.
+// Starred questions never appear in any play mode until un-starred. The list lives on this device
+// (profile screen > "الأسئلة المبلّغ عنها") and can be copied as text for review.
 class QuestionReport {
-  static REPO='AhmedSaeed515/daghdagh';
-  // Fill these two once the Google Form exists. Empty = fall back to a prefilled GitHub issue.
-  // form: the .../formResponse URL. entries: the entry.NNN names of the 4 fields. csv: published responses CSV.
-  static CFG={form:'',entries:{id:'',cat:'',q:'',prob:''},csv:''};
-  static hash(q){let h=5381;const t=q[2]+'|'+q[3]+'|'+q.slice(4).join('|');for(let i=0;i<t.length;i++)h=((h*33)^t.charCodeAt(i))>>>0;return h.toString(36);}
-  static hiddenIds(){return new Set(store.get('hiddenids',[]));}
-  static isHidden(q){const id=QuestionReport.hash(q);return QuestionReport.isFlagged(q[2])||QuestionReport.hiddenIds().has(id);}
-  static parseCsv(t){const rows=[];let r=[],c='',qt=false;for(let i=0;i<t.length;i++){const ch=t[i];if(qt){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else qt=false;}else c+=ch;}else if(ch==='"')qt=true;else if(ch===','){r.push(c);c='';}else if(ch==='\n'){r.push(c);rows.push(r);r=[];c='';}else if(ch!=='\r')c+=ch;}if(c||r.length){r.push(c);rows.push(r);}return rows;}
-  static refresh(){
-    const u=QuestionReport.CFG.csv;if(!u||!window.fetch)return;
-    fetch(u+(u.includes('?')?'&':'?')+'t='+Date.now()).then(r=>r.text()).then(t=>{
-      const rows=QuestionReport.parseCsv(t),h=rows[0]||[];
-      const ci=h.findIndex(x=>/question id/i.test(x)),si=h.findIndex(x=>/^status$/i.test(x.trim()));if(ci<0)return;
-      const ids=rows.slice(1).filter(r=>r[ci]&&!(si>=0&&/fixed|تم|done/i.test(r[si]||''))).map(r=>r[ci].trim());
-      store.set('hiddenids',[...new Set(ids)]);
-    }).catch(()=>{});
-  }
   static esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  static flagged(){return new Set(store.get('flagged',[]));}
-  static isFlagged(text){return QuestionReport.flagged().has(text);}
+  static list(){return store.get('flagged',[]);}
+  static isFlagged(text){return QuestionReport.list().includes(text);}
+  static isHidden(q){return QuestionReport.isFlagged(q[2]);}
   static find(text){return Q.find(q=>q[2]===text);}
+  static label(on){return on?'⭐ متعلّم عليه، اضغط لإلغاء النجمة':'☆ بلّغ عن مشكلة في السؤال';}
   static button(text){
-    const done=QuestionReport.isFlagged(text);
-    return `<button class="rep" data-rep="${QuestionReport.esc(encodeURIComponent(text))}" ${done?'disabled':''}>${done?'✔ اتبلّغ، شكراً':'🚩 بلّغ عن السؤال'}</button>`;
+    const on=QuestionReport.isFlagged(text);
+    return `<button class="rep ${on?'on':''}" data-rep="${QuestionReport.esc(encodeURIComponent(text))}">${QuestionReport.label(on)}</button>`;
   }
-  static issueUrl(q){
-    const txt=q[2].replace(/^\u00a7[A-Z]:([^\u00a7]*)\u00a7/,(m,v)=>'['+v+'] ');
-    const cat=(typeof CATS!=='undefined'&&CATS[q[0]])||q[0];
-    const body=['**بلاغ عن سؤال غلط أو ناقص**','',`- الفئة: ${cat} (${q[0]})`,`- الصعوبة: ${q[1]}`,`- السؤال: ${txt}`,`- الإجابة المسجّلة كصح: ${q[3]}`,`- باقي الاختيارات: ${q.slice(4).join(' | ')}`,'',`- raw: ${q[2]}`,'','المشكلة (اختياري): '].join('\n');
-    const title='بلاغ: '+txt.slice(0,70);
-    return `https://github.com/${QuestionReport.REPO}/issues/new?labels=question-report&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  static toggle(btn){
+    const text=decodeURIComponent(btn.dataset.rep);let l=QuestionReport.list();
+    l=l.includes(text)?l.filter(t=>t!==text):[...l,text];store.set('flagged',l);
+    const on=l.includes(text);btn.classList.toggle('on',on);btn.textContent=QuestionReport.label(on);
   }
-  static report(btn){
-    const text=decodeURIComponent(btn.dataset.rep),q=QuestionReport.find(text);if(!q)return;
-    const f=QuestionReport.flagged();f.add(text);store.set('flagged',[...f]);
-    btn.textContent='✔ اتبلّغ، شكراً';btn.disabled=true;
-    const C=QuestionReport.CFG;
-    if(C.form&&C.entries.id){
-      const b=new URLSearchParams();b.set(C.entries.id,QuestionReport.hash(q));b.set(C.entries.cat,q[0]);b.set(C.entries.q,q[2]);b.set(C.entries.prob,'الإجابة المسجلة: '+q[3]);
-      fetch(C.form,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b.toString()}).catch(()=>{});
-    }else window.open(QuestionReport.issueUrl(q),'_blank','noopener');
+  static plain(q){return q[2].replace(/^\u00a7[A-Z]:([^\u00a7]*)\u00a7/,(m,v)=>'['+v+'] ');}
+  static card(){
+    const n=QuestionReport.list().length;
+    return `<button class="mode" data-act="reported"><span class="ic">⭐</span><span class="tx"><b>الأسئلة المبلّغ عنها (${n})</b><small>الأسئلة اللي علّمت عليها. مش بتظهر في اللعب لحد ما تشيل النجمة.</small></span><span class="ch">‹</span></button>`;
+  }
+  static screen(){
+    const items=QuestionReport.list().map(t=>QuestionReport.find(t)).filter(Boolean);
+    const rows=items.map(q=>`<div class="panel" style="text-align:right;margin-bottom:10px"><small>${QuestionReport.esc((typeof CATS!=='undefined'&&CATS[q[0]])||q[0])}</small><div class="q sm" style="margin:6px 0">${QuestionReport.esc(QuestionReport.plain(q))}</div><div>✔ ${QuestionReport.esc(q[3])}</div><div style="color:#6b6b6b;font-size:13px">${QuestionReport.esc(q.slice(4).join(' • '))}</div><button class="btn sm ghost" data-unstar="${QuestionReport.esc(encodeURIComponent(q[2]))}">إلغاء النجمة (يرجع للعب)</button></div>`).join('');
+    shell(`<div class="panel center"><h2>⭐ الأسئلة المبلّغ عنها</h2><p>${items.length?`${items.length} سؤال مستبعد من اللعب لحد ما تشيل النجمة.`:'مفيش أسئلة معلّم عليها.'}</p>${items.length?'<button class="btn" data-act="copyrep">نسخ القائمة</button>':''}</div>${rows}`);
+  }
+  static copy(){
+    const t=QuestionReport.list().map(x=>QuestionReport.find(x)).filter(Boolean).map((q,i)=>`${i+1}) [${q[0]}] ${QuestionReport.plain(q)} | الصح: ${q[3]} | الباقي: ${q.slice(4).join(' / ')}`).join('\n');
+    if(navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>{});
   }
 }
-window.QuestionReport=QuestionReport;QuestionReport.refresh();
-document.addEventListener('click',e=>{const b=e.target.closest('[data-rep]');if(b&&!b.disabled)QuestionReport.report(b);});
+window.QuestionReport=QuestionReport;
+document.addEventListener('click',e=>{
+  const r=e.target.closest('[data-rep]');if(r)return QuestionReport.toggle(r);
+  const u=e.target.closest('[data-unstar]');if(u){const t=decodeURIComponent(u.dataset.unstar);store.set('flagged',QuestionReport.list().filter(x=>x!==t));return QuestionReport.screen();}
+  const a=e.target.closest('[data-act]');if(!a)return;
+  if(a.dataset.act==='reported')QuestionReport.screen();
+  else if(a.dataset.act==='copyrep'){QuestionReport.copy();a.textContent='اتنسخت ✔';}
+});
