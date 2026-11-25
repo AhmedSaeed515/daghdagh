@@ -2,7 +2,7 @@
 
 ## Overview
 
-BOOM (formerly Logz+ and ZAKA ARENA) is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
+Falta (formerly Logz+, ZAKA ARENA and BOOM) is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
 
 ```
 index.html   UI, base styles, question bank, game engine, online-room client
