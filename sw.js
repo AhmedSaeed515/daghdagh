@@ -1,5 +1,5 @@
-const CACHE='falta-v13';
-const ASSETS=['./','./index.html','./theme.css?v=10','./qx.js?v=10','./flags1.js?v=10','./flags2.js?v=10','./flags3.js?v=10','./qb2a.js?v=10','./qb3a.js?v=10','./qb4a.js?v=10','./qb1a.js?v=10','./qb1b.js?v=10','./qb1c.js?v=10','./manifest.json','./icon.svg','./logo.svg'];
+const CACHE='falta-v14';
+const ASSETS=['./','./index.html','./theme.css?v=10','./qx.js?v=10','./flags1.js?v=10','./flags2.js?v=10','./flags3.js?v=10','./qb2a.js?v=10','./qb3a.js?v=10','./qb4a.js?v=10','./qb5a.js?v=10','./qb1a.js?v=10','./qb1b.js?v=10','./qb1c.js?v=10','./manifest.json','./icon.svg','./logo.svg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{
