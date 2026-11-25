@@ -2,7 +2,7 @@
 const CAT_GROUPS=[
  {id:'eg',name:'مصر وثقافتنا',keys:['eg','am','pp','la','md']},
  {id:'sp',name:'كورة ورياضة',keys:['fb','ol']},
- {id:'ar',name:'أفلام وموسيقى وفن',keys:['mv','ms','art','emo']},
+ {id:'ar',name:'أفلام وموسيقى وفن',keys:['mv','emv','ms','art','emo']},
  {id:'wd',name:'جغرافيا',keys:['cn','cap','cu','flg','fl','geo','lm','lmk']},
  {id:'hs',name:'تاريخ',keys:['hist','is','dt']},
  {id:'sc',name:'علوم وطبيعة',keys:['sci','sp','an','wt','mt','hl','inv']},
