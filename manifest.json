@@ -1,6 +1,6 @@
 {
-  "name": "لُغْز+ | لعبة الأسئلة والألغاز",
-  "short_name": "لُغْز+",
+  "name": "ذكاء أرينا | ZAKA ARENA",
+  "short_name": "ذكاء أرينا",
   "description": "لعبة أسئلة وألغاز بالمصري: حوالي ٧٠٠ سؤال في ٣٢ تصنيف، ولعب أونلاين مع صحابك",
   "start_url": "./",
   "scope": "./",
@@ -8,20 +8,10 @@
   "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
-  "background_color": "#0f1226",
-  "theme_color": "#0f1226",
+  "background_color": "#05060f",
+  "theme_color": "#05060f",
   "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
-    }
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
   ]
 }
