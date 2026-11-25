@@ -173,26 +173,34 @@ function installView(){
 function setup(){return openOnline();}
 
 // ---------- category browser ----------
-let catBr=null,catQ='',catF='all';
-function catsBrowser(o){catBr=o;catQ='';catF='all';catsView();}
+let catBr=null,catQ='',catF='all',catG='';
+function catsBrowser(o){catBr=o;catQ='';catF='all';catG='';catsView();}
+function catGroupsList(){const used=new Set();const g=CAT_GROUPS.map(x=>({...x,keys:x.keys.filter(k=>CATS[k]&&!used.has(k)&&used.add(k))}));const rest=Object.keys(CATS).filter(k=>!used.has(k));if(rest.length)g.push({id:'ot',name:'أخرى',keys:rest});return g.filter(x=>x.keys.length);}
 function catsSync(){if(!catBr)return;const sel=catBr.get();const all=Object.keys(CATS);const allOn=sel.length>=all.length;
 document.querySelectorAll('.catc').forEach(c=>{const on=sel.includes(c.dataset.catt);c.classList.toggle('on',on);c.style.animation='none';if(catF==='sel'&&!on)c.remove();});
+document.querySelectorAll('.catsec').forEach(s=>{if(!s.querySelector('.catc'))s.remove();});
 const cs=document.querySelector('[data-catf="sel"]');if(cs)cs.textContent='المختارة ('+sel.length+')';
 const an=document.querySelector('[data-act="catsall2"]');if(an)an.textContent=allOn?'إلغاء الكل':'اختيار الكل ✓';
+const sc=document.getElementById('catcount');if(sc)sc.textContent=sel.length+' مختارة';
 const d=document.querySelector('[data-act="catsdone"]');if(d){d.disabled=sel.length<MINCATS;d.textContent=sel.length<MINCATS?`اختار ${MINCATS-sel.length} فئات كمان (${sel.length}/${MINCATS})`:`اعتمد ${sel.length} فئة`;}}
 function catsView(){
   if(!catBr)return;TAB=catBr.tab||'';
   const sel=catBr.get();const allOn=sel.length>=Object.keys(CATS).length;
   const counts={};Q.forEach(q=>{counts[q[0]]=(counts[q[0]]||0)+1});
-  const normq=norm(catQ);
-  let list=Object.entries(CATS);
-  if(catF==='sel')list=list.filter(([k])=>sel.includes(k));
-  if(normq)list=list.filter(([k,v])=>norm(v).includes(normq));
-  const cards=list.map(([k,v])=>{const em=v.split(' ')[0],nm=v.slice(em.length).trim();return `<button class="catc ${sel.includes(k)?'on':''}" data-catt="${k}"><span class="ck">✓</span><span class="em">${em}</span><b>${nm}</b><small>${counts[k]||0} سؤال</small></button>`}).join('');
+  const normq=norm(catQ);const groups=catGroupsList();
+  const card=k=>{const v=CATS[k],em=v.split(' ')[0],nm=v.slice(em.length).trim();return `<button class="catc ${sel.includes(k)?'on':''}" data-catt="${k}"><span class="ck">✓</span><span class="em">${em}</span><b>${nm}</b><small>${counts[k]||0} سؤال</small></button>`;};
+  const secs=groups.filter(g=>!catG||g.id===catG).map(g=>{
+    let ks=g.keys;
+    if(catF==='sel')ks=ks.filter(k=>sel.includes(k));
+    if(normq)ks=ks.filter(k=>norm(CATS[k]).includes(normq)||norm(g.name).includes(normq));
+    if(!ks.length)return '';
+    const n=g.keys.filter(k=>sel.includes(k)).length;
+    return `<section class="catsec"><div class="cathd"><h3>${g.name}</h3><span>${n}/${g.keys.length}</span></div><div class="catgrid">${ks.map(card).join('')}</div></section>`;}).join('');
+  const opts=`<option value="">كل المجموعات</option>`+groups.map(g=>`<option value="${g.id}"${catG===g.id?' selected':''}>${g.name}</option>`).join('');
   shell(`<div class="search"><input id="catq" placeholder="ابحث عن فئة..." value="${esc(catQ)}" autocomplete="off"></div>
-  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">الكل (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button><button class="chip alln" data-act="catsall2">${allOn?'إلغاء الكل':'اختيار الكل ✓'}</button></div>
-  <div class="catgrid">${cards||'<p class="center" style="grid-column:1/-1;color:var(--mut)">مفيش فئات مطابقة</p>'}</div>
-  <div class="footbar"${catBr.tab?' style="bottom:66px"':''}><button class="btn big" data-act="catsdone" ${sel.length<MINCATS?'disabled':''}>${sel.length<MINCATS?`اختار ${MINCATS-sel.length} فئات كمان (${sel.length}/${MINCATS})`:`اعتمد ${sel.length} فئة`}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
+  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">تصفح (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button><select id="catg" class="catsel" aria-label="المجموعة">${opts}</select><button class="chip alln" data-act="catsall2">${allOn?'إلغاء الكل':'اختيار الكل ✓'}</button></div>
+  <div class="catlist">${secs||'<p class="center" style="color:var(--mut);margin-top:24px">مفيش فئات مطابقة</p>'}</div>
+  <div class="footbar catbar"${catBr.tab?' style="bottom:66px"':''}><div class="catinfo"><b id="catcount">${sel.length} مختارة</b><button class="catrev" data-catf="sel">راجع اختياراتك</button></div><button class="btn big" data-act="catsdone" ${sel.length<MINCATS?'disabled':''}>${sel.length<MINCATS?`اختار ${MINCATS-sel.length} فئات كمان (${sel.length}/${MINCATS})`:`اعتمد ${sel.length} فئة`}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
 }
 
 // ---------- profile ----------
@@ -353,6 +361,7 @@ document.addEventListener('click',e=>{
     case 'bnext':G.i++;return bluffRound();
   }
 });
+document.addEventListener('change',e=>{if(e.target.id==='catg'){catG=e.target.value;catsView();}});
 document.addEventListener('input',e=>{
   if(e.target.classList.contains('pn'))CFG.players[+e.target.dataset.i]=e.target.value;
   if(e.target.id==='catq'){catQ=e.target.value;catsView();const el=document.getElementById('catq');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}}
