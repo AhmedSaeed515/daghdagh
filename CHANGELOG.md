@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.2.1] - 2026-11-25
+
+### Changed
+- Renamed the game to BOOM (بوم).
+- New owl mascot logo and app icon.
+
 ## [1.2.0] - 2026-11-25
 
 ### Added
