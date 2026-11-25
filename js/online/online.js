@@ -105,6 +105,7 @@ function onNet(m){
     if(m.t==='bye')return hostBye(m.id);
     if(m.t==='rp')return hostRep(m.r);
     if(m.t==='iv')return impVote(m.id,m.r,m.k);
+    if(m.t==='tv')return hostBroadcast();
     if(m.t==='hp')return hostHelp(m.id,m.r,m.k);
     return;
   }
@@ -117,6 +118,7 @@ function onNet(m){
 function applyState(s,now,seq){
   const prev=S;S=s;S.seq=seq;off=now-Date.now();lastSt=Date.now();clearTimeout(joinT);
   if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
+  if(room&&room.tv){clearInterval(tvT);view();startUi();return;}
   if(!s.pl.some(p=>p.i===ME.id)){ // not accepted (game already started?)
     if(s.ph!=='lobby'){leave();msg='اللعبة بدأت بالفعل في الغرفة دي.';return lobbyView();}
   }
@@ -297,6 +299,7 @@ function sbHtml(){return tmBar()+`<div class="sb">${S.pl.map(p=>`<div class="sp 
 function view(){
   if(!S||!room)return;
   const host=room.host;
+  if(room.tv)return tvView();
   if(X.catsOpen&&X.catsOpen())return;
   if(S.ph==='lobby')return lobbyRoom(host);
   if(S.ph==='fin')return finView();
@@ -345,12 +348,36 @@ function lobbyRoom(host){
   <h3>مين يقدر ينضم؟</h3><div class="seg" style="width:100%"><button class="${hc.appr?'':'on'}" data-o="appr" data-v="0" style="flex:1">أي حد معاه الكود</button><button class="${hc.appr?'on':''}" data-o="appr" data-v="1" style="flex:1">بموافقتي 🔒</button></div>`
   :`<p class="center">${S.mode==='imp'?'🕵️ برا السرب':S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات'} • ${S.n} سؤال • ${S.cats.length} فئة${S.tn?' • '+S.tn+' فرق':''}</p>`;
   const mp=S.mp||16;const seats=Math.max(0,mp-S.pl.length);
-  shell(`<div class="roomc"><small>كود الغرفة</small><div class="code">${esc(S.code)}</div>${qrOn?`<div class="qr"><img alt="QR" width="168" height="168" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=${encodeURIComponent(joinUrl())}"><small>صوّر الكود بالكاميرا عشان تدخل</small></div>`:''}<div class="rbtns"><button class="btn y" data-o="invite">📨 ادعي صحابك</button><button class="btn ghost" data-o="qr">${qrOn?'إخفاء QR':'📷 QR'}</button>${host?'<button class="btn ghost" data-o="tosettings">⚙️ الإعدادات</button>':''}</div></div>
+  shell(`<div class="roomc"><small>كود الغرفة</small><div class="code">${esc(S.code)}</div>${qrOn?`<div class="qr"><img alt="QR" width="168" height="168" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=${encodeURIComponent(joinUrl())}"><small>صوّر الكود بالكاميرا عشان تدخل</small></div>`:''}<div class="rbtns"><button class="btn y" data-o="invite">📨 ادعي صحابك</button><button class="btn ghost" data-o="qr">${qrOn?'إخفاء QR':'📷 QR'}</button>${host?'<button class="btn ghost" data-o="tvlink">📺 شاشة تلفزيون</button>':''}${host?'<button class="btn ghost" data-o="tosettings">⚙️ الإعدادات</button>':''}</div></div>
   <div class="panel center"><h3 class="hrow">اللاعبين <i>${S.pl.length} / ${mp}</i></h3><div class="plist">${S.pl.map((p,i)=>`<div class="pl" style="--i:${i}">${avh(p.a,'avl')}<b>${esc(p.n)}</b>${S.tn&&p.tm!==undefined?`<button class="tmb" style="background:${TM[p.tm][1]}" ${host?`data-o="tm" data-v="${p.i}"`:''}>${TM[p.tm][0]}</button>`:''}${i===0?'<em>👑 صاحب الغرفة</em>':p.i===ME.id?'<em class="you">إنت</em>':'<em class="rd">✅ جاهز</em>'}${host&&i>0?`<button class="kx" data-o="kick" data-v="${p.i}" aria-label="طرد">✖</button>`:''}</div>`).join('')}${seats>0?`<div class="empty">+ ${seats} أماكن فاضية</div>`:''}</div>
   ${host&&H.pending.length?`<h3>طلبات انضمام 🙋</h3><div class="rank">${H.pending.map(p=>`<div class="rk pend"><span class="who">${avh(p.av)}${esc(p.name)}</span><span style="display:flex;gap:6px"><button class="btn sm" data-o="ok" data-v="${p.id}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${p.id}">رفض</button></span></div>`).join('')}</div>`:''}
   ${cfgHtml}
   ${host?`<div class="warn">${S.mode==='imp'&&S.pl.length<3?'اللعبة دي محتاجة 3 لاعبين على الأقل':S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':S.tn&&new Set(S.pl.map(p=>p.tm)).size<2?'لازم فريقين فيهم لاعبين':S.mode!=='imp'&&S.cats.length<6?'اختار 6 فئات على الأقل ('+S.cats.length+'/6)':''}</div><button class="btn big" data-o="start" ${S.pl.length<2||(S.mode==='imp'&&S.pl.length<3)||(S.mode!=='imp'&&S.cats.length<6)||(S.tn&&new Set(S.pl.map(p=>p.tm)).size<2)?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
   <button class="btn ghost" data-o="leave">خروج</button></div>`);
+}
+let tvT=null;
+function tvCode(code){
+  code=String(code||'').trim().toUpperCase();if(!/^[1-3][A-Z2-9]{4}$/.test(code))return false;
+  leave(true);room={code,host:false,tv:true};S=null;NET=connect(code);
+  shell(`<div class="panel center"><div class="big-emoji">📺</div><h2>شاشة التلفزيون</h2><p>بدور على الغرفة ${esc(code)}...</p></div>`,{back:false});
+  const ask=()=>{if(S||!room||!room.tv)return;NET.send({t:'tv'});};ask();clearInterval(tvT);tvT=setInterval(ask,3000);return true;
+}
+function tvView(){
+  const sb=`<div class="sb">${S.pl.map(p=>`<div class="sp"><span class="who">${avh(p.a)}${esc(p.n)}</span><b>${p.s}</b></div>`).join('')}</div>`;
+  const tmb=S.tn?tmBar():'';
+  if(S.ph==='lobby'){return shell(`<div class="panel center tv"><h2>ادخل من موبايلك</h2><div class="roomc"><small>كود الغرفة</small><div class="code">${esc(S.code)}</div><div class="qr"><img alt="QR" width="220" height="220" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=${encodeURIComponent(location.origin+location.pathname+'?r='+S.code)}"></div></div><div class="plist">${S.pl.map((p,i)=>`<div class="pl">${avh(p.a,'avl')}<b>${esc(p.n)}</b></div>`).join('')}</div></div>`,{back:false});}
+  if(S.ph==='fin'){const rows=S.pl.map(p=>p).sort((a,b)=>b.s-a.s);return shell(`<div class="panel center tv"><div class="big-emoji trophy">🏆</div><h2>الفائز: ${esc(rows[0].n)}</h2><div class="rank">${rows.map((p,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(p.a)}${esc(p.n)}</span><span>${p.s} نقطة</span></div>`).join('')}</div></div>`,{back:false});}
+  const bar=`<div class="bar"><i id="obar"></i></div>`;
+  if(S.mode==='imp'){
+    const inner=S.ph==='id'?`<div class="qbox big">الموضوع: ${esc(S.th)}</div><p class="center">كل واحد يلمّح بكلمة واحدة بالدور... وبعدين التصويت</p>`:S.ph==='iv'?`<div class="qbox big">صوّتوا من موبايلاتكم: مين برا السرب؟</div>`:`<div class="qbox big">الكلمة كانت: <b>${esc(S.word)}</b></div><div class="res">${esc(S.pl[S.imp].n)} كان برا السرب! 🕵️</div>`;
+    return shell(`${S.ph==='ir'?'':bar}${tmb}${sb}${inner}`,{back:false});
+  }
+  const q=S.q;if(!q)return;
+  const meta=`<div class="qmeta"><span>${CATS[q.c]||''}</span><span>${'⭐'.repeat(q.d)} +${PTS[q.d]||10}</span><span>${S.r+1}/${S.n}</span></div>`;
+  let opts='';
+  if(S.o&&S.ph!=='wr')opts=`<div class="opts">${S.o.map((o,k)=>`<div class="opt ${S.ph==='rv'&&k===S.right?'right':''}" style="cursor:default">${esc(o)}</div>`).join('')}</div>`;
+  else opts='<p class="center">اللاعبين بيكتبوا إجابات مزيفة...</p>';
+  shell(`${S.ph==='rv'?'':bar}${tmb}${sb}${meta}${qbox(q.t)}${opts}`,{back:false});
 }
 function impView(host){
   const my=myIndex(),isI=IW&&IW.r===S.r;const bar=`<div class="bar"><i id="obar"></i></div>`;
@@ -395,6 +422,7 @@ document.addEventListener('click',e=>{
     case 'help':return doHelp(v);
     case 'vote':return doVote(+t.dataset.k);
     case 'fake':return doFake();
+    case 'tvlink':{const u=location.origin+location.pathname+'?tv='+S.code;if(navigator.clipboard)navigator.clipboard.writeText(u).then(()=>warn('اتنسخ لينك شاشة التلفزيون. افتحه على الشاشة.')).catch(()=>prompt('افتح اللينك ده على التلفزيون',u));else prompt('افتح اللينك ده على التلفزيون',u);return;}
     case 'skip':if(H&&H.ph==='rv')hostNext();return;
     case 'ivs':if(H&&H.ph==='id')impVoteStart();return;
     case 'inx':if(H&&H.ph==='ir')impNext();return;
@@ -425,6 +453,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='ofake')doFake();if(e.target.id==='oname'||e.target.id==='ocode'){const c=(document.getElementById('ocode')||{}).value;c?join():create();}});
 document.addEventListener('change',e=>{if(e.target.id==='orng'&&H&&H.ph==='lobby'){H.cfg.n=Math.max(10,Math.min(30,+e.target.value||10));hostBroadcast();}});
+(function(){const m=/[?&]tv=([A-Za-z0-9]{5})/.exec(location.search);if(m)setTimeout(()=>tvCode(m[1]),400);})();
 return {open,leave,joinCode,debug:()=>({S,H,room})};
 }
 
