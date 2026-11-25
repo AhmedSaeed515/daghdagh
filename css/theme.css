@@ -380,4 +380,15 @@ html,body{background:#efece3!important}
 .rbtns .btn{flex:1 1 40%;min-width:120px}
 
 /* category picker: keep the last row clear of the fixed confirm bar */
-.lg .catgrid{padding-bottom:170px}
+.lg .catlist{padding-bottom:190px}
+
+/* category picker: sections, group filter, bottom bar */
+.lg .catsec{margin-top:18px}
+.lg .cathd{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #151515;padding-bottom:6px}
+.lg .cathd h3{margin:0;font-size:17px;font-weight:900;color:#151515}
+.lg .cathd span{font-size:13px;font-weight:800;color:#5c5a52}
+.lg .catsec .catgrid{margin-top:12px}
+.lg .catsel{background:#fff;color:#151515;border:3px solid #151515;border-radius:0;padding:8px 10px;font:inherit;font-weight:800;font-size:14px;box-shadow:3px 3px 0 #151515;max-width:46%}
+.lg .catbar{background:linear-gradient(transparent,#efece3 18%);padding-top:22px}
+.lg .catinfo{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-weight:900;color:#151515}
+.lg .catrev{background:none;border:0;border-bottom:2px solid #151515;color:#151515;font:inherit;font-weight:800;padding:2px 0;cursor:pointer}
