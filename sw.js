@@ -1,4 +1,4 @@
-const CACHE='daghdagh-v31';
+const CACHE='daghdagh-v32';
 const ASSETS=['./','./index.html','./theme.css?v=20','./avatars.js?v=13','./qx.js?v=13','./flags1.js?v=13','./flags2.js?v=13','./flags3.js?v=13','./qb2a.js?v=13','./qb3a.js?v=13','./qb4a.js?v=13','./qb5a.js?v=13','./qb6a.js?v=13','./qb1a.js?v=13','./qb1b.js?v=13','./qb1c.js?v=13','./manifest.json','./icon.svg','./logo.svg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
