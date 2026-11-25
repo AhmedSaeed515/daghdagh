@@ -1,4 +1,4 @@
-<p align="center"><img src="logo.svg" alt="Daghdagh logo" width="120"></p>
+<p align="center"><img src="assets/logo.svg" alt="Daghdagh logo" width="120"></p>
 
 # دغدغ (Daghdagh)
 
@@ -38,14 +38,14 @@ python3 -m http.server 8080
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | The whole app: markup, styles, question bank and game logic |
+| `index.html` | HTML shell that loads the styles and scripts |
 | `manifest.json` | PWA manifest (name, RTL, theme, icons) |
-| `qx.js`, `qb*.js`, `flags1-3.js` | Question banks (picture questions, Egypt, science, capitals and more) and embedded flag images |
-| `avatars.js` | Avatar set |
+| `js/data/` | Question banks (`questions/`), categories, flags and avatars |
+| `js/lib/`, `js/online/`, `js/app/`, `js/main.js` | Helper classes, online rooms, views and game modes, boot |
 | `sw.js` | Service worker: offline cache for the app shell |
-| `theme.css` | Paper and ink theme, loaded after the base styles |
-| `logo.svg` | Static logo used in the app header and this README (the home screen animates it inline) |
-| `icon.svg` | App icon |
+| `css/base.css`, `css/theme.css` | Base styles, then the paper and ink theme |
+| `assets/logo.svg` | Static logo used in the app header and this README (the home screen animates it inline) |
+| `assets/icon.svg` | App icon |
 | `docs/ARCHITECTURE.md` | How the app is built and how online rooms work |
 | `docs/DEPLOYMENT.md` | Hosting on GitHub Pages and release steps |
 
