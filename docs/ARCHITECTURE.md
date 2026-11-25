@@ -2,12 +2,12 @@
 
 ## Overview
 
-Falta (formerly Logz+, ZAKA ARENA and BOOM) is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
+Daghdagh is a static single-page app. Everything the player needs ships in `index.html`; there is no server component owned by this project.
 
 ```
 index.html   UI, base styles, question bank, game engine, online-room client
-theme.css      dark neon theme (overrides the base styles)
-logo.svg       logo emblem
+theme.css      paper and ink theme (overrides the base styles)
+logo.svg       static logo (the home screen animates it inline)
 manifest.json  PWA metadata
 sw.js          offline cache
 icon.svg       icon
@@ -15,9 +15,9 @@ icon.svg       icon
 
 ## Game engine
 
-- Questions and riddles are stored as data inside `index.html`, grouped into 32 categories with difficulty levels.
+- Questions are stored as data (`index.html` plus the `qx.js`, `qb*.js` and `flags*.js` banks), grouped into 36 categories with difficulty levels.
 - A round is built from the selected categories, difficulty and round count.
-- Modes: `classic` (multiple choice with timer and lifelines), `riddles`, `bluff` (players write fake answers and vote).
+- Modes: `classic` (multiple choice with timer and helpers) and `bluff` (players write fake answers and vote). Both are online only.
 - Settings and local progress are saved in `localStorage` with the key prefix `lo3ba_`.
 
 ## Online rooms
