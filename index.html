@@ -85,7 +85,7 @@ html,body{margin:0;min-height:100%;background:#0f1226}
 .lg .opt small{display:block}
 .lg{border-radius:0;min-height:100vh;min-height:100dvh}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=10"><script src="flags1.js?v=10"></script><script src="flags2.js?v=10"></script><script src="flags3.js?v=10"></script><script src="qx.js?v=10"></script><script src="qb2a.js?v=10"></script><script src="qb3a.js?v=10"></script><script src="qb4a.js?v=10"></script><script src="qb5a.js?v=10"></script><script src="qb1a.js?v=10"></script><script src="qb1b.js?v=10"></script><script src="qb1c.js?v=10"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&display=swap"><link rel="stylesheet" href="theme.css?v=11"><script src="flags1.js?v=10"></script><script src="flags2.js?v=10"></script><script src="flags3.js?v=10"></script><script src="qx.js?v=10"></script><script src="qb2a.js?v=10"></script><script src="qb3a.js?v=10"></script><script src="qb4a.js?v=10"></script><script src="qb5a.js?v=10"></script><script src="qb1a.js?v=10"></script><script src="qb1b.js?v=10"></script><script src="qb1c.js?v=10"></script>
 </head>
 <body>
 <div class="lg" dir="rtl"><div id="app" class="lg-app"></div></div>
@@ -831,7 +831,7 @@ function leave(quiet){
 function lobbyView(){
   X.setTab&&X.setTab('online');
   shell(`<div class="panel center"><div class="big-emoji">🌐</div><h2>لعب أونلاين</h2><p>كل واحد بموبايله. واحد يعمل غرفة ويدّي الكود لصحابه، وهما يدخلوا بنفس الكود.</p>
-  <div class="pcard">${avh(X.store.get('myav',''),'lg')}<b>${esc(X.store.get('myname',''))}</b><button class="btn sm ghost" data-act="me">تعديل</button></div>
+  <div class="pcard">${avh(X.store.get('myav',''),'avl')}<b>${esc(X.store.get('myname',''))}</b><button class="btn sm ghost" data-act="me">تعديل</button></div>
   <div id="omsg" class="warn">${esc(msg)}</div>
   <button class="btn big" data-o="create">🎮 اعمل غرفة جديدة</button>
   <h3>أو ادخل غرفة صاحبك</h3><input id="ocode" maxlength="5" placeholder="كود الغرفة" style="text-align:center;letter-spacing:6px;text-transform:uppercase">
@@ -1324,7 +1324,7 @@ function profileForm(first){
    <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد اللعب.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button></div>`;
-  shell(`<div class="panel pf center">${first?'<img src="logo.svg" alt="" width="72" height="72"><h2>أهلاً بيك في فلتة!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'xl')}</div><h2>بروفايلي</h2>`}
+  shell(`<div class="panel pf center">${first?'<img src="logo.svg" alt="" width="72" height="72"><h2>أهلاً بيك في فلتة!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'avxl')}</div><h2>بروفايلي</h2>`}
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
   <h3>إنت؟</h3><div class="seg" style="width:100%"><button class="${PF.g==='m'?'on':''}" data-pf="g" data-v="m" style="flex:1">👦 ولد</button><button class="${PF.g==='f'?'on':''}" data-pf="g" data-v="f" style="flex:1">👧 بنت</button></div>
   <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="أفاتار ${a}">${a}</button>`).join('')}</div>
