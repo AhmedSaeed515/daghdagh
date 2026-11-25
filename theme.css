@@ -216,3 +216,7 @@ html,body{background:#0b0b12}
 .pcard b{min-width:0;word-break:normal;overflow-wrap:break-word}
 .lg .pcard .btn.sm{width:auto;flex:none;white-space:nowrap;margin:0;padding-inline:16px;min-width:0}
 .lg .pcard b{min-width:0;flex:1;overflow-wrap:anywhere}
+
+.av{overflow:hidden}.av svg{width:100%;height:100%;display:block}
+.avb{padding:6px}.avb svg{width:100%;height:auto;display:block;max-width:64px;margin:0 auto}
+.avgrid{grid-template-columns:repeat(4,1fr)}
