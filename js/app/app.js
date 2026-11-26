@@ -18,9 +18,9 @@ function pickQuestions(n){return picker.pick(CFG.cats,CFG.diff,n);}
 // ---------- views ----------
 let TAB='home';
 function tabsHtml(){
-  const I={home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/>',cats:'<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>',online:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/>'};
+  const I={home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/>',cats:'<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>',online:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/>',friends:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-4 3.2-5.8 6.5-5.8s5.7 1.8 6.5 5.8"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.6 0 4.2 1.5 4.7 4.5"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/>'};
   const t=(k,l)=>`<button class="tab ${TAB===k?'on':''}" data-tab="${k}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg><span>${l}</span></button>`;
-  return `<div class="tabs">${t('home','الرئيسية')}${t('cats','الفئات')}${t('online','أونلاين')}${t('me','حسابي')}</div>`;
+  return `<div class="tabs">${t('home','الرئيسية')}${t('friends','صحابي')}${t('me','حسابي')}</div>`;
 }
 
 let LASTSCR=null;function shell(inner,{back=true,nav=false,title=''}={}){const _a=app(),_k=title+'|'+nav;const _o=document.getElementById('scr'),_st=(_k===LASTSCR&&_o)?_o.scrollTop:0;if(_k!==LASTSCR){LASTSCR=_k;_a.classList.remove('enter');void _a.offsetWidth;_a.classList.add('enter');}_a.innerHTML=`<div class="top">${back?'<button class="icon" data-act="back" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="assets/logo.svg" alt="" width="34" height="34" style="vertical-align:middle;margin-inline-end:8px"><b>دغدغ</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div><div class="scr${nav?' hasnav':''}" id="scr"><div class="scin" id="scin">${inner}</div></div>${nav?tabsHtml():''}`;if(_st){const _n=document.getElementById('scr');if(_n)_n.scrollTop=_st;}requestAnimationFrame(()=>{fitScr();if(_st){const _n=document.getElementById('scr');if(_n)_n.scrollTop=_st;}});}
@@ -73,6 +73,7 @@ function home(){
   const nc=Object.keys(CATS).length;
   shell(`<div class="hero center">${HomeLogo.markup}<h1>دغدغ</h1><p class="slg">${SLOGAN}</p><div class="pill who">${avh(store.get('myav',''))}أهلاً ${esc(store.get('myname',''))}</div></div>
   <button class="cta" data-act="online">🎉 اعمل غرفة أو ادخل بكود</button>
+  <button class="mode" data-act="catsopen" style="width:100%"><span class="ic">🗂️</span><span class="tx"><b>الفئات</b><small>شوف كل الفئات واختار اللي تعجبك.</small></span><span class="ch">‹</span></button>
   <div class="sec"><span>أنواع اللعب</span><span>${Q.length} سؤال • ${nc} فئة</span></div>
   <div class="cards duo">
    <button class="mode c-classic" data-act="online"><span class="ic">🎯</span><span class="tx"><b>سباق إجابات</b><small>4 اختيارات و20 ثانية. الأسرع والأدق يكسب.</small></span></button>
@@ -251,7 +252,7 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
   if(!t.dataset.pick&&!t.dataset.bv&&!t.dataset.o)sfx.tap();
   if(t.dataset.pf)return pfClick(t);
-  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>home(),tab:'cats'});if(k==='online')return openOnline();if(k==='me')return profileView();return;}
+  if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>home(),tab:'cats'});if(k==='online')return openOnline();if(k==='friends')return FR.open();if(k==='me')return profileView();return;}
   if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
   if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){sel.splice(i,1);}else sel.push(c);catBr.set(sel);return catsSync();}
   if(t.dataset.mode)return setup(t.dataset.mode);
@@ -265,6 +266,7 @@ document.addEventListener('click',e=>{
   switch(t.dataset.act){
     case 'online':return openOnline();
     case 'friends':return FR.open();
+    case 'catsopen':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>home(),tab:'home'});
     case 'me':return profileView();
     case 'install':return installView();
     case 'catsall2':{const sel=catBr.get();const all=Object.keys(CATS);const on=sel.length>=all.length;sel.length=0;if(!on)all.forEach(k=>sel.push(k));catBr.set(sel);return catsSync();}
