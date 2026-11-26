@@ -44,7 +44,7 @@ function view(){
   <div class="sbox"><h3>أصحابي (${fl.length})</h3>${fl.length?fl.map(f=>row(f,`${rm?`<button class="btn" data-fr="inv" data-v="${f.oid}">ادعيه</button>`:''}<button class="btn ghost" data-fr="del" data-v="${f.id}">حذف</button>`)).join(''):'<p style="color:var(--mut);font-size:13px">لسه مفيش أصحاب. ضيف حد بالكود بتاعه.</p>'}${rm?'':'<p style="color:var(--mut);font-size:12px">افتح غرفة أونلاين الأول عشان تدعي أصحابك لها.</p>'}</div>
   ${out.length?`<p style="color:var(--mut);font-size:13px">طلبات مبعوتة مستنية: ${out.length}</p>`:''}`,{title:'صحابي',nav:true,back:false});}
 async function open(){
- msg='';if(typeof clearTimer==='function')clearTimer();view();
+ msg='';if(typeof clearTimer==='function')clearTimer();try{TAB='friends'}catch(e){}view();
  try{await load();}catch(e){msg='حصلت مشكلة في الاتصال: '+e.message;}
  view();startPoll();}
 async function act(t){
