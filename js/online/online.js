@@ -388,25 +388,25 @@ let tvT=null;
 function tvCode(code){
   code=String(code||'').trim().toUpperCase();if(!/^[1-3][A-Z2-9]{4}$/.test(code))return false;
   leave(true);room={code,host:false,tv:true};S=null;NET=connect(code);
-  shell(`<div class="panel center"><div class="big-emoji">📺</div><h2>شاشة التلفزيون</h2><p>بدور على الغرفة ${esc(code)}...</p></div>`,{back:false});
+  shell(`<div class="panel center"><div class="big-emoji">📺</div><h2>شاشة التلفزيون</h2><p>بدور على الغرفة ${esc(code)}...</p></div>`,);
   const ask=()=>{if(S||!room||!room.tv)return;NET.send({t:'tv'});};ask();clearInterval(tvT);tvT=setInterval(ask,3000);return true;
 }
 function tvView(){
   const sb=`<div class="sb">${S.pl.slice().sort((a,b)=>b.s-a.s).slice(0,8).map(p=>`<div class="sp"><span class="who">${avh(p.a)}${esc(p.n)}</span><b>${p.s}</b></div>`).join('')}</div>`;
   const tmb=S.tn?tmBar():'';
-  if(S.ph==='lobby'){return shell(`<div class="panel center tv"><h2>ادخل من موبايلك</h2><div class="roomc"><small>كود الغرفة</small><div class="code">${esc(S.code)}</div><div class="qr"><img alt="QR" width="220" height="220" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=${encodeURIComponent(location.origin+location.pathname+'?r='+S.code)}"></div></div><div class="plist">${S.pl.map((p,i)=>`<div class="pl">${avh(p.a,'avl')}<b>${esc(p.n)}</b></div>`).join('')}</div></div>`,{back:false});}
-  if(S.ph==='fin'){const rows=S.pl.map(p=>p).sort((a,b)=>b.s-a.s);return shell(`<div class="panel center tv"><div class="big-emoji trophy">🏆</div><h2>الفائز: ${esc(rows[0].n)}</h2><div class="rank">${rows.map((p,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(p.a)}${esc(p.n)}</span><span>${p.s} نقطة</span></div>`).join('')}</div></div>`,{back:false});}
+  if(S.ph==='lobby'){return shell(`<div class="panel center tv"><h2>ادخل من موبايلك</h2><div class="roomc"><small>كود الغرفة</small><div class="code">${esc(S.code)}</div><div class="qr"><img alt="QR" width="220" height="220" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=${encodeURIComponent(location.origin+location.pathname+'?r='+S.code)}"></div></div><div class="plist">${S.pl.map((p,i)=>`<div class="pl">${avh(p.a,'avl')}<b>${esc(p.n)}</b></div>`).join('')}</div></div>`,);}
+  if(S.ph==='fin'){const rows=S.pl.map(p=>p).sort((a,b)=>b.s-a.s);return shell(`<div class="panel center tv"><div class="big-emoji trophy">🏆</div><h2>الفائز: ${esc(rows[0].n)}</h2><div class="rank">${rows.map((p,k)=>`<div class="rk"><span class="who">${k+1}. ${avh(p.a)}${esc(p.n)}</span><span>${p.s} نقطة</span></div>`).join('')}</div></div>`,);}
   const bar=`<div class="bar"><i id="obar"></i></div>`;
   if(S.mode==='imp'){
     const inner=S.ph==='id'?`<div class="qbox big">الموضوع: ${esc(S.th)}</div><p class="center">كل واحد يلمّح بكلمة واحدة بالدور... وبعدين التصويت</p>`:S.ph==='iv'?`<div class="qbox big">صوّتوا من موبايلاتكم: مين برا السرب؟</div>`:`<div class="qbox big">الكلمة كانت: <b>${esc(S.word)}</b></div><div class="res">${esc(S.pl[S.imp].n)} كان برا السرب! 🕵️</div>`;
-    return shell(`${S.ph==='ir'?'':bar}${tmb}${sb}${inner}`,{back:false});
+    return shell(`${S.ph==='ir'?'':bar}${tmb}${sb}${inner}`,);
   }
   const q=S.q;if(!q)return;
   const meta=`<div class="qmeta"><span>${CATS[q.c]||''}</span>${dpO(q.d)}<span>${S.r+1}/${S.n}</span></div>`;
   let opts='';
   if(S.o&&S.ph!=='wr')opts=`<div class="opts">${S.o.map((o,k)=>`<div class="opt ${S.ph==='rv'&&k===S.right?'right':''}" style="cursor:default">${esc(o)}</div>`).join('')}</div>`;
   else opts='<p class="center">اللاعبين بيكتبوا إجابات مزيفة...</p>';
-  shell(`${S.ph==='rv'?'':bar}${tmb}${sb}${meta}${qbox(q.t)}${opts}`,{back:false});
+  shell(`${S.ph==='rv'?'':bar}${tmb}${sb}${meta}${qbox(q.t)}${opts}`,);
 }
 function impView(host){
   const my=myIndex(),isI=IW&&IW.r===S.r;const bar=`<div class="bar"><i id="obar"></i></div>`;
