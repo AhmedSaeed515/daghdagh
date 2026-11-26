@@ -6,27 +6,30 @@ const N=t=>String(t).toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').re
 const lev=(a,b)=>{const m=a.length,n=b.length;if(Math.abs(m-n)>1)return 9;const d=[];for(let i=0;i<=m;i++){d[i]=[i];}for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];};
 const sh=(h,o)=>window.shell(h,o||{});
 const TK=(n,f)=>function(...a){return window.__trk?window.__trk(n,f).apply(this,a):f.apply(this,a);};
-const TC=['#2f5486','#b8562a'];
+const TC=['#2f5486','#b8562a','#2c7a4b','#7a3c8c'];
 const tapfx=()=>{try{window.__sfx&&window.__sfx.tap()}catch(e){}};
 
 /* ---------------- Team board ---------------- */
 let J=null;const TIERS=[[100,1],[300,2],[500,3]];
+const LLS=[['two','🗣️','إجابتين','الفريق ياخد محاولتين'],['block','⛔','حظر','يمنع فريق من الإجابة'],['call','📞','اتصال بصديق','دقيقة للاتصال'],['chg','🔄','غيّر السؤال','سؤال جديد نفس الفئة'],['opts','🔢','اختيارات','4 اختيارات فيهم الصح'],['bomb','💣','القنبلة','الإجابة للفريق التاني'],['hint','💡','تلميح','من غير ما يكشف الإجابة']];
 const cname=k=>(window.CATS&&window.CATS[k])||k;
 const cemoji=k=>{const n=cname(k);const m=/^(\S+)\s+(.*)$/.exec(n);return m?[m[1],m[2]]:['',n];};
 const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
-function stopTm(){if(J&&J.tm){clearInterval(J.tm);J.tm=null;}}
+function stopTm(){if(J&&J.tm){clearInterval(J.tm);J.tm=null;}if(J&&J.fr){clearInterval(J.fr);J.fr=null;}}
 function jSetup_(){
-  const st=J&&J.setup?J.setup:(J={setup:{names:['فريق 1','فريق 2'],cats:(window.__CFG&&window.__CFG.cats||[]).slice(0,6),time:90,rnd:0}}).setup;
+  const st=J&&J.setup?J.setup:(J={setup:{names:['فريق 1','فريق 2'],cats:(window.__CFG&&window.__CFG.cats||[]).slice(0,6),time:90,tmOn:1,rnd:0}}).setup;
   const chips=st.cats.length?st.cats.map(k=>`<span class="mdchip">${E(cname(k))}</span>`).join(''):'<span class="mdmut">لسه ما اخترتش فئات</span>';
+  const n=st.names.length;
   sh(`<div class="panel mdp"><h2>🎯 تحدي الفرق</h2>
-  <div class="mdnames"><input class="mdin" id="jn0" maxlength="12" value="${E(st.names[0])}" placeholder="اسم الفريق الأول"><input class="mdin" id="jn1" maxlength="12" value="${E(st.names[1])}" placeholder="اسم الفريق التاني"></div>
+  <div class="mdnames g">${st.names.map((v,i)=>`<div class="mdnm" style="--tc:${TC[i]}"><input class="mdin" id="jn${i}" maxlength="12" value="${E(v)}" placeholder="فريق ${i+1}">${n>2?`<button class="mdx" data-jx="trm" data-i="${i}">✕</button>`:''}</div>`).join('')}${n<4?'<button class="btn ghost mdadd" data-jx="tadd">+ فريق</button>':''}</div>
   <div class="mdlab">الفئات (لحد 6)</div><div class="mdchips">${chips}</div>
   <div class="mdrow"><button class="btn" data-jx="pick">🗂️ اختار الفئات</button><button class="btn" data-jx="rand">🎲 عشوائي</button></div>
-  <div class="mdlab">وقت السؤال</div><div class="mdrow tmrow"><button class="btn" data-jx="tm" data-d="15">+</button><b class="tmv">${fmt(st.time)}</b><button class="btn" data-jx="tm" data-d="-15">−</button></div>
-  <div class="mdlab">شكل اللوحة</div><div class="mdrow"><button class="btn ${st.rnd?'ghost':''}" data-jx="bm" data-v="0">عادية (100/300/500)</button><button class="btn ${st.rnd?'':'ghost'}" data-jx="bm" data-v="1">كروت سادة عشوائي</button></div>
+  <button class="mdtog ${st.rnd?'on':''}" data-jx="bm"><i></i><span>إخفاء مستوى السؤال قبل الاختيار</span></button>
+  <button class="mdtog ${st.tmOn?'on':''}" data-jx="ton"><i></i><span>مؤقت للأسئلة</span></button>
+  ${st.tmOn?`<div class="mdrow tmrow"><button class="btn" data-jx="tm" data-d="15">+</button><b class="tmv">${fmt(st.time)}</b><button class="btn" data-jx="tm" data-d="-15">−</button></div>`:''}
   <button class="btn big" data-jx="start" ${st.cats.length>=2?'':'disabled'}>ابدأ اللعب</button></div>`);
 }
-function jSaveNames(){const a=document.getElementById('jn0'),b=document.getElementById('jn1');if(J&&J.setup){if(a)J.setup.names[0]=a.value.trim().slice(0,12)||'فريق 1';if(b)J.setup.names[1]=b.value.trim().slice(0,12)||'فريق 2';}}
+function jSaveNames(){if(!J||!J.setup)return;J.setup.names=J.setup.names.map((v,i)=>{const a=document.getElementById('jn'+i);return a?(a.value.trim().slice(0,12)||'فريق '+(i+1)):v;});}
 function jStart(){
   stopTm();
   const st=J.setup;const cats=st.cats.slice(0,6);
@@ -34,49 +37,70 @@ function jStart(){
   if(st.rnd)tiers=SH(tiers);
   const cells={};let n=0;
   cats.forEach(c=>{cells[c]=[0,1,2].map(r=>{const [pts,d]=st.rnd?tiers[n++]:TIERS[r];const it=window.__picker.pick([c],d,1)[0];return {pts,d,it,done:0};});});
-  J={g:1,names:st.names.slice(),cats,cells,score:[0,0],turn:0,setup:st,rnd:st.rnd,time:st.time,ll:[{two:0,plus:0,hint:0},{two:0,plus:0,hint:0}]};
+  const N=st.names.length;
+  J={g:1,names:st.names.slice(),cats,cells,score:Array(N).fill(0),turn:0,setup:st,rnd:st.rnd,time:st.tmOn?st.time:0,ll:st.names.map(()=>({})),armed:0};
   jBoard();
 }
-function teamBox(i,big){return `<div class="jt ${J.turn===i?'on':''}" style="--tc:${TC[i]}"><span>${J.turn===i?'👉 ':''}${E(J.names[i])}</span><b>${J.score[i]}</b>${J.turn===i?'<small>دورهم</small>':''}</div>`;}
+function teamBox(i){const on=J.turn===i;const nn=J.names.length;return `<div class="jt n${nn} ${on?'on':''}" style="--tc:${TC[i]}"><span>${E(J.names[i])}</span><b>${J.score[i]}</b>${on&&nn<4?'<small>دورهم</small>':''}</div>`;}
+function teams(){return `<div class="jtop">${J.names.map((_,i)=>teamBox(i)).join('')}</div>`;}
 function jBoard_(){
   stopTm();
   const left=J.cats.reduce((s,c)=>s+J.cells[c].filter(x=>!x.done).length,0);
   if(!left)return jEnd();
   const head=J.cats.map(c=>{const [e,n]=cemoji(c);return `<div class="jh"><b>${e}</b><span>${E(n)}</span></div>`}).join('');
-  const rows=[0,1,2].map(r=>J.cats.map((c,ci)=>{const x=J.cells[c][r];return x.done?`<button class="jc used" disabled>${x.done<3?`<i style="background:${TC[x.done-1]}"></i>`:'<u>✕</u>'}</button>`:`<button class="jc ${J.rnd?'blank':'t'+x.d}" data-jx="cell" data-c="${ci}" data-r="${r}">${J.rnd?'؟':x.pts}</button>`}).join('')).join('');
-  sh(`<div class="jtop">${teamBox(0)}${teamBox(1)}</div><div class="jgrid" style="--n:${J.cats.length}">${head}${rows}</div>`);
+  const rows=[0,1,2].map(r=>J.cats.map((c,ci)=>{const x=J.cells[c][r];return x.done?`<button class="jc used" disabled>${x.done<9?`<i style="background:${TC[x.done-1]}"></i>`:'<u>✕</u>'}</button>`:`<button class="jc ${J.rnd?'blank':'t'+x.d}" data-jx="cell" data-c="${ci}" data-r="${r}">${J.rnd?'؟':x.pts}</button>`}).join('')).join('');
+  const used=J.ll[J.turn].dbl;
+  sh(`${teams()}<div class="jgrid" style="--n:${J.cats.length}">${head}${rows}</div><button class="jdbl ${J.armed?'on':''}" data-jx="dbl" ${used||J.armed?'disabled':''}>${J.armed?'✖️2 مفعّلة على السؤال الجاي':'✖️2 دبلها (قبل اختيار السؤال)'}</button>`);
 }
 function jAsk(ci,r){
   const c=J.cats[ci],x=J.cells[c][r];if(!x||x.done)return;
-  J.cur={c,r,x,stage:0,left:J.time,shown:null,hint:0};jQ();
-  stopTm();J.tm=setInterval(()=>{if(!J||!J.cur||J.cur.stage)return stopTm();J.cur.left=Math.max(0,J.cur.left-1);const el=document.getElementById('jtm');if(el){el.textContent=fmt(J.cur.left);if(J.cur.left<=10)el.classList.add('low');if(!J.cur.left)el.classList.add('end');}if(!J.cur.left){stopTm();try{window.__sfx&&window.__sfx.bad&&window.__sfx.bad()}catch(e){}}},1000);
+  J.cur={c,r,x,stage:0,left:J.time,mult:J.armed?2:1,shown:null,hint:0,two:0,blocked:[],bomb:null,call:0,pend:null};J.armed=0;jQ();
+  stopTm();if(J.time)J.tm=setInterval(()=>{if(!J||!J.cur||J.cur.stage)return stopTm();J.cur.left=Math.max(0,J.cur.left-1);const el=document.getElementById('jtm');if(el){el.textContent=fmt(J.cur.left);if(J.cur.left<=10)el.classList.add('low');if(J.cur.left)el.classList.remove('end');else el.classList.add('end');}if(!J.cur.left){clearInterval(J.tm);J.tm=null;try{window.__sfx&&window.__sfx.bad&&window.__sfx.bad()}catch(e){}}},1000);
 }
+function tgtBtns(k){return J.names.map((n,i)=>i===J.turn?'':`<button class="btn" style="--tc:${TC[i]}" data-jx="tgt" data-i="${i}">${E(n)}</button>`).join('');}
 function jQ_(){
-  const {x,c,stage}=J.cur;const ll=J.ll[J.turn];
-  const lb=(k,t)=>`<button class="jl" data-jx="ll" data-k="${k}" ${ll[k]||stage?'disabled':''}>${t}</button>`;
+  const cu=J.cur,{x,c,stage}=cu;const ll=J.ll[J.turn];const pts=x.pts*cu.mult;
   let mid='';
-  if(stage===0)mid=`<div class="jlls">${lb('two','✌️ خيارين')}${lb('hint','💡 تلميح')}${lb('plus','⏱ +30 ث')}</div>${J.cur.shown?`<div class="jtip">الإجابة واحدة من: <b>${E(J.cur.shown[0])}</b> أو <b>${E(J.cur.shown[1])}</b></div>`:''}${J.cur.hint?`<div class="jtip">الإجابة بتبدأ بـ «<b>${E(String(x.it.right).trim().charAt(0))}</b>»</div>`:''}<button class="btn big" data-jx="rev">👁 كشف الإجابة</button>`;
+  if(stage===0){
+    const lb=LLS.map(([k,ic,nm])=>`<button class="jl" data-jx="ll" data-k="${k}" ${ll[k]?'disabled':''}><b>${ic}</b><span>${nm}</span></button>`).join('');
+    const tips=[];
+    if(cu.two)tips.push('🗣️ مسموح للفريق إجابتين');
+    if(cu.blocked.length)tips.push('⛔ ممنوع من الإجابة: <b>'+cu.blocked.map(i=>E(J.names[i])).join('، ')+'</b>');
+    if(cu.bomb!==null)tips.push('💣 السؤال عند <b>'+E(J.names[cu.bomb])+'</b>: لو غلط تتخصم '+pts);
+    if(cu.shown)tips.push('🔢 '+cu.shown.map(t=>'<b>'+E(t)+'</b>').join(' • '));
+    if(cu.hint)tips.push('💡 '+E(cu.hint));
+    if(cu.call)tips.push('📞 <b id="jfr">1:00</b>');
+    mid=`<div class="jlls">${lb}</div>${cu.pend?`<div class="jtip">اختار الفريق:<div class="jaw">${tgtBtns(cu.pend)}</div></div>`:''}${tips.map(t=>`<div class="jtip">${t}</div>`).join('')}<button class="btn big" data-jx="rev">👁 كشف الإجابة</button>`;
+  }
   else if(stage===1)mid=`<div class="jans">✅ الإجابة: <b>${E(x.it.right)}</b></div><button class="btn big" data-jx="nxt">التالي ⬅</button>`;
-  else mid=`<div class="mdlab center">مين خد النقط (${x.pts})؟</div><div class="jaw"><button class="btn" style="--tc:${TC[0]}" data-jx="aw" data-w="1">${E(J.names[0])}</button><button class="btn" style="--tc:${TC[1]}" data-jx="aw" data-w="2">${E(J.names[1])}</button></div><button class="btn big ghost" data-jx="aw" data-w="3">ولا حد</button>`;
-  sh(`<div class="jtop">${teamBox(0)}${teamBox(1)}</div><div class="qmeta"><span>${E(cname(c))}</span><span class="dp d${x.d}">${x.pts} نقطة</span></div>${window.qbox(x.it.text)}${stage===0?`<div class="jtm ${J.cur.left<=10?'low':''} ${J.cur.left?'':'end'}" id="jtm">${fmt(J.cur.left)}</div>`:''}${mid}`);
+  else if(cu.bomb!==null)mid=`<div class="mdlab center">${E(J.names[cu.bomb])} جاوب؟ (${pts})</div><div class="jaw"><button class="btn" style="--tc:#2c7a4b" data-jx="aw" data-w="bok">✅ صح +${pts}</button><button class="btn" style="--tc:#a33" data-jx="aw" data-w="bno">❌ غلط -${pts}</button></div>`;
+  else mid=`<div class="mdlab center">مين خد النقط (${pts})؟</div><div class="jaw">${J.names.map((n,i)=>`<button class="btn" style="--tc:${TC[i]}" data-jx="aw" data-w="${i+1}" ${cu.blocked.includes(i)?'disabled':''}>${E(n)}</button>`).join('')}</div><button class="btn big ghost" data-jx="aw" data-w="9">ولا حد</button>`;
+  sh(`${teams()}<div class="qmeta"><span>${E(cname(c))}</span><span class="dp d${x.d}">${pts} نقطة${cu.mult>1?' ✖️2':''}</span></div>${window.qbox(x.it.text)}${stage===0&&J.time?`<div class="jtm ${cu.left<=10?'low':''} ${cu.left?'':'end'}" id="jtm">${fmt(cu.left)}</div>`:''}${mid}`);
 }
 function jLL(k){
-  const cu=J.cur;if(!cu||cu.stage||J.ll[J.turn][k])return;J.ll[J.turn][k]=1;
-  if(k==='two')cu.shown=SH([cu.x.it.right,SH(cu.x.it.wrong)[0]]);
-  if(k==='plus')cu.left+=30;
-  if(k==='hint')cu.hint=1;
+  const cu=J.cur;if(!cu||cu.stage||J.ll[J.turn][k])return;
+  const N=J.names.length;
+  if(k==='block'||k==='bomb'){J.ll[J.turn][k]=1;if(N===2){const o=1-J.turn;if(k==='block')cu.blocked=[o];else cu.bomb=o;}else cu.pend=k;return jQ();}
+  J.ll[J.turn][k]=1;
+  if(k==='two')cu.two=1;
+  if(k==='opts'){const w=SH(cu.x.it.wrong).slice(0,3);cu.shown=SH([cu.x.it.right,...w]);}
+  if(k==='hint'){const a=String(cu.x.it.right).trim();const wc=a.split(/\s+/).length;cu.hint='بتبدأ بحرف «'+a.charAt(0)+'»، '+(wc>1?wc+' كلمات':'كلمة واحدة')+'، وعدد حروفها '+a.replace(/\s/g,'').length;}
+  if(k==='chg'){let it=cu.x.it;for(let n=0;n<6&&it.text===cu.x.it.text;n++){it=window.__picker.pick([cu.c],cu.x.d,1)[0];}cu.x.it=it;cu.shown=null;cu.hint=0;}
+  if(k==='call'){cu.call=1;const el0=Date.now();if(J.fr)clearInterval(J.fr);J.fr=setInterval(()=>{const s=Math.max(0,60-Math.floor((Date.now()-el0)/1000));const el=document.getElementById('jfr');if(el)el.textContent=fmt(s);if(!s){clearInterval(J.fr);J.fr=null;try{window.__sfx&&window.__sfx.bad&&window.__sfx.bad()}catch(e){}}},500);}
   jQ();
 }
+function jTgt(i){const cu=J.cur;if(!cu||!cu.pend)return;if(cu.pend==='block')cu.blocked=[i];else cu.bomb=i;cu.pend=null;jQ();}
 function jAw(w){
-  const cu=J.cur;if(!cu||cu.stage!==2)return;
-  cu.x.done=w;if(w===1||w===2)J.score[w-1]+=cu.x.pts;
-  J.turn=1-J.turn;J.cur=null;if(window.__navPopSilent)window.__navPopSilent();jBoard();
+  const cu=J.cur;if(!cu||cu.stage!==2)return;const pts=cu.x.pts*cu.mult;
+  if(w==='bok'){J.score[cu.bomb]+=pts;cu.x.done=cu.bomb+1;}
+  else if(w==='bno'){J.score[cu.bomb]-=pts;cu.x.done=cu.bomb+1;}
+  else{cu.x.done=w;if(w>=1&&w<=4)J.score[w-1]+=pts;}
+  J.turn=(J.turn+1)%J.names.length;J.cur=null;if(window.__navPopSilent)window.__navPopSilent();jBoard();
 }
 function jEnd(){
-  const [a,b]=J.score;const w=a===b?'تعادل 🤝':'🏆 فاز '+E(J.names[a>b?0:1]);
-  sh(`<div class="panel center"><div class="big-emoji">🏁</div><h2>${w}</h2><div class="jtop"><div class="jt on" style="--tc:${TC[0]}"><span>${E(J.names[0])}</span><b>${a}</b></div><div class="jt on" style="--tc:${TC[1]}"><span>${E(J.names[1])}</span><b>${b}</b></div></div><button class="btn big" data-jx="again">العب تاني بنفس الفئات</button><button class="btn big" data-jx="home">الرئيسية</button></div>`);
+  const m=Math.max(...J.score);const ws=J.names.filter((n,i)=>J.score[i]===m);const w=ws.length>1?'تعادل 🤝':'🏆 فاز '+E(ws[0]);
+  sh(`<div class="panel center"><div class="big-emoji">🏁</div><h2>${w}</h2>${teams().replace(/ on"/g,' on"').replace('class="jtop"','class="jtop" style="margin:8px 0"')}<button class="btn big" data-jx="again">العب تاني بنفس الفئات</button><button class="btn big" data-jx="home">الرئيسية</button></div>`);
 }
-
 
 /* ---------------- Rank the list ---------------- */
 const LISTS=[
@@ -143,11 +167,16 @@ document.addEventListener('click',e=>{
   if(a==='start'){jSaveNames();return jStart();}
   if(a==='cell')return jAsk(+t.dataset.c,+t.dataset.r);
   if(a==='tm'){jSaveNames();J.setup.time=Math.min(300,Math.max(60,J.setup.time+ +t.dataset.d));return jSetup();}
-  if(a==='bm'){jSaveNames();J.setup.rnd=+t.dataset.v;return jSetup();}
+  if(a==='bm'){jSaveNames();J.setup.rnd=J.setup.rnd?0:1;return jSetup();}
+  if(a==='ton'){jSaveNames();J.setup.tmOn=J.setup.tmOn?0:1;return jSetup();}
+  if(a==='tadd'){jSaveNames();if(J.setup.names.length<4)J.setup.names.push('فريق '+(J.setup.names.length+1));return jSetup();}
+  if(a==='trm'){jSaveNames();if(J.setup.names.length>2)J.setup.names.splice(+t.dataset.i,1);return jSetup();}
+  if(a==='tgt')return jTgt(+t.dataset.i);
+  if(a==='dbl'){if(!J.ll[J.turn].dbl&&!J.armed){J.ll[J.turn].dbl=1;J.armed=1;jBoard();}return;}
   if(a==='ll')return jLL(t.dataset.k);
   if(a==='rev'){stopTm();J.cur.stage=1;return jQ();}
   if(a==='nxt'){J.cur.stage=2;return jQ();}
-  if(a==='aw')return jAw(+t.dataset.w);
+  if(a==='aw'){const w=t.dataset.w;return jAw(/^\d+$/.test(w)?+w:w);}
   if(a==='again'){J.setup.names=J.names.slice();return jStart();}
   if(a==='home')return window.__lgHome();
   if(a==='rl'){return rSetup(+t.dataset.i);}
