@@ -24,7 +24,7 @@ function tabsHtml(){
 }
 
 let LASTSCR=null;function shell(inner,{back=true,nav=false,title=''}={}){const _a=app(),_k=title+'|'+nav;const _o=document.getElementById('scr'),_st=(_k===LASTSCR&&_o)?_o.scrollTop:0;if(_k!==LASTSCR){LASTSCR=_k;_a.classList.remove('enter');void _a.offsetWidth;_a.classList.add('enter');}_a.innerHTML=`<div class="top">${back?'<button class="icon" data-act="back" aria-label="رجوع">→</button>':'<span></span>'}${title?`<div class="tlt">${title}</div>`:`<div class="logo"><img src="assets/logo.svg" alt="" width="34" height="34" style="vertical-align:middle;margin-inline-end:8px"><b>دغدغ</b></div>`}<button class="icon" data-act="sound">${store.get('sound',true)?'🔊':'🔇'}</button></div><div class="scr${nav?' hasnav':''}" id="scr"><div class="scin" id="scin">${inner}</div></div>${nav?tabsHtml():''}`;if(_st){const _n=document.getElementById('scr');if(_n)_n.scrollTop=_st;}requestAnimationFrame(()=>{fitScr();if(_st){const _n=document.getElementById('scr');if(_n)_n.scrollTop=_st;}});}
-function fitScr(){const s=document.getElementById('scr'),n=document.getElementById('scin');if(!s||!n)return;n.style.zoom='';s.classList.remove('fit');if(n.querySelector('.search,.catsec,.avgrid,.sbox')){s.classList.add('free');return;}s.classList.remove('free');const cs=getComputedStyle(s),av=s.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom),h=n.getBoundingClientRect().height;if(h>av+1){const z=av/h;if(z<.78){s.classList.add('free');return;}s.classList.add('fit');n.style.zoom=z.toFixed(3);}}
+function fitScr(){const s=document.getElementById('scr'),n=document.getElementById('scin');if(!s||!n)return;n.style.zoom='';s.classList.remove('fit');if(n.querySelector('.search,.catsec,.avgrid,.sbox')){s.classList.add('free');return;}s.classList.remove('free');const cs=getComputedStyle(s),av=s.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom),h=n.getBoundingClientRect().height;if(h>av+1){const z=av/h;if(z<(n.querySelector('.hero,.rgrid,.jgrid,.jlls,.mdp')?.55:.78)){s.classList.add('free');return;}s.classList.add('fit');n.style.zoom=z.toFixed(3);}}
 addEventListener('resize',()=>requestAnimationFrame(fitScr));
 const AVS=Object.keys(window.AVSVG||{});
 const avOK=a=>AVS.includes(a)?a:AVS[[...String(a||'x')].reduce((q,c)=>q+c.codePointAt(0),0)%AVS.length];
@@ -76,7 +76,7 @@ function home(){
   <button class="mode" data-jx="ot" style="width:100%"><span class="ic">🎯</span><span class="tx"><b>تحدي الفرق (جهاز واحد)</b><small>فريقين، لوحة فئات ونقاط 100 و300 و500.</small></span><span class="ch">‹</span></button>
   <button class="mode" data-jx="or" style="width:100%"><span class="ic">🔟</span><span class="tx"><b>رتّب القايمة</b><small>أكبر 10 دول، أعلى 10 جبال... كل ما العنصر أبعد نقطه أكتر.</small></span><span class="ch">‹</span></button>
   <button class="mode" data-act="catsopen" style="width:100%"><span class="ic">🗂️</span><span class="tx"><b>الفئات</b><small>شوف كل الفئات واختار اللي تعجبك.</small></span><span class="ch">‹</span></button>
-  <p class="slg" style="text-align:center;color:var(--mut);font-size:13px">${Q.length} سؤال • ${nc} فئة • سباق إجابات وبلوف مع صحابك أونلاين</p>
+  <p class="slg hstat" style="text-align:center;color:var(--mut);font-size:13px">${Q.length} سؤال • ${nc} فئة • سباق إجابات وبلوف مع صحابك أونلاين</p>
   <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});HomeLogo.animate();
 }
 function howto(){shell(`<div class="panel"><h2>إزاي ألعب؟</h2>
