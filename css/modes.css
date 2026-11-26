@@ -110,3 +110,9 @@
 .lg .rs.f b{color:#151515;background:#ffd84a}
 @media (max-height:700px){.lg .rsb{margin-bottom:8px}.lg .rhd{margin-bottom:8px;padding:7px 12px}.lg .rgrid.dense .rs{min-height:24px;padding:2px 6px}.lg .rmsg{margin:3px auto}}
 @media (max-height:560px){.lg .rgrid.dense{gap:4px}.lg .rgrid.dense .rs{min-height:22px;padding:1px 6px}.lg .rsg{height:28px}}
+
+/* v116 six-row board */
+.lg .jgrid{gap:5px}.lg .jc{height:min(7.6vh,58px);font-size:18px;border-radius:9px}.lg .jh{min-height:46px;padding:4px 2px}.lg .jh b{font-size:18px}
+.lg .jtop{margin-bottom:10px}
+@media (max-height:620px){.lg .jc{height:6.6vh;font-size:16px}.lg .jh{min-height:38px;font-size:10px}.lg .jh b{font-size:15px}.lg .jgrid{gap:4px}.lg .jtop{margin-bottom:8px}.lg .jdbl{margin-top:4px;padding:6px}}
+.lg .jh span{word-break:normal;font-size:10.5px;max-width:100%}
