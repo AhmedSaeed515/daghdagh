@@ -62,3 +62,51 @@
 @media (max-height:780px){.lg .hero img,.lg .hero svg,.lg .hero canvas{width:130px!important;height:auto!important;max-height:20vh}.lg .hero{margin:0 0 4px!important}.lg .hero .slg{margin:2px 0 6px!important;font-size:16px!important}.lg .mode{padding:9px 12px;gap:10px}.lg .mode .ic{flex-basis:38px;width:38px;height:38px}.lg .mode small{font-size:11.5px;line-height:1.4}.lg .hstat{display:none}}
 @media (max-height:640px){.lg .hero img,.lg .hero svg,.lg .hero canvas{width:92px!important;max-height:15vh}.lg .mode small{display:none}.lg .mode{padding:7px 12px}.lg .cta{padding:10px}.lg .hero .pill{padding:4px 10px}}
 @media (max-height:560px){.lg .foot{display:none}}
+
+/* v113 rank screen redesign */
+.lg .rsb{display:flex;gap:8px;margin:2px 0 10px}
+.lg .rp{position:relative;flex:1 1 0;min-width:0;display:grid;grid-template-columns:1fr auto;grid-template-areas:"n s" "h s";align-items:center;column-gap:6px;background:var(--tc);color:#fff;border:0;border-radius:14px;padding:7px 11px;opacity:.55;font-size:13px;transition:transform .15s,opacity .2s}
+.lg .rp span{grid-area:n;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:start}
+.lg .rp b{grid-area:s;font-size:28px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.lg .rp i{grid-area:h;font-style:normal;display:flex;gap:3px;min-height:15px;align-items:center}
+.lg .rp.on{opacity:1;transform:translateY(-3px);animation:jglow 1.4s ease-in-out infinite}
+.lg .rp.out{opacity:.3;filter:grayscale(.6)}
+.lg .rsb.n3 .rp,.lg .rsb.n4 .rp{grid-template-columns:1fr;grid-template-areas:"n" "s" "h";justify-items:center;text-align:center;padding:5px 3px;row-gap:0}
+.lg .rsb.n3 .rp b,.lg .rsb.n4 .rp b{font-size:24px}
+.lg .rsb.n3 .rp i,.lg .rsb.n4 .rp i{justify-content:center}.lg .rsb.n3 .rp span,.lg .rsb.n4 .rp span,.lg .rsb.n3 .rp i,.lg .rsb.n4 .rp i{text-align:center;max-width:100%}
+.lg .rhd{background:var(--card2);color:var(--y2);border:3px solid var(--y2);border-radius:14px;box-shadow:4px 4px 0 var(--y2);padding:9px 12px;margin:2px 3px 12px 5px}
+.lg .rt{font-size:16px;font-weight:900;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lg .rc{display:flex;align-items:center;gap:10px;margin-top:7px}
+.lg .rbar{flex:1;height:9px;border-radius:99px;background:var(--card3);overflow:hidden;border:2px solid var(--y2)}
+.lg .rbar i{display:block;height:100%;background:#1fa34a;border-radius:99px;transition:width .3s}
+.lg .rc b{font-size:13px;font-weight:900;min-width:42px;text-align:end;font-variant-numeric:tabular-nums}
+.lg .rgrid{gap:7px;margin:4px 3px 8px 5px}
+.lg .rs{display:flex;align-items:center;gap:8px;background:var(--card2);color:var(--y2);border:2.5px solid var(--y2);border-radius:12px;box-shadow:2px 2px 0 var(--y2);padding:7px 8px;min-height:38px;font-size:15px}
+.lg .rs em{flex:0 0 auto;display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:var(--y2);color:var(--card2);font-size:13px;font-weight:900;min-width:0}
+.lg .rs span{flex:1;font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lg .rs:not(.f) span{opacity:.35}
+.lg .rs b{flex:0 0 auto;background:#ffd84a;color:#151515;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:900;border:2px solid #151515}
+.lg .rs.f{background:#1fa34a;color:#fff}.lg .rs.f em{background:#fff;color:#151515}.lg .rs.f span{opacity:1}
+.lg .rs.miss{opacity:.6;box-shadow:none}
+.lg .rgrid.mid .rs{padding:5px 8px;min-height:32px;font-size:14px}
+.lg .rgrid.dense{gap:5px}.lg .rgrid.dense .rs{padding:3px 6px;min-height:26px;font-size:12.5px;gap:5px;border-width:2px;box-shadow:1.5px 1.5px 0 var(--y2);border-radius:9px}
+.lg .rgrid.dense .rs em{width:19px;height:19px;font-size:11px;border-radius:6px}.lg .rgrid.dense .rs b{font-size:9.5px;padding:0 6px;border-width:1.5px}
+.lg .rmsg{display:block;width:fit-content;max-width:100%;margin:6px auto;background:var(--card3);color:var(--y2);border-radius:99px;padding:4px 14px;font-size:13px;font-weight:800;min-height:0}
+@media (max-height:620px){.lg .rp{padding:4px 10px}.lg .rp b{font-size:22px}.lg .rhd{padding:6px 10px;margin-bottom:8px}.lg .rt{font-size:14px}.lg .rc{margin-top:4px}.lg .rsb{margin-bottom:8px}.lg .rsb.n3 .rp b,.lg .rsb.n4 .rp b{font-size:19px}.lg .rgrid{margin-bottom:4px}.lg .rmsg{margin:3px auto}}
+
+.lg .hrt{display:inline-block;width:17px;height:15px}.lg .hrt svg{width:100%;height:100%;display:block;overflow:visible}
+.lg .hrt g{fill:#ff3b4e;stroke:none;transform-box:fill-box;transform-origin:50% 100%}.lg .hrt .hs{fill:#ffd0d6}
+.lg .hrt.gone .hs,.lg .hrt.brk .hs{opacity:0}
+.lg .hrt.gone g{fill:#3a2d3a;opacity:.7}.lg .hrt.gone .hl{transform:translate(-.5px,.3px) rotate(-14deg)}.lg .hrt.gone .hr{transform:translate(.5px,.5px) rotate(14deg)}
+.lg .hrt.brk{animation:hshake .5s steps(6) 1}
+.lg .hrt.brk .hl{animation:hbl .9s steps(8) forwards}.lg .hrt.brk .hr{animation:hbr .9s steps(8) forwards}
+@keyframes hshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-2px)}40%{transform:translateX(2px)}60%{transform:translateX(-2px)}80%{transform:translateX(1px)}}
+@keyframes hbl{0%,30%{fill:#ff3b4e;transform:none}100%{fill:#3a2d3a;opacity:.7;transform:translate(-.5px,.3px) rotate(-14deg)}}
+@keyframes hbr{0%,30%{fill:#ff3b4e;transform:none}100%{fill:#3a2d3a;opacity:.7;transform:translate(.5px,.5px) rotate(14deg)}}
+.lg .rsg{display:flex;gap:6px;margin:6px 0 0;height:34px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;align-items:center}.lg .rsg::-webkit-scrollbar{display:none}
+.lg .rsgb{flex:0 0 auto;background:var(--card2);color:var(--y2);border:2px solid var(--y2);border-radius:99px;padding:4px 12px;font:inherit;font-size:14px;font-weight:800;box-shadow:2px 2px 0 var(--y2)}
+.lg .rsgb:active{transform:translate(2px,2px);box-shadow:none}
+@media (max-height:620px){.lg .rsg{height:30px;margin-top:3px}.lg .rsgb{padding:2px 10px;font-size:13px}.lg .hrt{width:14px;height:12px}}
+.lg .rs.f b{color:#151515;background:#ffd84a}
+@media (max-height:700px){.lg .rsb{margin-bottom:8px}.lg .rhd{margin-bottom:8px;padding:7px 12px}.lg .rgrid.dense .rs{min-height:24px;padding:2px 6px}.lg .rmsg{margin:3px auto}}
+@media (max-height:560px){.lg .rgrid.dense{gap:4px}.lg .rgrid.dense .rs{min-height:22px;padding:1px 6px}.lg .rsg{height:28px}}
