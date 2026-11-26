@@ -4142,6 +4142,1179 @@
     ]
    },
    "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "لو هتبرمج بلغة مفيهاش غير 0 و1، دي لغة إيه؟",
+    "correct": "الثنائية (Binary)",
+    "wrong": [
+     "جافا سكريبت",
+     "سي++",
+     "بايثون"
+    ]
+   },
+   "en": {
+    "q": "If you were to code software in this language you'd only be able to type 0's and 1's.",
+    "correct": "Binary",
+    "wrong": [
+     "JavaScript",
+     "C++",
+     "Python"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه الجهاز اللي بيربط كل قطع الكمبيوتر ببعض؟",
+    "correct": "اللوحة الأم (Motherboard)",
+    "wrong": [
+     "المعالج",
+     "الهارد ديسك",
+     "الرامات"
+    ]
+   },
+   "en": {
+    "q": "Which computer hardware device provides an interface for all other connected devices to communicate?",
+    "correct": "Motherboard",
+    "wrong": [
+     "Central Processing Unit",
+     "Hard Disk Drive",
+     "Random Access Memory"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "نظام العد اللي أساسه 16 اسمه إيه؟",
+    "correct": "النظام السداسي عشر (Hexadecimal)",
+    "wrong": [
+     "الثنائي",
+     "الاثنا عشري",
+     "الثماني"
+    ]
+   },
+   "en": {
+    "q": "The numbering system with a radix of 16 is more commonly referred to as",
+    "correct": "Hexidecimal",
+    "wrong": [
+     "Binary",
+     "Duodecimal",
+     "Octal"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "اختصار HP في اسم الشركة بيعني إيه؟",
+    "correct": "هيوليت باكارد",
+    "wrong": [
+     "هاورد باكمان",
+     "هاسكر بولوسك",
+     "هيلمان بول"
+    ]
+   },
+   "en": {
+    "q": "The name of technology company HP stands for what?",
+    "correct": "Hewlett-Packard",
+    "wrong": [
+     "Howard Packmann",
+     "Husker-Pollosk",
+     "Hellman-Pohl"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه اللي بيتقال عليه \"مخ الكمبيوتر\"؟",
+    "correct": "المعالج (CPU)",
+    "wrong": [
+     "اللوحة الأم",
+     "كارت الشاشة",
+     "الكيبورد"
+    ]
+   },
+   "en": {
+    "q": "What is known as \"the brain\" of the Computer?",
+    "correct": "Central Processing Unit",
+    "wrong": [
+     "Motherboard",
+     "Graphics Processing Unit",
+     "Keyboard"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين العالم الأمريكي اللي اخترع لغة C؟",
+    "correct": "دينيس ريتشي",
+    "wrong": [
+     "تيم برنرز لي",
+     "الخوارزمي",
+     "ويليس وير"
+    ]
+   },
+   "en": {
+    "q": "The C programming language was created by this American computer scientist.",
+    "correct": "Dennis Ritchie",
+    "wrong": [
+     "Tim Berners Lee",
+     "al-Khwārizmī",
+     "Willis Ware"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "الإصدار 4.3 من أندرويد اسمه إيه؟",
+    "correct": "جيلي بين",
+    "wrong": [
+     "لوليبوب",
+     "نوتيلا",
+     "فرويو"
+    ]
+   },
+   "en": {
+    "q": "What was the name given to Android 4.3?",
+    "correct": "Jelly Bean",
+    "wrong": [
+     "Lollipop",
+     "Nutella",
+     "Froyo"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "LAN في الشبكات معناها إيه؟",
+    "correct": "شبكة محلية (Local Area Network)",
+    "wrong": [
+     "عقدة هوائية طويلة",
+     "عقدة وصول ضوئية",
+     "ملاحة عناوين الأرض"
+    ]
+   },
+   "en": {
+    "q": "In computing, what does LAN stand for?",
+    "correct": "Local Area Network",
+    "wrong": [
+     "Long Antenna Node",
+     "Light Access Node",
+     "Land Address Navigation"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه اسم نسخة أندرويد 7.0؟",
+    "correct": "نوجا (Nougat)",
+    "wrong": [
+     "آيس كريم ساندوتش",
+     "جيلي بين",
+     "مارشميلو"
+    ]
+   },
+   "en": {
+    "q": "What is the code name for the mobile operating system Android 7.0?",
+    "correct": "Nougat",
+    "wrong": [
+     "Ice Cream Sandwich",
+     "Jelly Bean",
+     "Marshmallow"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "JVM في جافا معناها إيه؟",
+    "correct": "Java Virtual Machine",
+    "wrong": [
+     "Java Vendor Machine",
+     "Java Visual Machine",
+     "Just Virtual Machine"
+    ]
+   },
+   "en": {
+    "q": "What does the computer software acronym JVM stand for?",
+    "correct": "Java Virtual Machine",
+    "wrong": [
+     "Java Vendor Machine",
+     "Java Visual Machine",
+     "Just Virtual Machine"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي أمر في SQL بيجيب بيانات من قاعدة البيانات؟",
+    "correct": "SELECT",
+    "wrong": [
+     "INDEX",
+     "VALUES",
+     "EXEC"
+    ]
+   },
+   "en": {
+    "q": "Which SQL keyword is used to fetch data from a database?",
+    "correct": "SELECT",
+    "wrong": [
+     "INDEX",
+     "VALUES",
+     "EXEC"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "CLI في الكمبيوتر معناها إيه؟",
+    "correct": "واجهة سطر الأوامر (Command Line Interface)",
+    "wrong": [
+     "Common Language Input",
+     "Control Line Interface",
+     "Common Language Interface"
+    ]
+   },
+   "en": {
+    "q": "In computing terms, typically what does CLI stand for?",
+    "correct": "Command Line Interface",
+    "wrong": [
+     "Common Language Input",
+     "Control Line Interface",
+     "Common Language Interface"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 3,
+   "ar": {
+    "q": "محرك Unreal Engine 4 بيستخدم أنهي لغة برمجة؟",
+    "correct": "C++",
+    "wrong": [
+     "أسمبلي",
+     "C#",
+     "ECMAScript"
+    ]
+   },
+   "en": {
+    "q": "What major programming language does Unreal Engine 4 use?",
+    "correct": "C++",
+    "wrong": [
+     "Assembly",
+     "C#",
+     "ECMAScript"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 3,
+   "ar": {
+    "q": "هيكل البيانات اللي بيشتغل بمبدأ \"آخر داخل أول خارج\" (FILO) اسمه إيه؟",
+    "correct": "المكدس (Stack)",
+    "wrong": [
+     "الطابور (Queue)",
+     "الكومة (Heap)",
+     "الشجرة (Tree)"
+    ]
+   },
+   "en": {
+    "q": "Which data structure does FILO apply to?",
+    "correct": "Stack",
+    "wrong": [
+     "Queue",
+     "Heap",
+     "Tree"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة بدأت كمكتبة أونلاين اسمها \"كادابرا\"؟",
+    "correct": "أمازون",
+    "wrong": [
+     "إيباي",
+     "أوفرستوك",
+     "شوبيفاي"
+    ]
+   },
+   "en": {
+    "q": "Which internet company began life as an online bookstore called 'Cadabra'?",
+    "correct": "Amazon",
+    "wrong": [
+     "eBay",
+     "Overstock",
+     "Shopify"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "موقع GitHub اتكتب بأنهي لغة في الأول؟",
+    "correct": "روبي",
+    "wrong": [
+     "جافا سكريبت",
+     "بايثون",
+     "لوا"
+    ]
+   },
+   "en": {
+    "q": "What programming language was GitHub written in?",
+    "correct": "Ruby",
+    "wrong": [
+     "JavaScript",
+     "Python",
+     "Lua"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 1,
+   "ar": {
+    "q": "MIDI معناها إيه؟",
+    "correct": "Musical Instrument Digital Interface",
+    "wrong": [
+     "Musical Interface of Digital Instruments",
+     "Modular Interface of Digital Instruments",
+     "Musical Instrument Data Interface"
+    ]
+   },
+   "en": {
+    "q": "In computing, what does MIDI stand for?",
+    "correct": "Musical Instrument Digital Interface",
+    "wrong": [
+     "Musical Interface of Digital Instruments",
+     "Modular Interface of Digital Instruments",
+     "Musical Instrument Data Interface"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "tech",
+   "difficulty": 2,
+   "ar": {
+    "q": "القطعة المعدنية اللي بين المعالج والمروحة اسمها إيه؟",
+    "correct": "المشتت الحراري (Heat Sink)",
+    "wrong": [
+     "فتحة المعالج",
+     "مبدد الحرارة",
+     "مخرج الحرارة"
+    ]
+   },
+   "en": {
+    "q": "What is the correct term for the metal object in between the CPU and the CPU fan within a computer system?",
+    "correct": "Heat Sink",
+    "wrong": [
+     "CPU Vent",
+     "Temperature Decipator",
+     "Heat Vent"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "في أنهي فيلم ديزني ممكن تلاقي شخصية \"باك مان\" لو ركزت؟",
+    "correct": "ترون",
+    "wrong": [
+     "بيج هيرو 6",
+     "فانتازيا",
+     "شركة المرعبين"
+    ]
+   },
+   "en": {
+    "q": "In what Disney movie can you spot the character \"Pac-Man\" in if you look closely enough in some scenes?",
+    "correct": "Tron",
+    "wrong": [
+     "Big Hero 6",
+     "Fantasia",
+     "Monsters, Inc."
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 3,
+   "ar": {
+    "q": "إيه اسم الكوكب في فيلم \"Aliens\"؟",
+    "correct": "LV-426",
+    "wrong": [
+     "FR-838",
+     "DI-621",
+     "LV-246"
+    ]
+   },
+   "en": {
+    "q": "What was the name of the planet in \"Aliens\"?",
+    "correct": "LV-426",
+    "wrong": [
+     "FR-838",
+     "DI-621",
+     "LV-246"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين مثّل دور ويلي ونكا في فيلم 1971؟",
+    "correct": "جين وايلدر",
+    "wrong": [
+     "شيا لابيوف",
+     "بيتر أوستروم",
+     "جوني ديب"
+    ]
+   },
+   "en": {
+    "q": "In the 1971 film \"Willy Wonka & the Chocolate Factory\", who played Willy Wonka?",
+    "correct": "Gene Wilder",
+    "wrong": [
+     "Shia LeBouf",
+     "Peter Ostrum",
+     "Johnny Depp"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي فيلم جيمس بوند أغنيته غنتها أديل؟",
+    "correct": "سكاي فول",
+    "wrong": [
+     "كازينو رويال",
+     "كوانتم أوف سولاس",
+     "سبكتر"
+    ]
+   },
+   "en": {
+    "q": "Which James Bond film had the theme song written and performed by English singer-songwriter Adele?",
+    "correct": "Skyfall",
+    "wrong": [
+     "Casino Royale",
+     "Quantum Solace",
+     "Spectre"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين أخرج فيلم \"شكل الماء\" (The Shape of Water) سنة 2017؟",
+    "correct": "جيليرمو ديل تورو",
+    "wrong": [
+     "ستيفن سبيلبرج",
+     "جيمس كاميرون",
+     "مارتن سكورسيزي"
+    ]
+   },
+   "en": {
+    "q": "Who directed the 2017 movie \"The Shape of Water\"?",
+    "correct": "Guillermo del Toro",
+    "wrong": [
+     "Steven Spielberg",
+     "James Cameron",
+     "Martin Scorsese"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "في \"Avengers: Infinity War\"، حجر الروح كان فين؟",
+    "correct": "فورمير",
+    "wrong": [
+     "زاندار",
+     "نولاير",
+     "أسجارد"
+    ]
+   },
+   "en": {
+    "q": "In Avengers: Infinity War, where was the Soul Stone located?",
+    "correct": "Vormir",
+    "wrong": [
+     "Xandar",
+     "Knowhere",
+     "Asgard"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "اسم أم نيمو في فيلم \"البحث عن نيمو\" إيه؟",
+    "correct": "كورال",
+    "wrong": [
+     "ساندي",
+     "بيرل",
+     "شيلي"
+    ]
+   },
+   "en": {
+    "q": "In Finding Nemo, what was the name of Nemo's mom?",
+    "correct": "Coral",
+    "wrong": [
+     "Sandy",
+     "Pearl",
+     "Shelly"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "الجملة الشهيرة \"Nobody puts Baby in a corner\" من أنهي فيلم؟",
+    "correct": "Dirty Dancing",
+    "wrong": [
+     "Three Men and a Baby",
+     "Ferris Bueller's Day Off",
+     "Pretty in Pink"
+    ]
+   },
+   "en": {
+    "q": "This movie contains the quote, \"Nobody puts Baby in a corner.\"",
+    "correct": "Dirty Dancing",
+    "wrong": [
+     "Three Men and a Baby",
+     "Ferris Bueller's Day Off",
+     "Pretty in Pink"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "بيلا لوجوسي اشتهر بدور شخصية إيه في فيلم رعب سنة 1931؟",
+    "correct": "الكونت دراكولا",
+    "wrong": [
+     "دكتور فرانكنشتاين",
+     "المستذئب",
+     "مخلوق البحيرة السوداء"
+    ]
+   },
+   "en": {
+    "q": "Bela Lugosi was a Hungarian-American actor best known for his starring role of what 1931 horror film?",
+    "correct": "Count Dracula",
+    "wrong": [
+     "Dr Frankenstein",
+     "Werewolf",
+     "The Creature from the Black Lagoon"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين أخرج فيلم \"إي تي\" (E.T.) سنة 1982؟",
+    "correct": "ستيفن سبيلبرج",
+    "wrong": [
+     "ستانلي كوبريك",
+     "جيمس كاميرون",
+     "تيم بيرتون"
+    ]
+   },
+   "en": {
+    "q": "Who directed \"E.T. the Extra-Terrestrial\" (1982)?",
+    "correct": "Steven Spielberg",
+    "wrong": [
+     "Stanley Kubrick",
+     "James Cameron",
+     "Tim Burton"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين بيلعب دور إيثان هانت في سلسلة \"Mission: Impossible\"؟",
+    "correct": "توم كروز",
+    "wrong": [
+     "جوني ديب",
+     "شون كونري",
+     "بيرس بروسنان"
+    ]
+   },
+   "en": {
+    "q": "Who plays protagonist Ethan Hunt in the \"Mission: Impossible\" film-series?",
+    "correct": "Tom Cruise",
+    "wrong": [
+     "Johnny Depp",
+     "Sean Connery",
+     "Pierce Brosnan"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين كتب وأخرج فيلم \"Platoon\" سنة 1986؟",
+    "correct": "أوليفر ستون",
+    "wrong": [
+     "فرانسيس فورد كوبولا",
+     "ستانلي كوبريك",
+     "مايكل شيمينو"
+    ]
+   },
+   "en": {
+    "q": "Who wrote and directed the 1986 film 'Platoon'?",
+    "correct": "Oliver Stone",
+    "wrong": [
+     "Francis Ford Coppola",
+     "Stanley Kubrick",
+     "Michael Cimino"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين أخرج فيلم \"Alien\"؟",
+    "correct": "ريدلي سكوت",
+    "wrong": [
+     "كريستوفر نولان",
+     "مايكل باي",
+     "جيمس كاميرون"
+    ]
+   },
+   "en": {
+    "q": "Who directed the movie \"Alien\"?",
+    "correct": "Ridley Scott",
+    "wrong": [
+     "Christopher Nolan",
+     "Michael Bay",
+     "James Cameron"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "فيلم \"تايتانيك\" لجيمس كاميرون نزل السينمات سنة كام؟",
+    "correct": "1997",
+    "wrong": [
+     "1996",
+     "1998",
+     "1999"
+    ]
+   },
+   "en": {
+    "q": "What year did the James Cameron film \"Titanic\" come out in theaters?",
+    "correct": "1997",
+    "wrong": [
+     "1996",
+     "1998",
+     "1999"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "هيتشكوك استخدم إيه كدم في فيلم \"Psycho\"؟",
+    "correct": "شراب الشوكولاتة",
+    "wrong": [
+     "كاتشب",
+     "ملون أحمر",
+     "شراب القيقب"
+    ]
+   },
+   "en": {
+    "q": "What did Alfred Hitchcock use as blood in the film \"Psycho\"?",
+    "correct": "Chocolate syrup",
+    "wrong": [
+     "Ketchup",
+     "Red food coloring",
+     "Maple syrup"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي ممثل من دول ماقدمش شخصية سبايدر مان في السينما؟",
+    "correct": "مايكل سيرا",
+    "wrong": [
+     "توبي ماجواير",
+     "أندرو جارفيلد",
+     "توم هولاند"
+    ]
+   },
+   "en": {
+    "q": "Which of these actors have NOT played Spiderman in the movies?",
+    "correct": "Michael Cera",
+    "wrong": [
+     "Tobey Maguire",
+     "Andrew Garfield",
+     "Tom Holland"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "نوع الجبنة اللي بيحبها والاس وجروميت؟",
+    "correct": "ونسلي ديل",
+    "wrong": [
+     "شيدر",
+     "جبنة القمر",
+     "إيدام"
+    ]
+   },
+   "en": {
+    "q": "What type of cheese, loved by Wallace and Gromit, had it's sale prices rise after their successful short films?",
+    "correct": "Wensleydale",
+    "wrong": [
+     "Cheddar",
+     "Moon Cheese",
+     "Edam"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي فيلم من دول مش مقتبس من رواية لستيفن كينج؟",
+    "correct": "الشيء (The Thing)",
+    "wrong": [
+     "كاري",
+     "بؤس (Misery)",
+     "الميل الأخضر"
+    ]
+   },
+   "en": {
+    "q": "Which of the following movies was not based on a novel by Stephen King?",
+    "correct": "The Thing",
+    "wrong": [
+     "Carrie",
+     "Misery",
+     "The Green Mile"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "mv",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين صمم أصوات ستار وورز زي زئير شيوباكا وصفير R2-D2؟",
+    "correct": "بن بيرت",
+    "wrong": [
+     "كين بيرنز",
+     "رالف مكواري",
+     "ميراندا كيز"
+    ]
+   },
+   "en": {
+    "q": "What is the name of the foley artist who designed the famous sounds of Star Wars, including Chewbacca's roar and R2-D2's beeps and whistles?",
+    "correct": "Ben Burtt",
+    "wrong": [
+     "Ken Burns",
+     "Ralph McQuarrie",
+     "Miranda Keyes"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "الفرقة اللي ألبومها \"OK Computer\" نزل سنة كام؟",
+    "correct": "1997",
+    "wrong": [
+     "1995",
+     "2000",
+     "1993"
+    ]
+   },
+   "en": {
+    "q": "When did Radiohead release their album \"OK Computer\"?",
+    "correct": "1997",
+    "wrong": [
+     "1995",
+     "2000",
+     "1993"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين قائد فرقة الميتال ميجاديث؟",
+    "correct": "ديف موستين",
+    "wrong": [
+     "روب هالفورد",
+     "فينس نيل",
+     "جيمس هيتفيلد"
+    ]
+   },
+   "en": {
+    "q": "What is the frontman's name of the metal band Megadeth?",
+    "correct": "Dave Mustaine",
+    "wrong": [
+     "Rob Halford",
+     "Vince Neil",
+     "James Hetfield"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 1,
+   "ar": {
+    "q": "الكمان له 4 أوتار: صول ودو وإيه وإيه؟",
+    "correct": "المي (E)",
+    "wrong": [
+     "الدو (C)",
+     "السي (B)",
+     "الفا (F)"
+    ]
+   },
+   "en": {
+    "q": "The four strings on a violin are the G string, D string, A string, and...",
+    "correct": "E string",
+    "wrong": [
+     "C string",
+     "B string",
+     "F string"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي ألبوم لنيرفانا عليه صورة طفل عريان؟",
+    "correct": "Nevermind",
+    "wrong": [
+     "Bleach",
+     "In Utero",
+     "Incesticide"
+    ]
+   },
+   "en": {
+    "q": "Which Nirvana album had a naked baby on the cover?",
+    "correct": "Nevermind",
+    "wrong": [
+     "Bleach",
+     "In Utero",
+     "Incesticide"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "دامون ألبارن، المشارك في تأسيس جوريلاز، هو كمان المغني الرئيسي لأنهي فرقة؟",
+    "correct": "بلور",
+    "wrong": [
+     "أويسز",
+     "راديوهيد",
+     "كوينز أوف ذا ستون إيج"
+    ]
+   },
+   "en": {
+    "q": "The co-creator of Gorillaz, Damon Albarn, is also the lead singer of what band?",
+    "correct": "Blur",
+    "wrong": [
+     "Oasis",
+     "Radiohead",
+     "Queens of the Stone Age"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "عادةً البيانو فيه كام مفتاح؟",
+    "correct": "88",
+    "wrong": [
+     "24",
+     "12",
+     "96"
+    ]
+   },
+   "en": {
+    "q": "Typically, how many keys are on a piano?",
+    "correct": "88",
+    "wrong": [
+     "24",
+     "12",
+     "96"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 1,
+   "ar": {
+    "q": "براين ماي كان عازف الجيتار في أنهي فرقة؟",
+    "correct": "كوين",
+    "wrong": [
+     "بينك فلويد",
+     "رولينج ستونز",
+     "ذا دورز"
+    ]
+   },
+   "en": {
+    "q": "Brian May was the guitarist for which band?",
+    "correct": "Queen",
+    "wrong": [
+     "Pink Floyd",
+     "Rolling Stones",
+     "The Doors"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي ألبوم نزله كانييه ويست سنة 2013؟",
+    "correct": "Yeezus",
+    "wrong": [
+     "My Beautiful Dark Twisted Fantasy",
+     "The Life of Pablo",
+     "Watch the Throne"
+    ]
+   },
+   "en": {
+    "q": "Which album was released by Kanye West in 2013?",
+    "correct": "Yeezus",
+    "wrong": [
+     "My Beautiful Dark Twisted Fantasy",
+     "The Life of Pablo",
+     "Watch the Throne"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "ألبوم \"Purple Rain\" لبرنس نزل سنة كام؟",
+    "correct": "1984",
+    "wrong": [
+     "1979",
+     "1983",
+     "1981"
+    ]
+   },
+   "en": {
+    "q": "When was the Prince album \"Purple Rain\" released?",
+    "correct": "1984",
+    "wrong": [
+     "1979",
+     "1983",
+     "1981"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي فنان باع أكتر ألبومات بالملايين حسب RIAA؟",
+    "correct": "البيتلز",
+    "wrong": [
+     "إلفيس بريسلي",
+     "مايكل جاكسون",
+     "بينك فلويد"
+    ]
+   },
+   "en": {
+    "q": "According to the RIAA: Which artist has sold the most albums by the million?",
+    "correct": "The Beatles",
+    "wrong": [
+     "Elvis Presley",
+     "Michael Jackson",
+     "Pink Floyd"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين من البيتلز حكى حلقات \"ثومس القطار\"؟",
+    "correct": "رينجو ستار",
+    "wrong": [
+     "جورج هاريسون",
+     "جون لينون",
+     "بول مكارتني"
+    ]
+   },
+   "en": {
+    "q": "Which member of \"The Beatles\" narrated episodes of \"Thomas the Tank Engine\"?",
+    "correct": "Ringo Starr",
+    "wrong": [
+     "George Harrison",
+     "John Lennon",
+     "Paul McCartney"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 1,
+   "ar": {
+    "q": "أغنية \"Harder, Better, Faster, Stronger\" من أنهي ألبوم لدافت بانك؟",
+    "correct": "Discovery",
+    "wrong": [
+     "Homework",
+     "Random Access Memories",
+     "Human After All"
+    ]
+   },
+   "en": {
+    "q": "Which Daft Punk album is the song \"Harder, Better, Faster, Stronger\" from?",
+    "correct": "Discovery",
+    "wrong": [
+     "Homework",
+     "Random Access Memories",
+     "Human After All"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي عازف عزف سولو الجيتار في أغنية \"Beat It\" لمايكل جاكسون؟",
+    "correct": "إيدي فان هالين",
+    "wrong": [
+     "ستيف فاي",
+     "كيرك هاميت",
+     "زاك وايلد"
+    ]
+   },
+   "en": {
+    "q": "Who performed the guitar solo on Michael Jackson's hit \"Beat It\"?",
+    "correct": "Eddie Van Halen",
+    "wrong": [
+     "Steve Vai",
+     "Kirk Hammett",
+     "Zakk Wylde"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "ms",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي آلة من دول مش من آلات النفخ؟",
+    "correct": "الفيولا",
+    "wrong": [
+     "الأوبوا",
+     "الترومبون",
+     "الدودوك"
+    ]
+   },
+   "en": {
+    "q": "What is not a wind instrument?",
+    "correct": "Viola",
+    "wrong": [
+     "Oboe",
+     "Trombone",
+     "Duduk"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
   }
  ]
 }
