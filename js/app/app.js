@@ -74,11 +74,7 @@ function home(){
   shell(`<div class="hero center">${HomeLogo.markup}<h1>دغدغ</h1><p class="slg">${SLOGAN}</p><div class="pill who">${avh(store.get('myav',''))}أهلاً ${esc(store.get('myname',''))}</div></div>
   <button class="cta" data-act="online">🎉 اعمل غرفة أو ادخل بكود</button>
   <button class="mode" data-act="catsopen" style="width:100%"><span class="ic">🗂️</span><span class="tx"><b>الفئات</b><small>شوف كل الفئات واختار اللي تعجبك.</small></span><span class="ch">‹</span></button>
-  <div class="sec"><span>أنواع اللعب</span><span>${Q.length} سؤال • ${nc} فئة</span></div>
-  <div class="cards duo">
-   <button class="mode c-classic" data-act="online"><span class="ic">🎯</span><span class="tx"><b>سباق إجابات</b><small>4 اختيارات و20 ثانية. الأسرع والأدق يكسب.</small></span></button>
-   <button class="mode c-bluff" data-act="online"><span class="ic">🎭</span><span class="tx"><b>بلوف</b><small>اكتب إجابة مزيفة تخدع بيها صحابك.</small></span></button>
-  </div>
+  <p class="slg" style="text-align:center;color:var(--mut);font-size:13px">${Q.length} سؤال • ${nc} فئة • سباق إجابات وبلوف مع صحابك أونلاين</p>
   <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});HomeLogo.animate();
 }
 function howto(){shell(`<div class="panel"><h2>إزاي ألعب؟</h2>
