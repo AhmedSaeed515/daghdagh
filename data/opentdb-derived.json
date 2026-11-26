@@ -5,29 +5,6 @@
  "questions": [
   {
    "cat": "sci",
-   "difficulty": 2,
-   "ar": {
-    "q": "إيه اللون اللي ما ينفعش يطلع في الورد حتى بالتعديل الوراثي؟",
-    "correct": "الأزرق",
-    "wrong": [
-     "الأسود",
-     "البرتقالي",
-     "البني"
-    ]
-   },
-   "en": {
-    "q": "Which color cannot be produced in Roses, even through genetic alteration?",
-    "correct": "Blue",
-    "wrong": [
-     "Black",
-     "Orange",
-     "Brown"
-    ]
-   },
-   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
-  },
-  {
-   "cat": "sci",
    "difficulty": 1,
    "ar": {
     "q": "حزام الكويكبات موجود بين أنهي كوكبين؟",
@@ -137,29 +114,6 @@
      "Sulfur",
      "Hydrogen",
      "Iron"
-    ]
-   },
-   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
-  },
-  {
-   "cat": "sci",
-   "difficulty": 1,
-   "ar": {
-    "q": "كام كروموسوم في خلايا جسم الإنسان (عدد الأزواج)؟",
-    "correct": "23 زوج",
-    "wrong": [
-     "21 زوج",
-     "22 زوج",
-     "24 زوج"
-    ]
-   },
-   "en": {
-    "q": "How many chromosomes are in your body cells?",
-    "correct": "23",
-    "wrong": [
-     "21",
-     "22",
-     "24"
     ]
    },
    "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
@@ -2121,29 +2075,6 @@
   },
   {
    "cat": "hist",
-   "difficulty": 2,
-   "ar": {
-    "q": "أول رياضة اتلعبت على القمر؟",
-    "correct": "الجولف",
-    "wrong": [
-     "كرة القدم",
-     "التنس",
-     "السوكر"
-    ]
-   },
-   "en": {
-    "q": "What was the first sport to have been played on the moon?",
-    "correct": "Golf",
-    "wrong": [
-     "Football",
-     "Tennis",
-     "Soccer"
-    ]
-   },
-   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
-  },
-  {
-   "cat": "hist",
    "difficulty": 3,
    "ar": {
     "q": "الربيع العربي بدأ في أنهي دولة عربية؟",
@@ -2805,29 +2736,6 @@
      "Roy Lichtenstein",
      "David Hockney",
      "Peter Blake"
-    ]
-   },
-   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
-  },
-  {
-   "cat": "art",
-   "difficulty": 1,
-   "ar": {
-    "q": "إيه أقدم عمل أدبي خيالي معروف في العالم؟",
-    "correct": "ملحمة جلجامش",
-    "wrong": [
-     "بردية آني",
-     "شريعة حمورابي",
-     "حجر رشيد"
-    ]
-   },
-   "en": {
-    "q": "What is the world's oldest known piece of fiction?",
-    "correct": "Epic of Gilgamesh",
-    "wrong": [
-     "Papyrus of Ani",
-     "Code of Hammurabi",
-     "Rosetta Stone"
     ]
    },
    "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
@@ -4116,29 +4024,6 @@
      "Toshiba",
      "Asus",
      "Dell"
-    ]
-   },
-   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
-  },
-  {
-   "cat": "gen",
-   "difficulty": 2,
-   "ar": {
-    "q": "إيه الحاجة اللي منعتها كتالونيا سنة 2010 ودخل القرار حيز التنفيذ 2012؟",
-    "correct": "مصارعة الثيران",
-    "wrong": [
-     "الفيستا",
-     "الفلامنكو",
-     "الماريتشي"
-    ]
-   },
-   "en": {
-    "q": "What did Catalonia ban in 2010, effective in 2012?",
-    "correct": "Bullfighting",
-    "wrong": [
-     "Fiestas",
-     "Flamenco",
-     "Mariachi"
     ]
    },
    "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
