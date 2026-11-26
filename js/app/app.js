@@ -8,7 +8,7 @@ booted=true;
 
 
 // ---------- state ----------
-const CFG={mode:'classic',players:['لاعب 1'],cats:(store.get('cats',[])||[]).filter(k=>CATS[k]),diff:0,rounds:10};const MINCATS=6;
+const CFG={mode:'classic',players:['لاعب 1'],cats:(store.get('cats',[])||[]).filter(k=>CATS[k]).slice(0,6),diff:0,rounds:10};const MINCATS=1,MAXCATS=6;
 let G=null,timer=null;
 function clearTimer(){if(timer){clearInterval(timer);timer=null}}
 
@@ -103,9 +103,9 @@ function catsSync(){if(!catBr)return;const sel=catBr.get();const all=Object.keys
 document.querySelectorAll('.catc').forEach(c=>{const on=sel.includes(c.dataset.catt);c.classList.toggle('on',on);c.style.animation='none';if(catF==='sel'&&!on)c.remove();});
 document.querySelectorAll('.catsec').forEach(s=>{if(!s.querySelector('.catc')){s.remove();return;}const g=catGroupsList().find(x=>x.name===s.querySelector('h3').textContent);const n=s.querySelector('.cathd span');if(g&&n)n.textContent=g.keys.filter(k=>sel.includes(k)).length+'/'+g.keys.length;});
 const cs=document.querySelector('[data-catf="sel"]');if(cs)cs.textContent='المختارة ('+sel.length+')';
-const an=document.querySelector('[data-act="catsall2"]');if(an)an.textContent=allOn?'إلغاء الكل':'اختيار الكل ✓';
-const sc=document.getElementById('catcount');if(sc)sc.textContent=sel.length+' مختارة';
-const d=document.querySelector('[data-act="catsdone"]');if(d){d.disabled=sel.length<MINCATS;d.textContent=sel.length<MINCATS?`اختار ${MINCATS-sel.length} فئات كمان (${sel.length}/${MINCATS})`:`اعتمد ${sel.length} فئة`;}}
+const an=document.querySelector('[data-act="catsall2"]');if(an)an.textContent=sel.length?'إلغاء الكل':'🎲 اختار 6 عشوائي';
+const sc=document.getElementById('catcount');if(sc)sc.textContent=sel.length+' / '+MAXCATS+' مختارة';
+const d=document.querySelector('[data-act="catsdone"]');if(d){d.disabled=sel.length<MINCATS;d.textContent=sel.length<MINCATS?'اختار فئة واحدة على الأقل':`اعتمد ${sel.length} فئة`;}}
 function catsView(){
   if(!catBr)return;TAB=catBr.tab||'';
   const sel=catBr.get();const allOn=sel.length>=Object.keys(CATS).length;
@@ -121,9 +121,9 @@ function catsView(){
     return `<section class="catsec"><div class="cathd"><h3>${g.name}</h3><span>${n}/${g.keys.length}</span></div><div class="catgrid">${ks.map(card).join('')}</div></section>`;}).join('');
   const opts=`<option value="">كل المجموعات</option>`+groups.map(g=>`<option value="${g.id}"${catG===g.id?' selected':''}>${g.name}</option>`).join('');
   shell(`<div class="search"><input id="catq" placeholder="ابحث عن فئة..." value="${esc(catQ)}" autocomplete="off"></div>
-  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">تصفح (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button><select id="catg" class="catsel" aria-label="المجموعة">${opts}</select><button class="chip alln" data-act="catsall2">${allOn?'إلغاء الكل':'اختيار الكل ✓'}</button></div>
+  <div class="chips"><button class="chip ${catF==='all'?'on':''}" data-catf="all">تصفح (${Object.keys(CATS).length})</button><button class="chip ${catF==='sel'?'on':''}" data-catf="sel">المختارة (${sel.length})</button><select id="catg" class="catsel" aria-label="المجموعة">${opts}</select><button class="chip alln" data-act="catsall2">${sel.length?'إلغاء الكل':'🎲 اختار 6 عشوائي'}</button></div>
   <div class="catlist">${secs||'<p class="center" style="color:var(--mut);margin-top:24px">مفيش فئات مطابقة</p>'}</div>
-  <div class="footbar catbar"${catBr.tab?' style="bottom:66px"':''}><div class="catinfo"><b id="catcount">${sel.length} مختارة</b><button class="catrev" data-catf="sel">راجع اختياراتك</button></div><button class="btn big" data-act="catsdone" ${sel.length<MINCATS?'disabled':''}>${sel.length<MINCATS?`اختار ${MINCATS-sel.length} فئات كمان (${sel.length}/${MINCATS})`:`اعتمد ${sel.length} فئة`}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
+  <div class="footbar catbar"${catBr.tab?' style="bottom:66px"':''}><div class="catinfo"><b id="catcount">${sel.length} / ${MAXCATS} مختارة</b><button class="catrev" data-catf="sel">راجع اختياراتك</button></div><button class="btn big" data-act="catsdone" ${sel.length<MINCATS?'disabled':''}>${sel.length<MINCATS?'اختار فئة واحدة على الأقل':`اعتمد ${sel.length} فئة`}</button></div>`,{title:'الفئات',nav:!!catBr.tab});
 }
 
 // ---------- profile ----------
@@ -250,7 +250,7 @@ document.addEventListener('click',e=>{
   if(t.dataset.pf)return pfClick(t);
   if(t.dataset.tab){const k=t.dataset.tab;if(k==='home')return home();if(k==='cats')return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>home(),tab:'cats'});if(k==='online')return openOnline();if(k==='friends')return FR.open();if(k==='me')return profileView();return;}
   if(t.dataset.catf!==undefined){catF=t.dataset.catf;return catsView();}
-  if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){sel.splice(i,1);}else sel.push(c);catBr.set(sel);return catsSync();}
+  if(t.dataset.catt){const c=t.dataset.catt,sel=catBr.get();const i=sel.indexOf(c);if(i>=0){sel.splice(i,1);}else{if(sel.length>=MAXCATS){const sc=document.getElementById('catcount');if(sc){sc.textContent='الحد الأقصى '+MAXCATS+' فئات';setTimeout(()=>catsSync(),1400);}return;}sel.push(c);}catBr.set(sel);return catsSync();}
   if(t.dataset.mode)return setup(t.dataset.mode);
   if(t.dataset.cat){const c=t.dataset.cat;const i=CFG.cats.indexOf(c);if(i>=0){if(CFG.cats.length>1)CFG.cats.splice(i,1);}else CFG.cats.push(c);return setup(CFG.mode);}
   if(t.dataset.diff!==undefined){CFG.diff=+t.dataset.diff;return setup(CFG.mode);}
@@ -265,7 +265,7 @@ document.addEventListener('click',e=>{
     case 'catsopen':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>home(),tab:'home'});
     case 'me':return profileView();
     case 'install':return installView();
-    case 'catsall2':{const sel=catBr.get();const all=Object.keys(CATS);const on=sel.length>=all.length;sel.length=0;if(!on)all.forEach(k=>sel.push(k));catBr.set(sel);return catsSync();}
+    case 'catsall2':{const sel=catBr.get();const had=sel.length>0;sel.length=0;if(!had)shuffle(Object.keys(CATS)).slice(0,MAXCATS).forEach(k=>sel.push(k));catBr.set(sel);return catsSync();}
     case 'catsall':CFG.cats=Object.keys(CATS);return setup(CFG.mode);
     case 'catsnone':CFG.cats=[];return setup(CFG.mode);
     case 'catsedit':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>setup(CFG.mode)});
@@ -298,7 +298,7 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='fake')bluffSend();});
 
-const ONL=initOnline({app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,avh,avOK,setTab:k=>{TAB=k},catsOpen:()=>!!catBr});
+const ONL=initOnline({picker,app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,avh,avOK,setTab:k=>{TAB=k},catsOpen:()=>!!catBr});
 window.__ONL=ONL;window.__lgHome=home;window.shell=shell;window.CATS=CATS;
 JR?linkJoin():(profileOk()?home():profileForm(true));
 }
