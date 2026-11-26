@@ -238,12 +238,24 @@ function finish(){
 }
 
 // ---------- navigation history ----------
-var openOnline=function(){return openOnline();};let VH=[],CURV=null,NAVING=false;
-function goBack(){catBr=null;const p=VH.pop();if(!p)return home();NAVING=true;try{p.f();}finally{NAVING=false;}}
-function trk(n,fn,reset){return function(...a){if(n!=='cats')catBr=null;if(reset){VH=[];CURV=null;}else if(!NAVING){if(CURV&&CURV.n!==n){VH.push(CURV);try{history.pushState({v:1},'')}catch(e){}}}CURV={n,f:()=>fn.apply(null,a)};return fn.apply(this,a);}}
+var openOnline=function(){return openOnline();};let VH=[],CURV=null,NAVING=false,SKIP=0,HD=0;
+function goBack(){catBr=null;const p=VH.pop();if(!p)return home();NAVING=true;CURV=p;try{p.f();}finally{NAVING=false;}}
+function inPlay(){try{const d=ONL&&ONL.debug&&ONL.debug();if(d&&d.S&&d.S.ph&&!['lobby','fin'].includes(d.S.ph))return true;}catch(e){}
+ const s=document.getElementById('scr');if(!s)return false;
+ if(G&&s.querySelector('.qmeta,.opts'))return true;
+ return !!s.querySelector('.jgrid,.rgrid')&&!s.querySelector('.res.good');}
+function tryBack(fromPop){
+  if(inPlay()&&!confirm('تخرج من اللعبة؟ اللي لعبته هيضيع.')){if(fromPop){try{history.pushState({v:1},'');HD++;}catch(e){}}return;}
+  if(VH.length)return goBack();
+  if(CURV&&CURV.n!=='home')return home();
+}
+function doBack(){if(HD>0){try{history.back();return;}catch(e){}}tryBack(false);}
+function trk(n,fn,reset){return function(...a){if(n!=='cats')catBr=null;if(reset){VH=[];CURV=null;if(HD>0){const k=HD;HD=0;SKIP++;try{history.go(-k);}catch(e){SKIP--;}}}else if(!NAVING){if(CURV&&CURV.n!==n){VH.push(CURV);try{history.pushState({v:1},'');HD++;}catch(e){}}}CURV={n,f:()=>fn.apply(null,a)};return fn.apply(this,a);}}
 home=trk('home',home,true);setup=trk('setup',setup);catsBrowser=trk('cats',catsBrowser);profileView=trk('me',profileView);installView=trk('inst',installView);howto=trk('how',howto);
 CURV={n:'home',f:()=>home()};const _ool=()=>ONL.open();openOnline=trk('onl',_ool);
-window.addEventListener('popstate',()=>{if(VH.length)goBack();});
+window.__trk=trk;window.__back=doBack;window.__nd=()=>({VH:VH.map(v=>v.n),HD,CURV:CURV&&CURV.n});
+window.__navPopSilent=function(){VH.pop();CURV=null;if(HD>0){HD--;SKIP++;try{history.back();}catch(e){SKIP--;}}};
+window.addEventListener('popstate',()=>{if(SKIP>0){SKIP--;return;}HD=Math.max(0,HD-1);tryBack(true);});
 
 // ---------- events ----------
 document.addEventListener('click',e=>{
@@ -273,7 +285,7 @@ document.addEventListener('click',e=>{
     case 'catsedit':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>setup(CFG.mode)});
     case 'catsdone':{const o=catBr;catBr=null;if(o&&o.onDone)return o.onDone();return home();}
     case 'rminus':case 'rplus':{const st=RSTEP[CFG.mode];let i=st.indexOf(CFG.rounds);i+=t.dataset.act==='rplus'?1:-1;i=Math.max(0,Math.min(st.length-1,i));CFG.rounds=st[i];return setup(CFG.mode);}
-    case 'back':return goBack();case 'home':return home();case 'howto':return howto();
+    case 'back':return doBack();case 'home':return home();case 'howto':return howto();
     case 'lj':{const el=document.getElementById('ljname');const nm=el?el.value.trim().slice(0,14):'';if(!nm){if(el)el.focus();return;}store.set('myname',nm);if(!store.get('myav',''))store.set('myav',AVS[Math.floor(Math.random()*AVS.length)]);return ONL.joinCode(JR);}
     case 'back2home':return home();
     case 'theme':{const d=!store.get('dark',false);store.set('dark',d);document.documentElement.classList.toggle('dk',d);const m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#14141a':'#efece3';return profileView();}
