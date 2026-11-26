@@ -2003,6 +2003,2145 @@
     ]
    },
    "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "الحرب اللي حصلت فيها قنابل هيروشيما وناجازاكي الذرية؟",
+    "correct": "الحرب العالمية التانية",
+    "wrong": [
+     "الحرب العالمية الأولى",
+     "الحرب الروسية اليابانية",
+     "الحرب الصينية اليابانية الأولى"
+    ]
+   },
+   "en": {
+    "q": "In which war did the atomic bombings of Hiroshima and Nagasaki occur?",
+    "correct": "World War II",
+    "wrong": [
+     "World War I",
+     "Russo-Japanese War",
+     "First Sino-Japanese War"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "حرب المئة عام فضلت كام سنة فعلًا؟",
+    "correct": "116",
+    "wrong": [
+     "100",
+     "90",
+     "101"
+    ]
+   },
+   "en": {
+    "q": "How many years did the Hundred Years' War last?",
+    "correct": "116",
+    "wrong": [
+     "100",
+     "90",
+     "101"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "نيلسون مانديلا خرج من السجن في أنهي سنة؟",
+    "correct": "1990",
+    "wrong": [
+     "1994",
+     "1992",
+     "1980"
+    ]
+   },
+   "en": {
+    "q": "In which year was Nelson Mandela released from prison?",
+    "correct": "1990",
+    "wrong": [
+     "1994",
+     "1992",
+     "1980"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين صاحبة العبارة الشهيرة \"سيبوهم ياكلوا جاتوه\"؟",
+    "correct": "ماري أنطوانيت",
+    "wrong": [
+     "القيصر نيقولا الثاني",
+     "إليزابيث الأولى",
+     "هنري الثامن"
+    ]
+   },
+   "en": {
+    "q": "Which famous world leader is famed for the saying \"Let them eat cake\"?",
+    "correct": "Marie Antoinette",
+    "wrong": [
+     "Czar Nicholas II",
+     "Elizabeth I",
+     "Henry VIII"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي معركة بحرية اتعتبرت نقطة التحول في المحيط الهادي في الحرب العالمية التانية؟",
+    "correct": "معركة ميدواي",
+    "wrong": [
+     "الهجوم على ترك",
+     "الهجوم على بيرل هاربر",
+     "معركة بحر المرجان"
+    ]
+   },
+   "en": {
+    "q": "Which naval battle was considered the turning point of the Pacific Ocean Theater during World War 2?",
+    "correct": "Battle of Midway",
+    "wrong": [
+     "Attack on Truk Lagoon",
+     "Attack on Pearl Harbor",
+     "Battle of the Coral Sea"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "أول رياضة اتلعبت على القمر؟",
+    "correct": "الجولف",
+    "wrong": [
+     "كرة القدم",
+     "التنس",
+     "السوكر"
+    ]
+   },
+   "en": {
+    "q": "What was the first sport to have been played on the moon?",
+    "correct": "Golf",
+    "wrong": [
+     "Football",
+     "Tennis",
+     "Soccer"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 3,
+   "ar": {
+    "q": "الربيع العربي بدأ في أنهي دولة عربية؟",
+    "correct": "تونس",
+    "wrong": [
+     "المغرب",
+     "سوريا",
+     "مصر"
+    ]
+   },
+   "en": {
+    "q": "The Arab Spring began in which of these Arab nations?",
+    "correct": "Tunisia",
+    "wrong": [
+     "Morocco",
+     "Syria",
+     "Egypt"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه اسم أول مستوطنة إنجليزية دايمة في أمريكا؟",
+    "correct": "جيمستاون",
+    "wrong": [
+     "نيويورك",
+     "سانت جونز",
+     "بليموث"
+    ]
+   },
+   "en": {
+    "q": "What was the name of the first permanent English settlement in America?",
+    "correct": "Jamestown",
+    "wrong": [
+     "New York",
+     "St. John's",
+     "Plymouth"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي دولة كانت من الحلفاء في الحرب العالمية التانية؟",
+    "correct": "الاتحاد السوفييتي",
+    "wrong": [
+     "إيطاليا",
+     "ألمانيا",
+     "اليابان"
+    ]
+   },
+   "en": {
+    "q": "Which country was an allied power in World War II?",
+    "correct": "Soviet Union",
+    "wrong": [
+     "Italy",
+     "Germany",
+     "Japan"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي دولة مش كانت ضمن دول المحور (القوى المركزية) في الحرب العالمية الأولى؟",
+    "correct": "إسبانيا",
+    "wrong": [
+     "النمسا والمجر",
+     "تركيا",
+     "ألمانيا"
+    ]
+   },
+   "en": {
+    "q": "Which one of these countries was NOT in the Central Powers during WWI?",
+    "correct": "Spain",
+    "wrong": [
+     "Austria-Hungary",
+     "Turkey",
+     "Germany"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه الحدث اللي بدأ بيه الحرب العالمية التانية؟",
+    "correct": "غزو بولندا (1939)",
+    "wrong": [
+     "غزو روسيا",
+     "معركة بريطانيا",
+     "غزو النرويج"
+    ]
+   },
+   "en": {
+    "q": "What event marked the start of World War II?",
+    "correct": "Invasion of Poland (1939)",
+    "wrong": [
+     "Invasion of Russia",
+     "Battle of Britain",
+     "Invasion of Norway"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه الاسم الشائع لطرق التجارة القديمة اللي كانت بتوصل الشرق بالغرب؟",
+    "correct": "طريق الحرير",
+    "wrong": [
+     "طريق التوابل",
+     "طريق الطين",
+     "طريق الملح"
+    ]
+   },
+   "en": {
+    "q": "What was the name commonly given to the ancient trade routes that connected the East and West?",
+    "correct": "Silk Road",
+    "wrong": [
+     "Spice Road",
+     "Clay Road",
+     "Salt Road"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "hist",
+   "difficulty": 2,
+   "ar": {
+    "q": "بعد ما اتعمل بابا للكنيسة، رودريجو بورجيا اتسمى إيه؟",
+    "correct": "ألكسندر السادس",
+    "wrong": [
+     "رودريجو الأول",
+     "يوحنا بولس الثاني",
+     "بيوس السابع"
+    ]
+   },
+   "en": {
+    "q": "Under which name was Rodrigo Borgia made Pope?",
+    "correct": "Alexander VI",
+    "wrong": [
+     "Rodrigo I",
+     "John Paul II",
+     "Pius VII"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين النحات اليوناني اللي صمم تمثال أثينا بارثينوس جوه البارثينون؟",
+    "correct": "فيدياس",
+    "wrong": [
+     "سكوباس",
+     "هسيود",
+     "براكسيتيليس"
+    ]
+   },
+   "en": {
+    "q": "Which Greek sculptor designed the Athena Parthenos statue inside the Parthenon?",
+    "correct": "Phidias",
+    "wrong": [
+     "Scopas",
+     "Hesiod",
+     "Praxiteles"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه الاسم التاني للوحة \"لا جيوكاندا\"؟",
+    "correct": "الموناليزا",
+    "wrong": [
+     "الفتاة ذات القرط اللؤلؤ",
+     "الليلة المرصعة بالنجوم",
+     "عباد الشمس"
+    ]
+   },
+   "en": {
+    "q": "What is another name for La Gioconda / La Joconde?",
+    "correct": "The Mona Lisa",
+    "wrong": [
+     "The Girl with a Pearl Earring",
+     "The Starry Night",
+     "Sunflowers"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "الفنان بول جوجان انتقل لأنهي مكان سنة 1895؟",
+    "correct": "تاهيتي",
+    "wrong": [
+     "فرنسا",
+     "أتواونا",
+     "ليتوانيا"
+    ]
+   },
+   "en": {
+    "q": "Paul Gauguin moved to which country in 1895?",
+    "correct": "Tahiti",
+    "wrong": [
+     "France",
+     "Atuona",
+     "Lithuania"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي فنان أسلوبه إنه بيستخدم نقط صغيرة ملونة عشان يعمل اللوحة؟",
+    "correct": "جورج سورا",
+    "wrong": [
+     "بول سيزان",
+     "فان جوخ",
+     "هنري روسو"
+    ]
+   },
+   "en": {
+    "q": "Which artist's style was to use small different colored dots to create a picture?",
+    "correct": "Georges Seurat",
+    "wrong": [
+     "Paul Cézanne",
+     "Vincent Van Gogh",
+     "Henri Rousseau"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين اللي رسم سقف كنيسة السيستين؟",
+    "correct": "مايكل أنجلو",
+    "wrong": [
+     "ليوناردو دا فينشي",
+     "بيكاسو",
+     "رافائيل"
+    ]
+   },
+   "en": {
+    "q": "Who painted the Sistine Chapel?",
+    "correct": "Michelangelo",
+    "wrong": [
+     "Leonardo da Vinci",
+     "Pablo Picasso",
+     "Raphael"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين رسم لوحة \"إصرار الذاكرة\" والساعات الدايبة؟",
+    "correct": "سلفادور دالي",
+    "wrong": [
+     "جاكسون بولوك",
+     "فان جوخ",
+     "إدجار ديجا"
+    ]
+   },
+   "en": {
+    "q": "Who painted \"The Persistence of Memory\"?",
+    "correct": "Salvador Dali",
+    "wrong": [
+     "Jackson Pollock",
+     "Vincent van Gogh",
+     "Edgar Degas"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه الحركة الفنية اللي بيكاسو شارك في تأسيسها؟",
+    "correct": "التكعيبية",
+    "wrong": [
+     "المستقبلية",
+     "التعبيرية",
+     "الانطباعية"
+    ]
+   },
+   "en": {
+    "q": "Which art movement was Pablo Picasso known for co-founding?",
+    "correct": "Cubism",
+    "wrong": [
+     "Futurism",
+     "Expressionism",
+     "Impressionism"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه اللون اللي بيطلع من خلط الأسود والأبيض؟",
+    "correct": "الرمادي",
+    "wrong": [
+     "الأسود",
+     "البني",
+     "الأبيض"
+    ]
+   },
+   "en": {
+    "q": "What color is produced by mixing black and white?",
+    "correct": "Grey",
+    "wrong": [
+     "Black",
+     "Brown",
+     "White"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين اللي رسم الموناليزا؟",
+    "correct": "ليوناردو دا فينشي",
+    "wrong": [
+     "بيكاسو",
+     "كلود مونيه",
+     "فان جوخ"
+    ]
+   },
+   "en": {
+    "q": "Who painted the Mona Lisa?",
+    "correct": "Leonardo da Vinci",
+    "wrong": [
+     "Pablo Picasso",
+     "Claude Monet",
+     "Vincent van Gogh"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين رسم لوحة \"نايت هوكس\" (صقور الليل)؟",
+    "correct": "إدوارد هوبر",
+    "wrong": [
+     "يوهانس فيرمير",
+     "فان جوخ",
+     "سلفادور دالي"
+    ]
+   },
+   "en": {
+    "q": "Who painted the painting \"Nighthawks\"?",
+    "correct": "Edward Hopper",
+    "wrong": [
+     "Johannes Vermeer",
+     "Vincent van Gogh",
+     "Salvador Dali"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه اسم فن طي الورق الياباني؟",
+    "correct": "الأوريجامي",
+    "wrong": [
+     "سومي إي",
+     "أوكيو إي",
+     "الهايكو"
+    ]
+   },
+   "en": {
+    "q": "What is the name of the Japanese art of folding paper into decorative shapes and figures?",
+    "correct": "Origami",
+    "wrong": [
+     "Sumi-e",
+     "Ukiyo-e",
+     "Haiku"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "فان جوخ كان من أنهي جنسية؟",
+    "correct": "هولندي",
+    "wrong": [
+     "فرنسي",
+     "روسي",
+     "بولندي"
+    ]
+   },
+   "en": {
+    "q": "What nationality was the famous artist Van Gogh?",
+    "correct": "Dutch",
+    "wrong": [
+     "French",
+     "Russian",
+     "Polish"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين رسم الجدارية الضخمة \"جرنيكا\"؟",
+    "correct": "بابلو بيكاسو",
+    "wrong": [
+     "فرانثيسكو جويا",
+     "ليوناردو دا فينشي",
+     "هنري ماتيس"
+    ]
+   },
+   "en": {
+    "q": "Who painted the epic mural Guernica?",
+    "correct": "Pablo Picasso",
+    "wrong": [
+     "Francisco Goya",
+     "Leonardo da Vinci",
+     "Henri Matisse"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين نحت تمثال داوود الشهير؟",
+    "correct": "مايكل أنجلو",
+    "wrong": [
+     "جيان لورينزو برنيني",
+     "أوجست رودان",
+     "دوناتيلو"
+    ]
+   },
+   "en": {
+    "q": "Who sculpted the statue of David?",
+    "correct": "Michelangelo",
+    "wrong": [
+     "Gian Lorenzo Bernini",
+     "Auguste Rodin",
+     "Donatello"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين رسم \"العشاء الأخير\"؟",
+    "correct": "ليوناردو دا فينشي",
+    "wrong": [
+     "بييرو ديلا فرانشيسكا",
+     "باولو أوتشيلو",
+     "لوكا باتشولي"
+    ]
+   },
+   "en": {
+    "q": "Which artist painted the late 15th century mural 'The Last Supper'?",
+    "correct": "Leonardo da Vinci",
+    "wrong": [
+     "Piero della Francesca",
+     "Paolo Uccello",
+     "Luca Pacioli"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين رسم لوحة \"خلق آدم\"؟",
+    "correct": "مايكل أنجلو",
+    "wrong": [
+     "ليوناردو دا فينشي",
+     "كارافاجيو",
+     "رامبرانت"
+    ]
+   },
+   "en": {
+    "q": "Who painted the biblical fresco The Creation of Adam?",
+    "correct": "Michelangelo",
+    "wrong": [
+     "Leonardo da Vinci",
+     "Caravaggio",
+     "Rembrandt"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي فنان مشهور إنه قطع ودنه؟",
+    "correct": "فان جوخ",
+    "wrong": [
+     "سلفادور دالي",
+     "رامبرانت",
+     "مايكل أنجلو"
+    ]
+   },
+   "en": {
+    "q": "Which artist is famous for cutting off his ear?",
+    "correct": "Vincent van Gogh",
+    "wrong": [
+     "Salvador Dali",
+     "Rembrandt",
+     "Michelangelo"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "مين رسم \"الليلة المرصعة بالنجوم\"؟",
+    "correct": "فان جوخ",
+    "wrong": [
+     "إدفارد مونك",
+     "بيكاسو",
+     "كلود مونيه"
+    ]
+   },
+   "en": {
+    "q": "Who painted \"The Starry Night\"?",
+    "correct": "Vincent van Gogh",
+    "wrong": [
+     "Edvard Munch",
+     "Pablo Picasso",
+     "Claude Monet"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين رسم لوحة \"الصرخة\"؟",
+    "correct": "إدفارد مونك",
+    "wrong": [
+     "فان جوخ",
+     "بيكاسو",
+     "هنري ماتيس"
+    ]
+   },
+   "en": {
+    "q": "Who painted \"The Scream\"?",
+    "correct": "Edvard Munch",
+    "wrong": [
+     "Vincent Van Gogh",
+     "Picasso",
+     "Henri Matisse"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "سلفادور دالي كان من أنهي جنسية؟",
+    "correct": "إسباني",
+    "wrong": [
+     "إيطالي",
+     "فرنسي",
+     "برتغالي"
+    ]
+   },
+   "en": {
+    "q": "What nationality was the surrealist painter Salvador Dali?",
+    "correct": "Spanish",
+    "wrong": [
+     "Italian",
+     "French",
+     "Portuguese"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "مين اللي رسم لوحة \"خيانة الصور\" (دي مش pipe)؟",
+    "correct": "ماجريت",
+    "wrong": [
+     "ماتيس",
+     "موديلياني",
+     "مونك"
+    ]
+   },
+   "en": {
+    "q": "Which artist painted \"The Treachery of Images,\" a painting of a pipe?",
+    "correct": "Magritte",
+    "wrong": [
+     "Matisse",
+     "Modigliani",
+     "Munch"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "مستوديو أنهي فنان كان بيتسمى \"المصنع\"؟",
+    "correct": "آندي وارهول",
+    "wrong": [
+     "روي ليشتنشتاين",
+     "ديفيد هوكني",
+     "بيتر بليك"
+    ]
+   },
+   "en": {
+    "q": "Which artist's studio was known as 'The Factory'?",
+    "correct": "Andy Warhol",
+    "wrong": [
+     "Roy Lichtenstein",
+     "David Hockney",
+     "Peter Blake"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه أقدم عمل أدبي خيالي معروف في العالم؟",
+    "correct": "ملحمة جلجامش",
+    "wrong": [
+     "بردية آني",
+     "شريعة حمورابي",
+     "حجر رشيد"
+    ]
+   },
+   "en": {
+    "q": "What is the world's oldest known piece of fiction?",
+    "correct": "Epic of Gilgamesh",
+    "wrong": [
+     "Papyrus of Ani",
+     "Code of Hammurabi",
+     "Rosetta Stone"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 3,
+   "ar": {
+    "q": "مين النحات الفرنسي اللي صمم تمثال الحرية؟",
+    "correct": "فريدريك أوجست بارتولدي",
+    "wrong": [
+     "جان ليون جيروم",
+     "أوجست رودان",
+     "هنري ماتيس"
+    ]
+   },
+   "en": {
+    "q": "What French sculptor designed the Statue of Liberty?",
+    "correct": "Frédéric Auguste Bartholdi",
+    "wrong": [
+     "Jean-Léon Gérôme",
+     "Auguste Rodin",
+     "Henri Matisse"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 3,
+   "ar": {
+    "q": "لوحة جرنيكا لبيكاسو بتعبر عن الرعب في أنهي حرب؟",
+    "correct": "الحرب الأهلية الإسبانية",
+    "wrong": [
+     "الحرب العالمية الأولى",
+     "حرب القرم",
+     "الحرب الأمريكية الإسبانية"
+    ]
+   },
+   "en": {
+    "q": "The painting \"Guernica\" expressed dread in response to which war?",
+    "correct": "Spanish Civil War",
+    "wrong": [
+     "World War I",
+     "The Crimean War",
+     "Spanish-American War"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 2,
+   "ar": {
+    "q": "بيكاسو كان من أنهي جنسية؟",
+    "correct": "إسباني",
+    "wrong": [
+     "فرنسي",
+     "إيطالي",
+     "ألماني"
+    ]
+   },
+   "en": {
+    "q": "What nationality was the famous artist Pablo Picasso?",
+    "correct": "Spanish",
+    "wrong": [
+     "French",
+     "Italian",
+     "German"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "art",
+   "difficulty": 3,
+   "ar": {
+    "q": "مين رسم \"الجوتيك الأمريكي\" (American Gothic)؟",
+    "correct": "جرانت وود",
+    "wrong": [
+     "أنيتا مالفاتي",
+     "بيكاسو",
+     "مارك شاجال"
+    ]
+   },
+   "en": {
+    "q": "Who painted \"American Gothic\"?",
+    "correct": "Grant Wood",
+    "wrong": [
+     "Anita Malfatti",
+     "Pablo Picasso",
+     "Marc Chagall"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "الحيوان اللي اتعمل عليه تجربة تدجين روسية سنة 1959؟",
+    "correct": "الثعالب",
+    "wrong": [
+     "الحمام",
+     "الدببة",
+     "التماسيح"
+    ]
+   },
+   "en": {
+    "q": "Which animal was part of a Russian domestication experiment in 1959?",
+    "correct": "Foxes",
+    "wrong": [
+     "Pigeons",
+     "Bears",
+     "Alligators"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 3,
+   "ar": {
+    "q": "كل الثدييات والطيور والزواحف تنتمي لأنهي شعبة بيولوجية؟",
+    "correct": "الحبليات",
+    "wrong": [
+     "شوكيات الجلد",
+     "الحلقيات",
+     "الصفيحيات"
+    ]
+   },
+   "en": {
+    "q": "To which biological phylum do all mammals, birds and reptiles belong?",
+    "correct": "Chordata",
+    "wrong": [
+     "Echinodermata",
+     "Annelida",
+     "Placozoa"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه أطول ثعبان سام في العالم؟",
+    "correct": "الكوبرا الملكية",
+    "wrong": [
+     "الأناكوندا الخضراء",
+     "التايبان الداخلي",
+     "ثعبان البطن الأصفر"
+    ]
+   },
+   "en": {
+    "q": "What is the world's longest venomous snake?",
+    "correct": "King Cobra",
+    "wrong": [
+     "Green Anaconda",
+     "Inland Taipan",
+     "Yellow Bellied Sea Snake"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "الومبات حيوان أصله من أنهي دولة؟",
+    "correct": "أستراليا",
+    "wrong": [
+     "نيوزيلندا",
+     "بابوا غينيا الجديدة",
+     "بالاو"
+    ]
+   },
+   "en": {
+    "q": "Wombats are native to which Country?",
+    "correct": "Australia",
+    "wrong": [
+     "New Zealand",
+     "Papua New Guinea",
+     "Palau"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "قرن وحيد القرن مصنوع من إيه؟",
+    "correct": "الكيراتين",
+    "wrong": [
+     "العظم",
+     "العاج",
+     "الجلد"
+    ]
+   },
+   "en": {
+    "q": "What are rhino's horns made of?",
+    "correct": "Keratin",
+    "wrong": [
+     "Bone",
+     "Ivory",
+     "Skin"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام سن عند الأرنب البالغ؟",
+    "correct": "28",
+    "wrong": [
+     "30",
+     "26",
+     "24"
+    ]
+   },
+   "en": {
+    "q": "How many teeth does an adult rabbit have?",
+    "correct": "28",
+    "wrong": [
+     "30",
+     "26",
+     "24"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه أسرع حيوان في العالم؟",
+    "correct": "الصقر الشاهين",
+    "wrong": [
+     "النسر الذهبي",
+     "الفهد",
+     "ذبابة الخيل"
+    ]
+   },
+   "en": {
+    "q": "What is the fastest animal?",
+    "correct": "Peregrine Falcon",
+    "wrong": [
+     "Golden Eagle",
+     "Cheetah",
+     "Horsefly"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام رجل للفراشة؟",
+    "correct": "6",
+    "wrong": [
+     "2",
+     "4",
+     "0"
+    ]
+   },
+   "en": {
+    "q": "How many legs do butterflies have?",
+    "correct": "6",
+    "wrong": [
+     "2",
+     "4",
+     "0"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي حيوان من دول مش منقرض؟",
+    "correct": "تنين كومودو",
+    "wrong": [
+     "أسد البحر الياباني",
+     "النمر التسماني",
+     "غزال سعودي"
+    ]
+   },
+   "en": {
+    "q": "Which of these species is not extinct?",
+    "correct": "Komodo dragon",
+    "wrong": [
+     "Japanese sea lion",
+     "Tasmanian tiger",
+     "Saudi gazelle"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 3,
+   "ar": {
+    "q": "\"الدجاجة الجبلية\" في الحقيقة نوع من إيه؟",
+    "correct": "ضفدع",
+    "wrong": [
+     "دجاج",
+     "حصان",
+     "ذبابة"
+    ]
+   },
+   "en": {
+    "q": "Which species is a \"mountain chicken\"?",
+    "correct": "Frog",
+    "wrong": [
+     "Chicken",
+     "Horse",
+     "Fly"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "\"هيبوكامبوس\" هو الاسم اللاتيني لأنهي كائن بحري؟",
+    "correct": "حصان البحر",
+    "wrong": [
+     "الدلفين",
+     "الحوت",
+     "الأخطبوط"
+    ]
+   },
+   "en": {
+    "q": "Hippocampus is the Latin name for which marine creature?",
+    "correct": "Seahorse",
+    "wrong": [
+     "Dolphin",
+     "Whale",
+     "Octopus"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 3,
+   "ar": {
+    "q": "إيه نوع الكائن البونوبو؟",
+    "correct": "قرد عليا (ape)",
+    "wrong": [
+     "أسد",
+     "ببغاء",
+     "قط بري"
+    ]
+   },
+   "en": {
+    "q": "What type of creature is a Bonobo?",
+    "correct": "Ape",
+    "wrong": [
+     "Lion",
+     "Parrot",
+     "Wildcat"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه الحيوان القومي للهند؟",
+    "correct": "النمر",
+    "wrong": [
+     "الأسد",
+     "الحصان",
+     "الجمل"
+    ]
+   },
+   "en": {
+    "q": "Which is the national animal of India?",
+    "correct": "Tiger",
+    "wrong": [
+     "Lion",
+     "Horse",
+     "Camel"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "السمندل المائي (النيوت) بينتمي لأنهي فئة؟",
+    "correct": "البرمائيات",
+    "wrong": [
+     "الأسماك",
+     "الزواحف",
+     "الثدييات"
+    ]
+   },
+   "en": {
+    "q": "Which class of animals are newts members of?",
+    "correct": "Amphibian",
+    "wrong": [
+     "Fish",
+     "Reptiles",
+     "Mammals"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "طبق الفوجو الياباني بيتعمل من أنهي سمك؟",
+    "correct": "السمكة المنتفخة",
+    "wrong": [
+     "القاروص",
+     "السلمون",
+     "الماكريل"
+    ]
+   },
+   "en": {
+    "q": "The dish Fugu is made from what family of fish?",
+    "correct": "Pufferfish",
+    "wrong": [
+     "Bass",
+     "Salmon",
+     "Mackerel"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه أسرع حيوان على اليابسة؟",
+    "correct": "الفهد",
+    "wrong": [
+     "الأسد",
+     "غزال طومسون",
+     "ظبي البرونجهورن"
+    ]
+   },
+   "en": {
+    "q": "What is the fastest land animal?",
+    "correct": "Cheetah",
+    "wrong": [
+     "Lion",
+     "Thomson's Gazelle",
+     "Pronghorn Antelope"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "الكشمير هو صوف أنهي حيوان؟",
+    "correct": "الماعز",
+    "wrong": [
+     "الخروف",
+     "الجمل",
+     "اللاما"
+    ]
+   },
+   "en": {
+    "q": "Cashmere is the wool from which kind of animal?",
+    "correct": "Goat",
+    "wrong": [
+     "Sheep",
+     "Camel",
+     "Llama"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه اسم ذكر النحل اللي بيطلع من بيضة غير مخصبة؟",
+    "correct": "الذكر (الطنان)",
+    "wrong": [
+     "الجندي",
+     "العاملة",
+     "ذكر عادي"
+    ]
+   },
+   "en": {
+    "q": "What is the name for a male bee that comes from an unfertilized egg?",
+    "correct": "Drone",
+    "wrong": [
+     "Soldier",
+     "Worker",
+     "Male"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "an",
+   "difficulty": 2,
+   "ar": {
+    "q": "الطائر القومي في البحرين؟",
+    "correct": "البلبل",
+    "wrong": [
+     "الطنان",
+     "الصقر",
+     "العصفور"
+    ]
+   },
+   "en": {
+    "q": "What is the national bird of Bahrain?",
+    "correct": "Bulbul",
+    "wrong": [
+     "Hummingbird",
+     "Falcon",
+     "Sparrow"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي مدينة إيطالية فيها شركة فيات؟",
+    "correct": "تورينو",
+    "wrong": [
+     "مارانيلو",
+     "مودينا",
+     "روما"
+    ]
+   },
+   "en": {
+    "q": "Which Italian city is home of the car manufacturer 'Fiat'?",
+    "correct": "Turin",
+    "wrong": [
+     "Maranello",
+     "Modena",
+     "Rome"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة سيارات خارقة من السويد؟",
+    "correct": "كوينيجسيج",
+    "wrong": [
+     "بوجاتي",
+     "لامبورجيني",
+     "ماكلارين"
+    ]
+   },
+   "en": {
+    "q": "Which supercar company is from Sweden?",
+    "correct": "Koenigsegg",
+    "wrong": [
+     "Bugatti",
+     "Lamborghini",
+     "McLaren"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "سيارة تراباب 601 اتصنعت في أنهي دولة؟",
+    "correct": "ألمانيا الشرقية",
+    "wrong": [
+     "الاتحاد السوفييتي",
+     "المجر",
+     "فرنسا"
+    ]
+   },
+   "en": {
+    "q": "What country was the Trabant 601 manufactured in?",
+    "correct": "East Germany",
+    "wrong": [
+     "Soviet Union",
+     "Hungary",
+     "France"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه الأجزاء الأسطوانية اللي بتطلع وتنزل جوه المحرك؟",
+    "correct": "المكابس (البستم)",
+    "wrong": [
+     "ياي الأوراق",
+     "الردياتير",
+     "ABS"
+    ]
+   },
+   "en": {
+    "q": "What are the cylinder-like parts that pump up and down within the engine?",
+    "correct": "Pistons",
+    "wrong": [
+     "Leaf Springs",
+     "Radiators",
+     "ABS"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي حيوان على شعار بورشه؟",
+    "correct": "حصان",
+    "wrong": [
+     "ثور",
+     "أسد",
+     "فهد"
+    ]
+   },
+   "en": {
+    "q": "What animal is pictured on the logo of the automobile manufacturer Porsche?",
+    "correct": "Horse",
+    "wrong": [
+     "Bull",
+     "Lion",
+     "Cheetah"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي شركة إطارات مشهورة بخط \"P Zero\"؟",
+    "correct": "بيريللي",
+    "wrong": [
+     "جوديير",
+     "بريدجستون",
+     "ميشلان"
+    ]
+   },
+   "en": {
+    "q": "Which car tire manufacturer is famous for its \"P Zero\" line?",
+    "correct": "Pirelli",
+    "wrong": [
+     "Goodyear",
+     "Bridgestone",
+     "Michelin"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي حيوان على شعار أبارث؟",
+    "correct": "عقرب",
+    "wrong": [
+     "ثعبان",
+     "ثور",
+     "حصان"
+    ]
+   },
+   "en": {
+    "q": "Which animal features on the logo for Abarth?",
+    "correct": "Scorpion",
+    "wrong": [
+     "Snake",
+     "Bull",
+     "Horse"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أوديه هي لفولكس فاجن زي إنفينيتي هي لـ...؟",
+    "correct": "نيسان",
+    "wrong": [
+     "هوندا",
+     "هيونداي",
+     "سوبارو"
+    ]
+   },
+   "en": {
+    "q": "Audi is to Volkswagen as Infiniti is to ?",
+    "correct": "Nissan",
+    "wrong": [
+     "Honda",
+     "Hyundai",
+     "Subaru"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيمتى اتأسست تسلا؟",
+    "correct": "2003",
+    "wrong": [
+     "2008",
+     "2005",
+     "2007"
+    ]
+   },
+   "en": {
+    "q": "When was Tesla founded?",
+    "correct": "2003",
+    "wrong": [
+     "2008",
+     "2005",
+     "2007"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة يابانية هي أكبر مصنّع موتوسيكلات في العالم؟",
+    "correct": "هوندا",
+    "wrong": [
+     "ياماها",
+     "سوزوكي",
+     "كاواساكي"
+    ]
+   },
+   "en": {
+    "q": "Which Japanese company is the world's largest manufacturer of motorcycles?",
+    "correct": "Honda",
+    "wrong": [
+     "Yamaha",
+     "Suzuki",
+     "Kawasaki"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "فين بتتصنع سيارات فيراري؟",
+    "correct": "إيطاليا",
+    "wrong": [
+     "رومانيا",
+     "ألمانيا",
+     "روسيا"
+    ]
+   },
+   "en": {
+    "q": "Where are the cars of the brand \"Ferrari\" manufactured?",
+    "correct": "Italy",
+    "wrong": [
+     "Romania",
+     "Germany",
+     "Russia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة صنعت سيارة \"أفنتادور\"؟",
+    "correct": "لامبورجيني",
+    "wrong": [
+     "فيراري",
+     "باجاني",
+     "بوجاتي"
+    ]
+   },
+   "en": {
+    "q": "Which car manufacturer created the \"Aventador\"?",
+    "correct": "Lamborghini",
+    "wrong": [
+     "Ferrari",
+     "Pagani",
+     "Bugatti"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي ماركة سيارات مش تابعة لجنرال موتورز؟",
+    "correct": "فورد",
+    "wrong": [
+     "بيوك",
+     "كاديلاك",
+     "شيفروليه"
+    ]
+   },
+   "en": {
+    "q": "Which car brand does NOT belong to General Motors?",
+    "correct": "Ford",
+    "wrong": [
+     "Buick",
+     "Cadillac",
+     "Chevrolet"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "أنهي شركة من دول مش بتصنع موتوسيكلات؟",
+    "correct": "تويوتا",
+    "wrong": [
+     "هوندا",
+     "كاواساكي",
+     "ياماها"
+    ]
+   },
+   "en": {
+    "q": "Which of these companies does NOT manufacture motorcycles?",
+    "correct": "Toyota",
+    "wrong": [
+     "Honda",
+     "Kawasaki",
+     "Yamaha"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة صنعت العربية اللي استخدمت في فيلم العودة للمستقبل؟",
+    "correct": "ديلوريان",
+    "wrong": [
+     "فورد",
+     "تويوتا",
+     "دايهاتسو"
+    ]
+   },
+   "en": {
+    "q": "What manufacturer made the car used in Back to the Future?",
+    "correct": "DeLorean",
+    "wrong": [
+     "Ford",
+     "Toyota",
+     "Daihatsu"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "car",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام عجلة للدراجة ذات العجلة الواحدة (يونيسايكل)؟",
+    "correct": "1",
+    "wrong": [
+     "4",
+     "3",
+     "6"
+    ]
+   },
+   "en": {
+    "q": "How many wheels does a unicycle have?",
+    "correct": "1",
+    "wrong": [
+     "4",
+     "3",
+     "6"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه العبارة اللاتينية اللي معناها تقريبًا \"اغتنم اليوم\"؟",
+    "correct": "كاربي ديم",
+    "wrong": [
+     "ميمنتو موري",
+     "بلوس أولترا",
+     "سيك سمبر تيرانيس"
+    ]
+   },
+   "en": {
+    "q": "What Latin phrase roughly translates to \"seize the day\"?",
+    "correct": "Carpe diem",
+    "wrong": [
+     "Memento mori",
+     "Plus ultra",
+     "Sic semper tyrannis"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "مقاسات A3 وB1 وLegal هي مقاسات أنهي حاجة؟",
+    "correct": "الورق",
+    "wrong": [
+     "الطيارات",
+     "كتب القانون",
+     "شاشات الموبايل"
+    ]
+   },
+   "en": {
+    "q": "\"A3\", \"B1\", and \"Legal\" are typical names of sizes for what object?",
+    "correct": "Paper",
+    "wrong": [
+     "Airplanes",
+     "Law books",
+     "Phone screens"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "دكتور حاصل على PhD بيبقى دكتور في إيه؟",
+    "correct": "الفلسفة",
+    "wrong": [
+     "علم النفس",
+     "الفرينولوجي",
+     "العلاج الطبيعي"
+    ]
+   },
+   "en": {
+    "q": "A doctor with a PhD is a doctor of what?",
+    "correct": "Philosophy",
+    "wrong": [
+     "Psychology",
+     "Phrenology",
+     "Physical Therapy"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه العضو في الجسم اللي بينتج الصفراء؟",
+    "correct": "الكبد",
+    "wrong": [
+     "المرارة",
+     "البنكرياس",
+     "المعدة"
+    ]
+   },
+   "en": {
+    "q": "What organ of the body produces bile?",
+    "correct": "Liver",
+    "wrong": [
+     "Gallbladder",
+     "Pancreas",
+     "Stomach"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "لعبة مكعب روبيك اخترعها أستاذ مجري، وشكلها إيه؟",
+    "correct": "مكعب",
+    "wrong": [
+     "كرة",
+     "أسطوانة",
+     "هرم"
+    ]
+   },
+   "en": {
+    "q": "What is the shape of the toy invented by Hungarian professor Ernő Rubik?",
+    "correct": "Cube",
+    "wrong": [
+     "Sphere",
+     "Cylinder",
+     "Pyramid"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة نوكيا كانت بتبيع في الأول؟",
+    "correct": "الورق",
+    "wrong": [
+     "الموبايلات",
+     "الكمبيوترات",
+     "المعالجات"
+    ]
+   },
+   "en": {
+    "q": "Which product did Nokia originally sell?",
+    "correct": "Paper",
+    "wrong": [
+     "Phones",
+     "Computers",
+     "Processors"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه عملة إثيوبيا؟",
+    "correct": "البير",
+    "wrong": [
+     "الدرهم",
+     "الدولار الأمريكي",
+     "الراند"
+    ]
+   },
+   "en": {
+    "q": "What is the name of the currency used in Ethiopia?",
+    "correct": "Birr",
+    "wrong": [
+     "Dirham",
+     "U.S. Dollar",
+     "Rand"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "إيه نوع الطيارة اللي طورها إيجور سيكورسكي في أمريكا 1942؟",
+    "correct": "هليكوبتر",
+    "wrong": [
+     "منطاد خفي",
+     "طيارة نفاثة",
+     "كبسولة فضاء"
+    ]
+   },
+   "en": {
+    "q": "What kind of aircraft was developed by Igor Sikorsky in the United States in 1942?",
+    "correct": "Helicopter",
+    "wrong": [
+     "Stealth Blimp",
+     "Jet",
+     "Space Capsule"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "أصل نبات الأناناس من فين؟",
+    "correct": "أمريكا الجنوبية",
+    "wrong": [
+     "هاواي",
+     "أوروبا",
+     "آسيا"
+    ]
+   },
+   "en": {
+    "q": "Where did the pineapple plant originate?",
+    "correct": "South America",
+    "wrong": [
+     "Hawaii",
+     "Europe",
+     "Asia"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام يوم خلق الله العالم حسب سفر التكوين؟",
+    "correct": "ستة أيام",
+    "wrong": [
+     "سبعة أيام",
+     "يوم واحد",
+     "اتناشر يوم"
+    ]
+   },
+   "en": {
+    "q": "According to the Book of Genesis, how many days did it take God to create the world?",
+    "correct": "Six",
+    "wrong": [
+     "Seven",
+     "One",
+     "Twelve"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي دولة فيها أكبر عدد مصانع جعة الترابيست؟",
+    "correct": "بلجيكا",
+    "wrong": [
+     "هولندا",
+     "فرنسا",
+     "أمريكا"
+    ]
+   },
+   "en": {
+    "q": "Which country has the most Trappist breweries?",
+    "correct": "Belgium",
+    "wrong": [
+     "Netherlands",
+     "France",
+     "USA"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "مصطلح \"فونامبيوليست\" بيمشي على إيه؟",
+    "correct": "حبل مشدود",
+    "wrong": [
+     "زجاج مكسور",
+     "كور",
+     "القمر"
+    ]
+   },
+   "en": {
+    "q": "What does a funambulist walk on?",
+    "correct": "A Tight Rope",
+    "wrong": [
+     "Broken Glass",
+     "Balls",
+     "The Moon"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "المشتغل بالـ\"ميلينر\" بيصنع ويبيع إيه؟",
+    "correct": "قبعات",
+    "wrong": [
+     "جزم",
+     "أحزمة",
+     "قمصان"
+    ]
+   },
+   "en": {
+    "q": "What does a milliner make and sell?",
+    "correct": "Hats",
+    "wrong": [
+     "Shoes",
+     "Belts",
+     "Shirts"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه عملة لاوس؟",
+    "correct": "الكيب",
+    "wrong": [
+     "الروبل",
+     "الكرونة",
+     "الدولار"
+    ]
+   },
+   "en": {
+    "q": "What is the unit of currency in Laos?",
+    "correct": "Kip",
+    "wrong": [
+     "Ruble",
+     "Krone",
+     "Dollar"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه اللغة اللي مش فيها جنس نحوي (مذكر ومؤنث)؟",
+    "correct": "التركية",
+    "wrong": [
+     "الألمانية",
+     "الدنماركية",
+     "البولندية"
+    ]
+   },
+   "en": {
+    "q": "Which of the following languages does NOT use gender as a part of its grammar?",
+    "correct": "Turkish",
+    "wrong": [
+     "German",
+     "Danish",
+     "Polish"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 1,
+   "ar": {
+    "q": "كام مقطع صوتي في الهايكو الياباني؟",
+    "correct": "17",
+    "wrong": [
+     "15",
+     "10",
+     "21"
+    ]
+   },
+   "en": {
+    "q": "How many syllables make up a haiku?",
+    "correct": "17",
+    "wrong": [
+     "15",
+     "10",
+     "21"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "أنهي شركة اشترت كومباك بـ25 مليار دولار سنة 2002؟",
+    "correct": "إتش بي (HP)",
+    "wrong": [
+     "توشيبا",
+     "أسوس",
+     "ديل"
+    ]
+   },
+   "en": {
+    "q": "Computer manufacturer Compaq was acquired in 2002 by which company?",
+    "correct": "Hewlett-Packard",
+    "wrong": [
+     "Toshiba",
+     "Asus",
+     "Dell"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
+  },
+  {
+   "cat": "gen",
+   "difficulty": 2,
+   "ar": {
+    "q": "إيه الحاجة اللي منعتها كتالونيا سنة 2010 ودخل القرار حيز التنفيذ 2012؟",
+    "correct": "مصارعة الثيران",
+    "wrong": [
+     "الفيستا",
+     "الفلامنكو",
+     "الماريتشي"
+    ]
+   },
+   "en": {
+    "q": "What did Catalonia ban in 2010, effective in 2012?",
+    "correct": "Bullfighting",
+    "wrong": [
+     "Fiestas",
+     "Flamenco",
+     "Mariachi"
+    ]
+   },
+   "source": "Open Trivia Database (opentdb.com), CC BY-SA 4.0, Arabic translation by Daghdagh"
   }
  ]
 }
