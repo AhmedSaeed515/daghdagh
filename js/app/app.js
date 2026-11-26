@@ -41,6 +41,7 @@ function profileForm(first){
   TAB=first?'':'me';
   const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
   const extra=first?'':`<div class="cards">
+   <button class="mode" data-act="friends"><span class="ic">👥</span><span class="tx"><b>صحابي</b><small>ضيف أصحابك بالكود وادعيهم للعب.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
    ${QuestionReport.card()}
    <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد اللعب.</small></span><span class="ch">‹</span></button>
@@ -259,9 +260,11 @@ document.addEventListener('click',e=>{
   if(t.dataset.rounds){CFG.rounds=+t.dataset.rounds;return setup(CFG.mode);}
   if(t.dataset.pick!==undefined)return answerClassic(+t.dataset.pick);
   if(t.dataset.life)return useLife(t.dataset.life);
+  if(t.dataset.fr&&window.FR)return FR.act(t);
   if(t.dataset.bv!==undefined)return bluffPick(+t.dataset.bv);
   switch(t.dataset.act){
     case 'online':return openOnline();
+    case 'friends':return FR.open();
     case 'me':return profileView();
     case 'install':return installView();
     case 'catsall2':{const sel=catBr.get();const all=Object.keys(CATS);const on=sel.length>=all.length;sel.length=0;if(!on)all.forEach(k=>sel.push(k));catBr.set(sel);return catsSync();}
