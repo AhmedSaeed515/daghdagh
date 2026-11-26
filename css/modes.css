@@ -117,3 +117,13 @@
 @media (max-height:620px){.lg .jc{height:6.6vh;font-size:16px}.lg .jh{min-height:38px;font-size:10px}.lg .jh b{font-size:15px}.lg .jgrid{gap:4px}.lg .jtop{margin-bottom:8px}.lg .jdbl{margin-top:4px;padding:6px}}
 .lg .jh span{word-break:normal;font-size:10.5px;max-width:100%}
 .lg .rsb.many{overflow-x:auto;scrollbar-width:none;padding-bottom:3px}.lg .rsb.many::-webkit-scrollbar{display:none}.lg .rsb.many .rp{flex:0 0 96px;grid-template-columns:1fr;grid-template-areas:"n" "s" "h";justify-items:center;text-align:center;padding:5px 3px}.lg .rsb.many .rp b{font-size:22px}.lg .rsb.many .rp i{justify-content:center}
+/* v119 long names + clearer broken hearts */
+.lg .rs span.l1{font-size:.9em}.lg .rs span.l2{font-size:.76em}.lg .rs span.l3{font-size:.68em;white-space:normal;line-height:1.05}
+.lg .rs.ln b{display:none}
+.lg .rs span{text-overflow:clip}
+.lg .hrt.gone g{fill:#4a3a48;opacity:.85}.lg .hrt.gone .hl{transform:translate(-.3px,.2px) rotate(-7deg)}.lg .hrt.gone .hr{transform:translate(.3px,.3px) rotate(7deg)}
+@keyframes hbl{0%,30%{fill:#ff3b4e;transform:none}100%{fill:#4a3a48;opacity:.85;transform:translate(-.3px,.2px) rotate(-7deg)}}
+@keyframes hbr{0%,30%{fill:#ff3b4e;transform:none}100%{fill:#4a3a48;opacity:.85;transform:translate(.3px,.3px) rotate(7deg)}}
+.lg .rp.out{opacity:.45}
+.lg .bar+.rsb{margin-top:12px}.lg .rp.on{transform:translateY(-2px)}
+.lg .rcats{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0 4px}.lg .rcb{background:var(--card2);color:var(--y2);border:2px solid var(--y2);border-radius:99px;padding:3px 10px;font:inherit;font-size:13px;font-weight:800}.lg .rcb.on{background:var(--y);color:#151515;box-shadow:2px 2px 0 var(--y2)}
