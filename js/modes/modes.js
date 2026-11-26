@@ -11,7 +11,7 @@ const TC=['#2f5486','#b8562a','#2c7a4b','#7a3c8c'];
 const tapfx=()=>{try{window.__sfx&&window.__sfx.tap()}catch(e){}};
 
 /* ---------------- Team board ---------------- */
-let J=null;const TIERS=[[100,1],[300,2],[500,3]];
+let J=null;const TIERS=[[100,1],[200,1],[300,2],[400,2],[500,3],[600,3]];
 const DEFLL=['dbl','hint','chg'];
 const LLS=[['dbl','✖️2','دبلها','يضاعف نقط السؤال الجاي'],['two','🗣️','إجابتين','الفريق ياخد محاولتين'],['block','⛔','حظر','يمنع فريق من الإجابة'],['call','📞','اتصال بصديق','دقيقة للاتصال'],['chg','🔄','غيّر السؤال','سؤال جديد نفس الفئة'],['opts','🔢','اختيارات','4 اختيارات فيهم الصح'],['bomb','💣','القنبلة','الإجابة للفريق التاني'],['hint','💡','تلميح','من غير ما يكشف الإجابة']];
 const cname=k=>(window.CATS&&window.CATS[k])||k;
@@ -39,7 +39,7 @@ function jStart(){
   let tiers=[];cats.forEach(()=>TIERS.forEach(t=>tiers.push(t)));
   if(st.rnd)tiers=SH(tiers);
   const cells={};let n=0;
-  cats.forEach(c=>{cells[c]=[0,1,2].map(r=>{const [pts,d]=st.rnd?tiers[n++]:TIERS[r];const it=window.__picker.pick([c],d,1)[0];return {pts,d,it,done:0};});});
+  cats.forEach(c=>{const stash={};[1,2,3].forEach(d=>{stash[d]=window.__picker.pick([c],d,2);});cells[c]=TIERS.map((_,r)=>{const [pts,d]=st.rnd?tiers[n++]:TIERS[r];const it=stash[d].shift()||window.__picker.pick([c],d,1)[0];return {pts,d,it,done:0};});});
   const N=st.names.length;
   J={g:1,names:st.names.slice(),cats,cells,score:Array(N).fill(0),turn:0,setup:st,rnd:st.rnd,time:st.tmOn?st.time:0,ll:st.names.map(()=>({})),pick:st.lls.map(a=>a.slice()),armed:0};
   jBoard();
@@ -51,7 +51,7 @@ function jBoard_(){
   const left=J.cats.reduce((s,c)=>s+J.cells[c].filter(x=>!x.done).length,0);
   if(!left)return jEnd();
   const head=J.cats.map(c=>{const [e,n]=cemoji(c);return `<div class="jh"><b>${e}</b><span>${E(n)}</span></div>`}).join('');
-  const rows=[0,1,2].map(r=>J.cats.map((c,ci)=>{const x=J.cells[c][r];return x.done?`<button class="jc used" disabled>${x.done<9?`<i style="background:${TC[x.done-1]}"></i>`:'<u>✕</u>'}</button>`:`<button class="jc ${J.rnd?'blank':'t'+x.d}" data-jx="cell" data-c="${ci}" data-r="${r}">${J.rnd?'؟':x.pts}</button>`}).join('')).join('');
+  const rows=TIERS.map((_,r)=>J.cats.map((c,ci)=>{const x=J.cells[c][r];return x.done?`<button class="jc used" disabled>${x.done<9?`<i style="background:${TC[x.done-1]}"></i>`:'<u>✕</u>'}</button>`:`<button class="jc ${J.rnd?'blank':'t'+x.d}" data-jx="cell" data-c="${ci}" data-r="${r}">${J.rnd?'؟':x.pts}</button>`}).join('')).join('');
   const used=J.ll[J.turn].dbl;const hasD=J.pick[J.turn].includes('dbl');
   sh(`${teams()}<div class="jgrid" style="--n:${J.cats.length}">${head}${rows}</div>${hasD?`<button class="jdbl ${J.armed?'on':''}" data-jx="dbl" ${used||J.armed?'disabled':''}>${J.armed?'✖️2 مفعّلة على السؤال الجاي':'✖️2 دبلها (قبل اختيار السؤال)'}</button>`:''}`);
 }
