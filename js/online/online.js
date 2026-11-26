@@ -135,7 +135,7 @@ function pubState(extra){
   const h=H;
   const s={code:room.code,mp:h.cfg.maxP,ph:h.ph,r:h.r,n:(h.ph!=='lobby'&&h.items&&h.items.length?h.items.length:h.cfg.n),mode:h.cfg.mode,cats:h.cfg.cats,diff:h.cfg.diff,tn:h.cfg.teams|0,pl:h.players.map(p=>({i:p.id,b:p.bot?1:0,o:p.own||'',n:(p.bot?'🤖 ':'')+p.name,s:p.score,a:p.av||'',h:hpMask(p),tm:p.tm})),ends:h.ends,lim:h.lim||0};
   if(h.cfg.mode==='imp'){s.th=h.iw?h.iw.theme:'';s.rn=h.rounds;if(h.ph==='ir'){s.imp=h.players.findIndex(p=>p.id===h.iw.imp);s.word=h.iw.word;s.iv=h.players.map(p=>{const k=h.iv[p.id];return k===undefined?-1:k});s.gain=h.gain;}return Object.assign(s,extra||{});}
-  if(h.cfg.mode==='rk'&&h.rk){const k=h.rk,L=rkL();s.rt=h.cfg.rt||30;s.rk={id:L.id,t:L.t,n:L.items.length,f:L.items.map((_,i)=>(k.found[i]||k.over)?L.disp[i]:''),x:k.found.slice(),tu:k.turn,lv:h.players.map(p=>p.lv),m:k.msg,mk:k.mk,ov:k.over?1:0};return Object.assign(s,extra||{});}
+  if(h.cfg.mode==='rk'&&h.rk){const k=h.rk,L=rkL();s.rt=h.cfg.rt||30;s.rc=h.cfg.rc||'all';s.rk={id:L.id,t:L.t,n:L.items.length,f:L.items.map((_,i)=>(k.found[i]||k.over)?L.disp[i]:''),x:k.found.slice(),tu:k.turn,lv:h.players.map(p=>p.lv),m:k.msg,mk:k.mk,ov:k.over?1:0};return Object.assign(s,extra||{});}
   if(h.ph==='q'||h.ph==='rv'||h.ph==='wr'||h.ph==='vt'){const it=h.items[h.r];s.q={c:it.cat,d:it.diff,t:it.text};}
   if(h.ph==='q'||h.ph==='vt'||h.ph==='rv')s.o=h.opts;
   if(h.ph==='rv'){s.right=h.right;s.pk=h.picks;s.pt=h.pts;s.rs=h.rscore;s.sk=h.sk;s.dx=h.players.map(p=>!!(h.hel[p.id]||{}).x);if(h.mode==='bluff'||h.cfg.mode==='bluff')s.by=h.owners.map(a=>a.map(pid=>h.players.findIndex(p=>p.id===pid)));}
@@ -290,7 +290,7 @@ let rkSeen={},rkSeq=-1,rkBrk={};
 function rkL(){const id=H?H.rk.li:S.rk.id;return (window.RANK_LISTS||[]).find(l=>l.id===id);}
 function rkStart(){
   const h=H,all=window.RANK_LISTS||[];if(!all.length)return;
-  h.usedL=h.usedL||[];let free=all.filter(l=>!h.usedL.includes(l.id));if(!free.length){h.usedL=[];free=all;}
+  h.usedL=h.usedL||[];const RK=window.__rk,rc=h.cfg.rc||'all';const cand=all.filter(l=>rc==='all'||!RK||RK.RC[l.id]===rc);let free=cand.filter(l=>!h.usedL.includes(l.id));if(!free.length){h.usedL=h.usedL.filter(x=>!cand.some(l=>l.id===x));free=cand;}if(!free.length)free=all;
   const L=shuffle(free)[0];h.usedL.push(L.id);
   h.players.forEach(p=>{p.score=0;p.right=0;p.lv=3});
   h.rk={li:L.id,found:Array(L.items.length).fill(0),turn:0,msg:'',mk:0,over:false};h.r=0;h.ph='rk';
@@ -321,7 +321,7 @@ function rkView(host,tv){
   if(rkSeq!==S.seq){S.pl.forEach((p,i)=>{const pv=rkSeen[p.i];rkBrk[p.i]=pv!==undefined&&k.lv[i]<pv;rkSeen[p.i]=k.lv[i];});rkSeq=S.seq;}
   const cards=S.pl.map((p,i)=>`<div class="rp ${i===k.tu&&!over?'on':''} ${k.lv[i]<=0?'out':''}" style="--tc:${RKC[i%RKC.length]}"><span>${esc(p.n)}</span><b>${p.s}</b><i>${[0,1,2].map(j=>HR(j<k.lv[i]?'ok':(j===k.lv[i]&&rkBrk[p.i]?'brk':'gone'))).join('')}</i></div>`).join('');
   const cnt=S.pl.length;const cls=cnt>4?'many':'n'+cnt;
-  const slots=k.f.map((f,i)=>`<div class="rs ${k.x[i]?'f':''} ${over&&!k.x[i]?'miss':''}"><em>${i+1}</em><span>${f?esc(f):'؟'}</span><b>${i+1} ن</b></div>`).join('');
+  const slots=k.f.map((f,i)=>{const nm=f||'؟';return `<div class="rs ${k.x[i]?'f':''} ${over&&!k.x[i]?'miss':''} ${nm.length>9?'ln':''}"><em>${i+1}</em><span class="${nm.length>12?'l3':nm.length>9?'l2':nm.length>6?'l1':''}">${esc(nm)}</span><b>${i+1} ن</b></div>`}).join('');
   let foot='';
   if(over)foot=`<div class="res good">خلصت اللعبة</div>${host?'<button class="btn big" data-o="rkfin">شوف النتيجة</button>':'<p class="warn">مستني صاحب الغرفة...</p>'}`;
   else if(meT)foot=`<div class="rmsg">${esc(k.m||'دورك!')}</div><div class="rin"><input class="mdin" id="orans" autocomplete="off" placeholder="اكتب اسم عنصر"><button class="btn" data-o="rans">تمام</button></div><div class="rsg" id="orsg"></div><button class="link" data-o="rsk">تخطي (غلطة)</button>`;
@@ -420,13 +420,13 @@ function hostKick(id){const h=H,i=h.players.findIndex(p=>p.id===id);if(i<=0)retu
 function lobbyRoom(host){
   const c=lobbyCfg,hc=H?H.cfg:c;
   const cfgHtml=host?`<h3 id="rsettings">نوع اللعب</h3><div class="chips"><button class="chip ${hc.mode==='classic'?'on':''}" data-o="mode" data-v="classic">🎯 سباق إجابات</button><button class="chip ${hc.mode==='bluff'?'on':''}" data-o="mode" data-v="bluff">🎭 بلوف</button><button class="chip ${hc.mode==='imp'?'on':''}" data-o="mode" data-v="imp">🕵️ برا السرب</button><button class="chip ${hc.mode==='rk'?'on':''}" data-o="mode" data-v="rk">🔟 رتّب القايمة</button></div>
-  ${hc.mode==='rk'?`<h3>وقت دور كل لاعب</h3><div class="chips">${[15,30,45,60,90].map(t=>`<button class="chip ${(hc.rt||30)===t?'on':''}" data-o="rkt" data-v="${t}">${t} ثانية</button>`).join('')}</div><p class="center" style="color:var(--mut);font-size:13px">قايمة عشوائية، كل لاعب بالدور يكتب عنصر. الترتيب الأبعد بياخد نقط أكتر. 3 غلطات لكل لاعب.</p>`:`<h3>وضع الجمهور 👥</h3><div class="seg" style="width:100%"><button class="${hc.crowd?'':'on'}" data-o="crowd" data-v="0" style="flex:1">عادي (لحد 16)</button><button class="${hc.crowd?'on':''}" data-o="crowd" data-v="1" style="flex:1">جمهور (لحد 20 + شاشة)</button></div>
+  ${hc.mode==='rk'?`<h3>الفئة</h3><div class="chips">${((window.__rk||{}).RCATS||[]).map(([k,n])=>`<button class="chip ${(hc.rc||'all')===k?'on':''}" data-o="rkc" data-v="${k}">${n}</button>`).join('')}</div><h3>وقت دور كل لاعب</h3><div class="chips">${[15,30,45,60,90].map(t=>`<button class="chip ${(hc.rt||30)===t?'on':''}" data-o="rkt" data-v="${t}">${t} ثانية</button>`).join('')}</div><p class="center" style="color:var(--mut);font-size:13px">قايمة عشوائية، كل لاعب بالدور يكتب عنصر. الترتيب الأبعد بياخد نقط أكتر. 3 غلطات لكل لاعب.</p>`:`<h3>وضع الجمهور 👥</h3><div class="seg" style="width:100%"><button class="${hc.crowd?'':'on'}" data-o="crowd" data-v="0" style="flex:1">عادي (لحد 16)</button><button class="${hc.crowd?'on':''}" data-o="crowd" data-v="1" style="flex:1">جمهور (لحد 20 + شاشة)</button></div>
   <h3>فرق</h3><div class="chips">${[0,2,3,4].map(n=>`<button class="chip ${(hc.teams|0)===n?'on':''}" data-o="teams" data-v="${n}">${n?n+' فرق':'فردي'}</button>`).join('')}</div>
   <h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${hc.cats.length?hc.cats.length+'/6 فئات مختارة':'ماختارتش فئات لسه'}</span><button class="btn sm ghost" data-o="cats">${hc.cats.length?'تعديل':'اختار'}</button></div>
   <h3>عدد الأسئلة</h3><div class="srow slider"><span class="lb"><span class="e">🔁</span>عدد الأسئلة</span><b id="orv" class="rv">${hc.n}</b></div><input type="range" id="orng" min="10" max="30" step="1" value="${hc.n}" class="rng"><div class="rngl"><span>١٠</span><span>٣٠</span></div>
   `}<div class="srow"><span class="lb"><span class="e">👥</span>الحد الأقصى للاعبين</span><span class="stepper"><button data-o="mp" data-v="-1">−</button><b>${hc.maxP}</b><button data-o="mp" data-v="1">+</button></span></div>
   <h3>مين يقدر ينضم؟</h3><div class="seg" style="width:100%"><button class="${hc.appr?'':'on'}" data-o="appr" data-v="0" style="flex:1">أي حد معاه الكود</button><button class="${hc.appr?'on':''}" data-o="appr" data-v="1" style="flex:1">بموافقتي 🔒</button></div>`
-  :`<p class="center">${S.mode==='rk'?'🔟 رتّب القايمة • '+(S.rt||30)+' ثانية للدور':(S.mode==='imp'?'🕵️ برا السرب':S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات')+' • '+S.n+' سؤال • '+S.cats.length+' فئة'+(S.tn?' • '+S.tn+' فرق':'')}</p>`;
+  :`<p class="center">${S.mode==='rk'?'🔟 رتّب القايمة • '+((((window.__rk||{}).RCATS||[]).find(c=>c[0]===(S.rc||'all'))||[0,''])[1])+' • '+(S.rt||30)+' ثانية للدور':(S.mode==='imp'?'🕵️ برا السرب':S.mode==='bluff'?'🎭 بلوف':'🎯 سباق إجابات')+' • '+S.n+' سؤال • '+S.cats.length+' فئة'+(S.tn?' • '+S.tn+' فرق':'')}</p>`;
   const mp=S.mp||16;const seats=Math.max(0,mp-S.pl.length);
   shell(`<div class="roomc"><small>كود الغرفة</small><div class="code">${esc(S.code)}</div>${qrOn?`<div class="qr"><img alt="QR" width="168" height="168" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=${encodeURIComponent(joinUrl())}"><small>صوّر الكود بالكاميرا عشان تدخل</small></div>`:''}<div class="rb3"><button class="rbb" data-o="invite"><span>📨</span><b>دعوة</b></button><button class="rbb" data-o="qr"><span>📷</span><b>${qrOn?'إخفاء QR':'QR'}</b></button>${host?'<button class="rbb" data-o="tosettings"><span>⚙️</span><b>إعدادات</b></button>':''}</div></div>
   <div class="panel center"><h3 class="hrow">اللاعبين <i>${S.pl.length} / ${mp}</i></h3><div class="plist">${S.pl.map((p,i)=>`<div class="pl" style="--i:${i}">${avh(p.a,'avl')}<b>${esc(p.n)}</b>${S.tn&&p.tm!==undefined?`<button class="tmb" style="background:${TM[p.tm][1]}" ${host?`data-o="tm" data-v="${p.i}"`:''}>${TM[p.tm][0]}</button>`:''}${i===0?'<em>👑 صاحب الغرفة</em>':p.b?'<em class="rd">بوت</em>':p.i===ME.id?'<em class="you">إنت</em>':'<em class="rd">✅ جاهز</em>'}${host&&i>0?`<button class="kx" data-o="kick" data-v="${p.i}" aria-label="طرد">✖</button>`:(p.b&&p.o===ME.id?`<button class="kx" data-o="botx" data-v="${p.i}" aria-label="شيل البوت">✖</button>`:'')}</div>`).join('')}${seats>0?`<div class="empty">+ ${seats} أماكن فاضية</div>`:''}</div>
@@ -517,6 +517,7 @@ document.addEventListener('click',e=>{
     case 'rsk':return rkSend('',true);
     case 'rsug':{const el=document.getElementById('orans');if(el){el.value=t.dataset.t;rkSug();try{el.focus()}catch(e){}}return;}
     case 'rkfin':if(H&&H.ph==='rk'){H.ph='fin';H.ends=0;hostBroadcast();}return;
+    case 'rkc':H.cfg.rc=v;return hostBroadcast();
     case 'rkt':H.cfg.rt=+v;return hostBroadcast();
     case 'start':return hostStart();
     case 'again':{const h=H;h.rk=null;h.ph='lobby';h.r=0;h.items=[];h.ends=0;h.players.forEach(p=>{p.score=0;p.right=0});hpReset();return hostBroadcast();}
