@@ -12,51 +12,70 @@ const tapfx=()=>{try{window.__sfx&&window.__sfx.tap()}catch(e){}};
 let J=null;const TIERS=[[100,1],[300,2],[500,3]];
 const cname=k=>(window.CATS&&window.CATS[k])||k;
 const cemoji=k=>{const n=cname(k);const m=/^(\S+)\s+(.*)$/.exec(n);return m?[m[1],m[2]]:['',n];};
+const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+function stopTm(){if(J&&J.tm){clearInterval(J.tm);J.tm=null;}}
 function jSetup(){
-  const st=J&&J.setup?J.setup:(J={setup:{names:['فريق 1','فريق 2'],cats:(window.__CFG&&window.__CFG.cats||[]).slice(0,6)}}).setup;
+  const st=J&&J.setup?J.setup:(J={setup:{names:['فريق 1','فريق 2'],cats:(window.__CFG&&window.__CFG.cats||[]).slice(0,6),time:90,rnd:0}}).setup;
   const chips=st.cats.length?st.cats.map(k=>`<span class="mdchip">${E(cname(k))}</span>`).join(''):'<span class="mdmut">لسه ما اخترتش فئات</span>';
-  sh(`<div class="panel mdp"><h2>🎯 تحدي الفرق</h2><p class="mdmut">فريقين على موبايل واحد. كل فريق بيختار مربع من اللوحة ويجاوب، والإجابة الصح بتجيب نقاط المربع (100 سهل، 300 متوسط، 500 صعب).</p>
+  sh(`<div class="panel mdp"><h2>🎯 تحدي الفرق</h2>
   <div class="mdnames"><input class="mdin" id="jn0" maxlength="12" value="${E(st.names[0])}" placeholder="اسم الفريق الأول"><input class="mdin" id="jn1" maxlength="12" value="${E(st.names[1])}" placeholder="اسم الفريق التاني"></div>
   <div class="mdlab">الفئات (لحد 6)</div><div class="mdchips">${chips}</div>
   <div class="mdrow"><button class="btn" data-jx="pick">🗂️ اختار الفئات</button><button class="btn" data-jx="rand">🎲 عشوائي</button></div>
+  <div class="mdlab">وقت السؤال</div><div class="mdrow tmrow"><button class="btn" data-jx="tm" data-d="15">+</button><b class="tmv">${fmt(st.time)}</b><button class="btn" data-jx="tm" data-d="-15">−</button></div>
+  <div class="mdlab">شكل اللوحة</div><div class="mdrow"><button class="btn ${st.rnd?'ghost':''}" data-jx="bm" data-v="0">عادية (100/300/500)</button><button class="btn ${st.rnd?'':'ghost'}" data-jx="bm" data-v="1">كروت سادة عشوائي</button></div>
   <button class="btn big" data-jx="start" ${st.cats.length>=2?'':'disabled'}>ابدأ اللعب</button></div>`);
 }
 function jSaveNames(){const a=document.getElementById('jn0'),b=document.getElementById('jn1');if(J&&J.setup){if(a)J.setup.names[0]=a.value.trim().slice(0,12)||'فريق 1';if(b)J.setup.names[1]=b.value.trim().slice(0,12)||'فريق 2';}}
 function jStart(){
+  stopTm();
   const st=J.setup;const cats=st.cats.slice(0,6);
-  const cells={};
-  cats.forEach(c=>{cells[c]=TIERS.map(([pts,d])=>{const it=window.__picker.pick([c],d,1)[0];return {pts,d,it,done:0};});});
-  // avoid the same question twice across the board
-  J={g:1,names:st.names.slice(),cats,cells,score:[0,0],turn:0,setup:st};
+  let tiers=[];cats.forEach(()=>TIERS.forEach(t=>tiers.push(t)));
+  if(st.rnd)tiers=SH(tiers);
+  const cells={};let n=0;
+  cats.forEach(c=>{cells[c]=[0,1,2].map(r=>{const [pts,d]=st.rnd?tiers[n++]:TIERS[r];const it=window.__picker.pick([c],d,1)[0];return {pts,d,it,done:0};});});
+  J={g:1,names:st.names.slice(),cats,cells,score:[0,0],turn:0,setup:st,rnd:st.rnd,time:st.time,ll:[{two:0,plus:0,hint:0},{two:0,plus:0,hint:0}]};
   jBoard();
 }
+function teamBox(i,big){return `<div class="jt ${J.turn===i?'on':''}" style="--tc:${TC[i]}"><span>${J.turn===i?'👉 ':''}${E(J.names[i])}</span><b>${J.score[i]}</b>${J.turn===i?'<small>دورهم</small>':''}</div>`;}
 function jBoard(){
+  stopTm();
   const left=J.cats.reduce((s,c)=>s+J.cells[c].filter(x=>!x.done).length,0);
   if(!left)return jEnd();
   const head=J.cats.map(c=>{const [e,n]=cemoji(c);return `<div class="jh"><b>${e}</b><span>${E(n)}</span></div>`}).join('');
-  const rows=TIERS.map((t,r)=>J.cats.map((c,ci)=>{const x=J.cells[c][r];return x.done?`<button class="jc used" disabled><i style="background:${TC[x.done-1]}"></i></button>`:`<button class="jc t${r+1}" data-jx="cell" data-c="${ci}" data-r="${r}">${t[0]}</button>`}).join('')).join('');
-  const team=i=>`<div class="jt ${J.turn===i?'on':''}" style="--tc:${TC[i]}"><span>${E(J.names[i])}</span><b>${J.score[i]}</b></div>`;
-  sh(`<div class="jtop">${team(0)}<div class="jturn">دور<br>${E(J.names[J.turn])}</div>${team(1)}</div><div class="jgrid" style="--n:${J.cats.length}">${head}${rows}</div>`,{back:false});
+  const rows=[0,1,2].map(r=>J.cats.map((c,ci)=>{const x=J.cells[c][r];return x.done?`<button class="jc used" disabled>${x.done<3?`<i style="background:${TC[x.done-1]}"></i>`:'<u>✕</u>'}</button>`:`<button class="jc ${J.rnd?'blank':'t'+x.d}" data-jx="cell" data-c="${ci}" data-r="${r}">${J.rnd?'؟':x.pts}</button>`}).join('')).join('');
+  sh(`<div class="jtop">${teamBox(0)}${teamBox(1)}</div><div class="jgrid" style="--n:${J.cats.length}">${head}${rows}</div>`,{back:false});
 }
 function jAsk(ci,r){
   const c=J.cats[ci],x=J.cells[c][r];if(!x||x.done)return;
-  J.cur={c,r,x,opts:SH([x.it.right,...x.it.wrong]),res:null};jQ();
+  J.cur={c,r,x,stage:0,left:J.time,shown:null,hint:0};jQ();
+  stopTm();J.tm=setInterval(()=>{if(!J||!J.cur||J.cur.stage)return stopTm();J.cur.left=Math.max(0,J.cur.left-1);const el=document.getElementById('jtm');if(el){el.textContent=fmt(J.cur.left);if(J.cur.left<=10)el.classList.add('low');if(!J.cur.left)el.classList.add('end');}if(!J.cur.left){stopTm();try{window.__sfx&&window.__sfx.bad&&window.__sfx.bad()}catch(e){}}},1000);
 }
 function jQ(){
-  const {x,opts,res,c}=J.cur;
-  const o=opts.map((t,k)=>{let cls='opt';if(res){if(t===x.it.right)cls+=' right';else if(k===res.pick)cls+=' wrong';}return `<button class="${cls}" data-jx="ans" data-k="${k}" ${res?'disabled':''}>${E(t)}</button>`}).join('');
-  sh(`<div class="jtop small"><div class="jt on" style="--tc:${TC[J.turn]}"><span>${E(J.names[J.turn])}</span><b>${J.score[J.turn]}</b></div></div><div class="qmeta"><span>${E(cname(c))}</span><span class="dp d${x.d}">${x.pts} نقطة</span></div>${window.qbox(x.it.text)}<div class="opts">${o}</div>${res?`<div class="res ${res.ok?'good':'bad'}">${res.ok?'✅ صح! +'+x.pts:'❌ غلط. الإجابة: '+E(x.it.right)}</div><button class="btn big" data-jx="back">رجوع للوحة</button>`:''}`,{back:false});
+  const {x,c,stage}=J.cur;const ll=J.ll[J.turn];
+  const lb=(k,t)=>`<button class="jl" data-jx="ll" data-k="${k}" ${ll[k]||stage?'disabled':''}>${t}</button>`;
+  let mid='';
+  if(stage===0)mid=`<div class="jlls">${lb('two','✌️ خيارين')}${lb('hint','💡 تلميح')}${lb('plus','⏱ +30 ث')}</div>${J.cur.shown?`<div class="jtip">الإجابة واحدة من: <b>${E(J.cur.shown[0])}</b> أو <b>${E(J.cur.shown[1])}</b></div>`:''}${J.cur.hint?`<div class="jtip">الإجابة بتبدأ بـ «<b>${E(String(x.it.right).trim().charAt(0))}</b>»</div>`:''}<button class="btn big" data-jx="rev">👁 كشف الإجابة</button>`;
+  else if(stage===1)mid=`<div class="jans">✅ الإجابة: <b>${E(x.it.right)}</b></div><button class="btn big" data-jx="nxt">التالي ⬅</button>`;
+  else mid=`<div class="mdlab center">مين خد النقط (${x.pts})؟</div><div class="jaw"><button class="btn" style="--tc:${TC[0]}" data-jx="aw" data-w="1">${E(J.names[0])}</button><button class="btn" style="--tc:${TC[1]}" data-jx="aw" data-w="2">${E(J.names[1])}</button></div><button class="btn big ghost" data-jx="aw" data-w="3">ولا حد</button>`;
+  sh(`<div class="jtop">${teamBox(0)}${teamBox(1)}</div><div class="qmeta"><span>${E(cname(c))}</span><span class="dp d${x.d}">${x.pts} نقطة</span></div>${window.qbox(x.it.text)}${stage===0?`<div class="jtm ${J.cur.left<=10?'low':''} ${J.cur.left?'':'end'}" id="jtm">${fmt(J.cur.left)}</div>`:''}${mid}`,{back:false});
 }
-function jAns(k){
-  if(J.cur.res)return;const {x,opts}=J.cur;const ok=opts[k]===x.it.right;
-  J.cur.res={pick:k,ok};x.done=J.turn+1;if(ok)J.score[J.turn]+=x.pts;
-  try{ok?window.__sfx&&window.__sfx.ok&&window.__sfx.ok():window.__sfx&&window.__sfx.bad&&window.__sfx.bad()}catch(e){}
+function jLL(k){
+  const cu=J.cur;if(!cu||cu.stage||J.ll[J.turn][k])return;J.ll[J.turn][k]=1;
+  if(k==='two')cu.shown=SH([cu.x.it.right,SH(cu.x.it.wrong)[0]]);
+  if(k==='plus')cu.left+=30;
+  if(k==='hint')cu.hint=1;
   jQ();
+}
+function jAw(w){
+  const cu=J.cur;if(!cu||cu.stage!==2)return;
+  cu.x.done=w;if(w===1||w===2)J.score[w-1]+=cu.x.pts;
+  J.turn=1-J.turn;J.cur=null;jBoard();
 }
 function jEnd(){
   const [a,b]=J.score;const w=a===b?'تعادل 🤝':'🏆 فاز '+E(J.names[a>b?0:1]);
-  sh(`<div class="panel center"><div class="big-emoji">🏁</div><h2>${w}</h2><div class="jtop"><div class="jt on" style="--tc:${TC[0]}"><span>${E(J.names[0])}</span><b>${a}</b></div><div></div><div class="jt on" style="--tc:${TC[1]}"><span>${E(J.names[1])}</span><b>${b}</b></div></div><button class="btn big" data-jx="again">العب تاني بنفس الفئات</button><button class="btn big" data-jx="home">الرئيسية</button></div>`,{back:false});
+  sh(`<div class="panel center"><div class="big-emoji">🏁</div><h2>${w}</h2><div class="jtop"><div class="jt on" style="--tc:${TC[0]}"><span>${E(J.names[0])}</span><b>${a}</b></div><div class="jt on" style="--tc:${TC[1]}"><span>${E(J.names[1])}</span><b>${b}</b></div></div><button class="btn big" data-jx="again">العب تاني بنفس الفئات</button><button class="btn big" data-jx="home">الرئيسية</button></div>`,{back:false});
 }
+
 
 /* ---------------- Rank the list ---------------- */
 const LISTS=[
@@ -116,8 +135,12 @@ document.addEventListener('click',e=>{
   if(a==='rand'){jSaveNames();J.setup.cats=SH(Object.keys(window.CATS)).slice(0,6);return jSetup();}
   if(a==='start'){jSaveNames();return jStart();}
   if(a==='cell')return jAsk(+t.dataset.c,+t.dataset.r);
-  if(a==='ans')return jAns(+t.dataset.k);
-  if(a==='back'){J.turn=1-J.turn;return jBoard();}
+  if(a==='tm'){jSaveNames();J.setup.time=Math.min(300,Math.max(60,J.setup.time+ +t.dataset.d));return jSetup();}
+  if(a==='bm'){jSaveNames();J.setup.rnd=+t.dataset.v;return jSetup();}
+  if(a==='ll')return jLL(t.dataset.k);
+  if(a==='rev'){stopTm();J.cur.stage=1;return jQ();}
+  if(a==='nxt'){J.cur.stage=2;return jQ();}
+  if(a==='aw')return jAw(+t.dataset.w);
   if(a==='again'){J.setup.names=J.names.slice();return jStart();}
   if(a==='home')return window.__lgHome();
   if(a==='rl'){return rSetup(+t.dataset.i);}
