@@ -57,3 +57,8 @@
 .lg .jlls{grid-template-columns:repeat(3,1fr)}
 .lg .rgrid.mid .rs{padding:5px 8px;font-size:14px}.lg .rgrid.dense{gap:3px}.lg .rgrid.dense .rs{padding:2px 6px;font-size:12px;gap:5px;min-height:16px}.lg .rgrid.dense .rs em{min-width:18px;font-size:11px}.lg .rgrid.dense .rs b{font-size:10px}.lg .rs.miss{opacity:.55}
 .lg .mdp .mdnames.g .lpbox{margin:0}
+
+/* v106 home fit */
+@media (max-height:780px){.lg .hero img,.lg .hero svg,.lg .hero canvas{width:130px!important;height:auto!important;max-height:20vh}.lg .hero{margin:0 0 4px!important}.lg .hero .slg{margin:2px 0 6px!important;font-size:16px!important}.lg .mode{padding:9px 12px;gap:10px}.lg .mode .ic{flex-basis:38px;width:38px;height:38px}.lg .mode small{font-size:11.5px;line-height:1.4}.lg .hstat{display:none}}
+@media (max-height:640px){.lg .hero img,.lg .hero svg,.lg .hero canvas{width:92px!important;max-height:15vh}.lg .mode small{display:none}.lg .mode{padding:7px 12px}.lg .cta{padding:10px}.lg .hero .pill{padding:4px 10px}}
+@media (max-height:560px){.lg .foot{display:none}}
