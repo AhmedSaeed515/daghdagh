@@ -213,5 +213,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='rans')rSug();});
 document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('.rsgb'))e.preventDefault();});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='rans'){e.preventDefault();rAns(e.target.value);}});
+window.__rk={N,N0,lev,TY,heart,lists:LISTS,sug:(id,raw,found)=>{const ty=TY[id]||id,z=N0(raw).replace(/ /g,''),q=N(raw);if(!z)return[];const done=new Set(found.map(N));const P=pool(ty).filter(o=>!done.has(o.k));
+  let a=P.filter(o=>o.k.startsWith(q)||o.z.replace(/ /g,'').startsWith(z));if(a.length<5&&q.length>=2)a=a.concat(P.filter(o=>!a.includes(o)&&o.k.includes(q)));
+  return a.filter(o=>o.k!==q).sort((x,y)=>x.d.length-y.d.length).slice(0,8).map(o=>o.d);}};
 window.Modes={team:()=>{J=J&&J.setup&&!J.g?J:null;jSetup();},rank:()=>{R=null;rList();}};
 })();
