@@ -73,6 +73,8 @@ function home(){
   const nc=Object.keys(CATS).length;
   shell(`<div class="hero center">${HomeLogo.markup}<h1>دغدغ</h1><p class="slg">${SLOGAN}</p><div class="pill who">${avh(store.get('myav',''))}أهلاً ${esc(store.get('myname',''))}</div></div>
   <button class="cta" data-act="online">🎉 اعمل غرفة أو ادخل بكود</button>
+  <button class="mode" data-jx="ot" style="width:100%"><span class="ic">🎯</span><span class="tx"><b>تحدي الفرق (جهاز واحد)</b><small>فريقين، لوحة فئات ونقاط 100 و300 و500.</small></span><span class="ch">‹</span></button>
+  <button class="mode" data-jx="or" style="width:100%"><span class="ic">🔟</span><span class="tx"><b>رتّب القايمة</b><small>أكبر 10 دول، أعلى 10 جبال... كل ما العنصر أبعد نقطه أكتر.</small></span><span class="ch">‹</span></button>
   <button class="mode" data-act="catsopen" style="width:100%"><span class="ic">🗂️</span><span class="tx"><b>الفئات</b><small>شوف كل الفئات واختار اللي تعجبك.</small></span><span class="ch">‹</span></button>
   <p class="slg" style="text-align:center;color:var(--mut);font-size:13px">${Q.length} سؤال • ${nc} فئة • سباق إجابات وبلوف مع صحابك أونلاين</p>
   <div class="foot"><button class="link" data-act="howto">إزاي ألعب؟</button> · <button class="link" data-act="install">ثبّتها كتطبيق 📲</button></div>`,{back:false,nav:true});HomeLogo.animate();
@@ -299,6 +301,6 @@ document.addEventListener('input',e=>{
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='fake')bluffSend();});
 
 const ONL=initOnline({picker,app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,avh,avOK,setTab:k=>{TAB=k},catsOpen:()=>!!catBr});
-window.__ONL=ONL;window.__lgHome=home;window.shell=shell;window.CATS=CATS;
+window.__picker=picker;window.__catsBrowser=catsBrowser;window.__CFG=CFG;window.__sfx=sfx;window.__ONL=ONL;window.__lgHome=home;window.shell=shell;window.CATS=CATS;
 JR?linkJoin():(profileOk()?home():profileForm(true));
 }
