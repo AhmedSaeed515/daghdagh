@@ -110,12 +110,13 @@ const LISTS=()=>window.RANK_LISTS||[];
 let R=null;
 const seenK='lo3ba_rkseen';
 function pickList(){const all=LISTS();let seen=[];try{seen=JSON.parse(localStorage.getItem(seenK)||'[]')}catch(e){}
-  let free=all.map((l,i)=>i).filter(i=>!seen.includes(all[i].id));if(!free.length){seen=[];free=all.map((l,i)=>i);}
+  const cd=all.map((l,i)=>i).filter(i=>!R||!R.cat||R.cat==='all'||RC[all[i].id]===R.cat);const cids=cd.map(i=>all[i].id);
+  let free=cd.filter(i=>!seen.includes(all[i].id));if(!free.length){seen=seen.filter(x=>!cids.includes(x));free=cd;}
   const i=free[Math.floor(Math.random()*free.length)];seen.push(all[i].id);try{localStorage.setItem(seenK,JSON.stringify(seen))}catch(e){}return i;}
 function rList_(){
   R=R||{n:2,names:['لاعب 1','لاعب 2','لاعب 3','لاعب 4']};
   sh(`<div class="panel mdp"><h2>🔟 رتّب القايمة</h2><p class="mdmut">هتطلعلكم قايمة عشوائية (من 5 لـ 20 عنصر). كل لاعب يكتب عنصر منها. كل ما العنصر ترتيبه أبعد في القايمة بياخد نقط أكتر، والأول بياخد نقطة واحدة. كل لاعب معاه 3 غلطات.</p>
-  <div class="mdlab">عدد اللاعبين</div><div class="mdrow">${[1,2,3,4].map(n=>`<button class="btn ${R.n===n?'':'ghost'}" data-jx="rn" data-n="${n}">${n}</button>`).join('')}</div>
+  <div class="mdlab">الفئة</div><div class="rcats">${RCATS.map(([k,n])=>`<button class="rcb ${(R.cat||'all')===k?'on':''}" data-jx="rcat" data-k="${k}">${n}</button>`).join('')}</div><div class="mdlab">عدد اللاعبين</div><div class="mdrow">${[1,2,3,4].map(n=>`<button class="btn ${R.n===n?'':'ghost'}" data-jx="rn" data-n="${n}">${n}</button>`).join('')}</div>
   <div class="mdnames">${[...Array(R.n).keys()].map(k=>`<input class="mdin rn" data-k="${k}" maxlength="12" value="${E(R.names[k])}">`).join('')}</div>
   <button class="btn big" data-jx="rgo">ابدأ</button></div>`);
 }
@@ -133,12 +134,13 @@ function rAlive(){return R.lives.some(l=>l>0);}
 function rView_(){
   const L=LISTS()[R.li];const n=L.items.length;
   const nf=R.found.filter(Boolean).length;
-  const slots=L.items.map((it,i)=>{const f=R.found[i];return `<div class="rs ${f?'f':''} ${R.over&&!f?'miss':''}"><em>${i+1}</em><span>${f||R.over?E(L.disp[i]):'؟'}</span><b>${i+1} ن</b></div>`}).join('');
+  const slots=L.items.map((it,i)=>{const f=R.found[i];const nm=f||R.over?L.disp[i]:'؟';return `<div class="rs ${f?'f':''} ${R.over&&!f?'miss':''} ${nm.length>9?'ln':''}"><em>${i+1}</em><span class="${nm.length>12?'l3':nm.length>9?'l2':nm.length>6?'l1':''}">${E(nm)}</span><b>${i+1} ن</b></div>`}).join('');
   const sb=R.names.slice(0,R.n).map((nm,k)=>`<div class="rp ${k===R.turn&&!R.over?'on':''} ${R.lives[k]<=0?'out':''}" style="--tc:${TC[k]}"><span>${E(nm)}</span><b>${R.score[k]}</b><i>${hearts(k)}</i></div>`).join('');
   sh(`<div class="rsb n${R.n}">${sb}</div><div class="rhd"><div class="rt">${L.t}</div><div class="rc"><span class="rbar"><i style="width:${Math.round(100*nf/n)}%"></i></span><b>${nf}/${n}</b></div></div><div class="rgrid ${n>12?'dense':n>8?'mid':''}">${slots}</div>${R.over?`<div class="res good">خلصت اللعبة${R.n>1?' - '+rWin():''}</div><button class="btn big" data-jx="rgo2">قايمة تانية</button>`:`<div class="rmsg">${R.msg||('دور '+E(R.names[R.turn]))}</div><div class="rin"><input class="mdin" id="rans" autocomplete="off" placeholder="اكتب اسم عنصر"><button class="btn" data-jx="rsend">تمام</button></div><div class="rsg" id="rsg"></div><button class="link" data-jx="rskip">تخطي (غلطة)</button>`}`);
   R.brk=-1;if(!R.over){const el=document.getElementById('rans');if(el)setTimeout(()=>el.focus(),50);}
 }
 const TY={"area": "ctry", "pop": "ctry", "afr": "ctry", "eu": "ctry", "arb": "ctry", "gdp": "ctry", "gold": "ctry", "oil": "ctry", "gas": "ctry", "coal": "ctry", "elc": "ctry", "for": "ctry", "cst": "ctry", "car": "ctry", "rl": "ctry", "rice": "ctry", "wht": "ctry", "exp": "ctry", "ren": "ctry", "wtr": "ctry", "geu": "ctry", "gaa": "ctry", "gsa": "ctry", "gde": "ctry", "gsm": "ctry", "gpa": "ctry", "gpl": "ctry", "gap": "ctry", "gaq": "ctry", "gas2": "ctry", "bcf": "ctry", "bmt": "ctry", "bpo": "ctry", "bml": "ctry", "bst": "ctry", "btr": "ctry", "bwn": "ctry", "bbl": "ctry", "btm": "ctry", "bfr": "ctry", "bel": "ctry", "bfs": "ctry", "bcn": "ctry", "bag": "ctry", "bbr": "ctry", "bwp": "ctry", "bwg": "ctry", "gwc": "ctry", "gov": "egov", "gva": "egov", "gev": "egov", "gep": "egov", "ged": "egov", "egc": "city", "gac": "city", "prt": "city", "apt": "city", "mtn": "geo", "isl": "geo", "des": "geo", "lak": "geo", "riv": "geo", "grv": "geo", "tow": "bld", "gst": "bld", "gdm": "bld", "fst": "bld", "plz": "plan", "pld": "plan", "gsr": "plan", "con": "plan", "oce": "plan", "bar": "biz", "bco": "biz", "bfm": "biz", "pl": "ply", "fll": "ply", "flb": "ply", "fl1": "ply", "flu": "ply", "fpa": "ply", "fsa": "ply", "rma": "ply", "rmg": "ply", "bca": "ply", "bcg": "ply", "lvg": "ply", "arp": "ply", "chp": "ply", "mlp": "ply", "mlg": "ply", "tpp": "ply", "tpg": "ply", "psg": "ply", "bvp": "ply", "bvg": "ply", "jvp": "ply", "jvg": "ply", "inp": "ply", "ing": "ply", "mup": "ply", "gus": "pres", "gu2": "pres", "bcr": "club", "lng": "lng", "ust": "ust", "hem": "emp"};
+const RC={"gac":"ge","pl": "fb", "fll": "fb", "flb": "fb", "fl1": "fb", "flu": "fb", "fpa": "fb", "fsa": "fb", "rma": "fb", "rmg": "fb", "bca": "fb", "bcg": "fb", "lvg": "fb", "arp": "fb", "chp": "fb", "mlp": "fb", "mlg": "fb", "tpp": "fb", "tpg": "fb", "psg": "fb", "bvp": "fb", "bvg": "fb", "jvp": "fb", "jvg": "fb", "inp": "fb", "ing": "fb", "mup": "fb", "gwc": "fb", "bwp": "fb", "bwg": "fb", "fst": "fb", "bcr": "fb", "gov": "eg", "gva": "eg", "gev": "eg", "gep": "eg", "ged": "eg", "egc": "eg", "gdp": "ec", "gold": "ec", "oil": "ec", "gas": "ec", "coal": "ec", "elc": "ec", "for": "ec", "car": "ec", "rl": "ec", "rice": "ec", "wht": "ec", "exp": "ec", "ren": "ec", "wtr": "ec", "bcf": "ec", "bmt": "ec", "bpo": "ec", "bml": "ec", "bst": "ec", "btr": "ec", "bwn": "ec", "bbl": "ec", "btm": "ec", "bfr": "ec", "bel": "ec", "bfs": "ec", "bcn": "ec", "bag": "ec", "bbr": "ec", "apt": "ec", "prt": "ec", "bar": "ec", "bco": "ec", "gus": "cu", "gu2": "cu", "hem": "cu", "lng": "cu", "bfm": "cu", "plz": "cu", "pld": "cu", "gsr": "cu", "area": "ge", "pop": "ge", "afr": "ge", "arb": "ge", "eu": "ge", "geu": "ge", "gaa": "ge", "gsa": "ge", "gde": "ge", "gsm": "ge", "gpa": "ge", "gpl": "ge", "gap": "ge", "gaq": "ge", "gas2": "ge", "cst": "ge", "con": "ge", "oce": "ge", "mtn": "ge", "isl": "ge", "des": "ge", "lak": "ge", "riv": "ge", "grv": "ge", "ust": "ge", "tow": "ge", "gst": "ge", "gdm": "ge"};const RCATS=[['all','🎲 عشوائي'],['fb','⚽ كورة'],['ge','🌍 جغرافيا'],['eg','☥ مصر'],['ec','💰 اقتصاد وإنتاج'],['cu','📚 ثقافة وعلوم']];
 const POOLS={};
 function pool(ty){if(POOLS[ty])return POOLS[ty];const m=new Map();LISTS().forEach(l=>{if((TY[l.id]||l.id)!==ty)return;l.disp.forEach(d=>{const k=N(d);if(k&&!m.has(k))m.set(k,{d,k,z:N0(d)});});});return POOLS[ty]=[...m.values()];}
 function rSug(){const el=document.getElementById('rans'),bx=document.getElementById('rsg');if(!el||!bx)return;
@@ -203,6 +205,7 @@ document.addEventListener('click',e=>{
   if(a==='aw'){const w=t.dataset.w;return jAw(/^\d+$/.test(w)?+w:w);}
   if(a==='again'){J.setup.names=J.names.slice();return jStart();}
   if(a==='home')return window.__lgHome();
+  if(a==='rcat'){rSaveNames();R.cat=t.dataset.k;return rList();}
   if(a==='rn'){rSaveNames();R.n=+t.dataset.n;return rList();}
   if(a==='rgo')return rGo();
   if(a==='rgo2'){return rGo();}
@@ -213,7 +216,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='rans')rSug();});
 document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('.rsgb'))e.preventDefault();});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='rans'){e.preventDefault();rAns(e.target.value);}});
-window.__rk={N,N0,lev,TY,heart,lists:LISTS,sug:(id,raw,found)=>{const ty=TY[id]||id,z=N0(raw).replace(/ /g,''),q=N(raw);if(!z)return[];const done=new Set(found.map(N));const P=pool(ty).filter(o=>!done.has(o.k));
+window.__rk={N,N0,lev,TY,RC,RCATS,heart,lists:LISTS,sug:(id,raw,found)=>{const ty=TY[id]||id,z=N0(raw).replace(/ /g,''),q=N(raw);if(!z)return[];const done=new Set(found.map(N));const P=pool(ty).filter(o=>!done.has(o.k));
   let a=P.filter(o=>o.k.startsWith(q)||o.z.replace(/ /g,'').startsWith(z));if(a.length<5&&q.length>=2)a=a.concat(P.filter(o=>!a.includes(o)&&o.k.includes(q)));
   return a.filter(o=>o.k!==q).sort((x,y)=>x.d.length-y.d.length).slice(0,8).map(o=>o.d);}};
 window.Modes={team:()=>{J=J&&J.setup&&!J.g?J:null;jSetup();},rank:()=>{R=null;rList();}};
