@@ -109,6 +109,9 @@ function onNet(m){
     if(m.t==='rp')return hostRep(m.r);
     if(m.t==='iv')return impVote(m.id,m.r,m.k);
     if(m.t==='ra')return rkAns(m.id,m.r,m.x,m.sk);
+    if(m.t==='rv')return rkVoteStart(m.id);
+    if(m.t==='rvv')return rkVote(m.id,m.k);
+    if(m.t==='rh')return rkHintReq(m.id);
     if(m.t==='tv')return hostBroadcast();
     if(m.t==='hp')return hostHelp(m.id,m.r,m.k);
     return;
@@ -122,6 +125,7 @@ function onNet(m){
 function applyState(s,now,seq){
   const prev=S;S=s;S.seq=seq;off=now-Date.now();lastSt=Date.now();clearTimeout(joinT);
   if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
+  if(!s.rk||!s.rk.v)mine.vv=0;
   if(room&&room.tv){clearInterval(tvT);view();startUi();return;}
   if(!s.pl.some(p=>p.i===ME.id)){ // not accepted (game already started?)
     if(s.ph!=='lobby'){leave();msg='اللعبة بدأت بالفعل في الغرفة دي.';return lobbyView();}
@@ -135,7 +139,8 @@ function pubState(extra){
   const h=H;
   const s={code:room.code,mp:h.cfg.maxP,ph:h.ph,r:h.r,n:(h.ph!=='lobby'&&h.items&&h.items.length?h.items.length:h.cfg.n),mode:h.cfg.mode,cats:h.cfg.cats,diff:h.cfg.diff,tn:h.cfg.teams|0,pl:h.players.map(p=>({i:p.id,b:p.bot?1:0,o:p.own||'',n:(p.bot?'🤖 ':'')+p.name,s:p.score,a:p.av||'',h:hpMask(p),tm:p.tm})),ends:h.ends,lim:h.lim||0};
   if(h.cfg.mode==='imp'){s.th=h.iw?h.iw.theme:'';s.rn=h.rounds;if(h.ph==='ir'){s.imp=h.players.findIndex(p=>p.id===h.iw.imp);s.word=h.iw.word;s.iv=h.players.map(p=>{const k=h.iv[p.id];return k===undefined?-1:k});s.gain=h.gain;}return Object.assign(s,extra||{});}
-  if(h.cfg.mode==='rk'&&h.rk){const k=h.rk,L=rkL();s.rt=h.cfg.rt||30;s.rc=h.cfg.rc||'all';s.rk={id:L.id,t:L.t,n:L.items.length,f:L.items.map((_,i)=>(k.found[i]||k.over)?L.disp[i]:''),x:k.found.slice(),tu:k.turn,lv:h.players.map(p=>p.lv),m:k.msg,mk:k.mk,ov:k.over?1:0};return Object.assign(s,extra||{});}
+  if(h.cfg.mode==='rk'&&h.rk){const k=h.rk,L=rkL();s.rt=h.cfg.rt||30;s.rc=h.cfg.rc||'all';
+    s.rk={id:L.id,t:L.t,n:L.items.length,f:L.items.map((_,i)=>(k.found[i]||k.over)?L.disp[i]:''),x:k.found.slice(),o:k.own.slice(),tu:k.turn,m:k.msg,mk:k.mk,mo:k.mo||-1,ov:k.over?1:0,h:k.hint||'',hb:(!k.over&&k.fail>=2*h.players.length)?1:0,v:k.vote?{by:(h.players[k.vote.by]||{}).name||'',y:Object.values(k.vote.v).filter(x=>x).length}:null};return Object.assign(s,extra||{});}
   if(h.ph==='q'||h.ph==='rv'||h.ph==='wr'||h.ph==='vt'){const it=h.items[h.r];s.q={c:it.cat,d:it.diff,t:it.text};}
   if(h.ph==='q'||h.ph==='vt'||h.ph==='rv')s.o=h.opts;
   if(h.ph==='rv'){s.right=h.right;s.pk=h.picks;s.pt=h.pts;s.rs=h.rscore;s.sk=h.sk;s.dx=h.players.map(p=>!!(h.hel[p.id]||{}).x);if(h.mode==='bluff'||h.cfg.mode==='bluff')s.by=h.owners.map(a=>a.map(pid=>h.players.findIndex(p=>p.id===pid)));}
@@ -162,6 +167,7 @@ function hostBroadcast(){
   if(NET)NET.send({t:'st',seq:h.seq,s,now});
   const prev=S;S=s;S.seq=h.seq;off=0;lastSt=now;
   if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
+  if(!s.rk||!s.rk.v)mine.vv=0;
   if(prev&&s.ph==='rv'&&prev.ph!=='rv'){setTimeout(()=>sfx.round(),900);const k=0;if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
   view();startUi();
 }
@@ -278,6 +284,7 @@ function hostTick(){
   else if(h.ph==='wr'&&now>=h.ends+800){if(Object.keys(h.fakes).length)hostVoteStart();else{h.ph='vt';h.fakes={};hostVoteStart();}}
   else if(h.ph==='vt'&&now>=h.ends+800)hostReveal();
   else if(h.ph==='rv'&&now>=h.ends)hostNext();
+  else if(h.ph==='rk'&&h.rk&&h.rk.vote&&now>=h.rk.vote.end)rkVoteEnd(1);
   else if(h.ph==='rk'&&h.rk&&!h.rk.over&&now>=h.ends+600)rkAns(h.players[h.rk.turn].id,h.r,'',1,1);
   else if(h.ph==='id'&&now>=h.ends)impVoteStart();
   else if(h.ph==='iv'&&now>=h.ends+800)impReveal();
@@ -285,27 +292,71 @@ function hostTick(){
 }
 
 // ---------- rank-the-list mode ----------
-const RKC=['#2f5486','#b8562a','#2c7a4b','#7a3c8c','#a8324e','#2a7d86','#8a6d1f','#546b2f'];
-let rkSeen={},rkSeq=-1,rkBrk={};
+const RKC=['#2f5486','#b8562a','#2c7a4b','#a8324e','#2a7d86','#8a6d1f','#546b2f','#6b4a2a'];
+const RKSEEN='lo3ba_rkseen';let rkLast='';try{rkLast=localStorage.getItem('lo3ba_rklast')||''}catch(e){}
 function rkL(){const id=H?H.rk.li:S.rk.id;return (window.RANK_LISTS||[]).find(l=>l.id===id);}
 function rkStart(){
   const h=H,all=window.RANK_LISTS||[];if(!all.length)return;
-  h.usedL=h.usedL||[];const RK=window.__rk,rc=h.cfg.rc||'all';const cand=all.filter(l=>rc==='all'||!RK||RK.RC[l.id]===rc);let free=cand.filter(l=>!h.usedL.includes(l.id));if(!free.length){h.usedL=h.usedL.filter(x=>!cand.some(l=>l.id===x));free=cand;}if(!free.length)free=all;
-  const L=shuffle(free)[0];h.usedL.push(L.id);
-  h.players.forEach(p=>{p.score=0;p.right=0;p.lv=3});
-  h.rk={li:L.id,found:Array(L.items.length).fill(0),turn:0,msg:'',mk:0,over:false};h.r=0;h.ph='rk';
+  h.usedL=h.usedL||[];const RK=window.__rk,rc=h.cfg.rc||'all';
+  let cand=all.filter(l=>rc==='all'||!RK||RK.RC[l.id]===rc);if(!cand.length)cand=all.slice();
+  let seen=[];try{seen=JSON.parse(localStorage.getItem(RKSEEN)||'[]')}catch(e){}
+  let free=cand.filter(l=>!h.usedL.includes(l.id)&&!seen.includes(l.id)&&l.id!==rkLast);
+  if(!free.length)free=cand.filter(l=>!h.usedL.includes(l.id)&&l.id!==rkLast);
+  if(!free.length)free=cand.filter(l=>l.id!==rkLast);
+  if(!free.length){h.usedL=[];free=cand.slice();}
+  const L=shuffle(free)[0];h.usedL.push(L.id);rkLast=L.id;
+  try{const s2=JSON.parse(localStorage.getItem(RKSEEN)||'[]');s2.push(L.id);while(s2.length>Math.max(5,all.length-5))s2.shift();localStorage.setItem(RKSEEN,JSON.stringify(s2));localStorage.setItem('lo3ba_rklast',L.id)}catch(e){}
+  h.players.forEach(p=>{p.score=0;p.right=0});
+  h.rk={li:L.id,found:Array(L.items.length).fill(0),own:Array(L.items.length).fill(-1),turn:0,msg:'',mk:0,mo:-1,over:false,fail:0,hint:'',hinted:[],vote:null};h.r=0;h.ph='rk';
   h.lim=h.cfg.rt||30;h.ends=Date.now()+h.lim*1000;hostBroadcast();
 }
 function rkAns(id,r,x,sk,timeout){
   const h=H;if(!h||h.ph!=='rk'||!h.rk||h.rk.over||r!==h.r)return;const k=h.rk,pl=h.players[k.turn];if(!pl||pl.id!==id)return;
   const R=window.__rk,L=rkL(),a=R.N(x||'');if(!sk&&!a)return;let hit=-1;
   if(!sk){L.items.forEach((al,i)=>{if(hit<0&&al.some(y=>R.N(y)===a))hit=i;});if(hit<0&&a.length>=6)L.items.forEach((al,i)=>{if(hit>=0)return;if(al.some(y=>{const z=R.N(y);return z.length>=6&&R.lev(a,z)<=1;}))hit=i;});}
-  const nm=pl.name;
-  if(hit>=0&&!k.found[hit]){k.found[hit]=1;pl.score+=hit+1;k.msg=nm+': '+L.disp[hit]+' ترتيبه '+(hit+1)+'، +'+(hit+1);k.mk=1;}
-  else{pl.lv=Math.max(0,pl.lv-1);k.mk=0;k.msg=timeout?nm+': خلص الوقت، -1 قلب':hit>=0?nm+': اتقال قبل كده، -1 قلب':sk?nm+': تخطّى، -1 قلب':nm+': مش في القايمة، -1 قلب';}
-  if(k.found.every(v=>v)||!h.players.some(p=>p.lv>0)){k.over=true;h.ends=0;h.lim=0;h.r++;return hostBroadcast();}
-  let t=k.turn;for(let i=0;i<h.players.length;i++){t=(t+1)%h.players.length;if(h.players[t].lv>0)break;}
-  k.turn=t;h.r++;h.lim=h.cfg.rt||30;h.ends=Date.now()+h.lim*1000;hostBroadcast();
+  const nm=pl.name;k.vote=null;k.mo=-1;
+  if(hit>=0&&!k.found[hit]){k.found[hit]=1;k.own[hit]=k.turn;pl.score+=hit+1;k.msg=nm+' لقى '+L.disp[hit]+' ترتيبه '+(hit+1)+'، +'+(hit+1);k.mk=1;k.mo=k.turn;k.fail=0;k.hint='';}
+  else{k.fail++;k.mk=0;k.msg=nm+': '+(timeout?'خلص الوقت':hit>=0?'اتقالت قبل كده':sk?'تخطّى':'مش في القايمة');}
+  if(k.found.every(v=>v)){k.over=true;h.ends=0;h.lim=0;h.r++;return hostBroadcast();}
+  k.turn=(k.turn+1)%h.players.length;h.r++;h.lim=h.cfg.rt||30;h.ends=Date.now()+h.lim*1000;hostBroadcast();
+}
+function rkVoteStart(id){
+  const h=H;if(!h||h.ph!=='rk'||!h.rk||h.rk.over||h.rk.vote)return;
+  const i=h.players.findIndex(p=>p.id===id);if(i<0)return;
+  h.rk.vote={by:i,v:{[id]:1},end:Date.now()+25000};h.rk.msg='';hostBroadcast();
+}
+function rkVote(id,k){
+  const h=H;if(!h||!h.rk||!h.rk.vote||h.rk.vote.v[id]!==undefined)return;
+  if(!h.players.some(p=>p.id===id))return;
+  h.rk.vote.v[id]=k?1:0;
+  if(h.players.every(p=>h.rk.vote.v[p.id]!==undefined))rkVoteEnd(1);else hostBroadcast();
+}
+function rkVoteEnd(force){
+  const h=H,k=h.rk;if(!k||!k.vote)return;
+  const total=h.players.length,y=Object.values(k.vote.v).filter(x=>x).length;
+  if(!force&&Object.keys(k.vote.v).length<total)return hostBroadcast();
+  k.vote=null;
+  if(y>total/2){rkSwap();k.msg='الأغلبية وافقت، السؤال اتغير';return hostBroadcast();}
+  k.msg='الاقتراح ماوافقش عليهش أغلبية';hostBroadcast();
+}
+function rkSwap(){
+  const h=H,k=h.rk;const all=window.RANK_LISTS||[];const RK=window.__rk,rc=h.cfg.rc||'all';
+  let cand=all.filter(l=>l.id!==k.li&&(rc==='all'||!RK||RK.RC[l.id]===rc));if(!cand.length)cand=all.filter(l=>l.id!==k.li);
+  const L=(cand.length?shuffle(cand):all)[0]||rkL();
+  h.usedL=h.usedL||[];h.usedL.push(L.id);rkLast=L.id;
+  try{const s2=JSON.parse(localStorage.getItem(RKSEEN)||'[]');s2.push(L.id);localStorage.setItem(RKSEEN,JSON.stringify(s2))}catch(e){}
+  k.li=L.id;k.found=Array(L.items.length).fill(0);k.own=Array(L.items.length).fill(-1);k.turn=0;k.fail=0;k.hint='';k.hinted=[];k.mk=0;k.mo=-1;
+  h.r++;h.lim=h.cfg.rt||30;h.ends=Date.now()+h.lim*1000;
+}
+function rkHintReq(id){
+  const h=H,k=h.rk;if(!h||h.ph!=='rk'||!k||k.over)return;
+  if(k.fail<2*h.players.length)return;if(!h.players.some(p=>p.id===id))return;
+  const L=rkL();const miss=[];L.items.forEach((al,i)=>{if(!k.found[i])miss.push(i)});if(!miss.length)return;
+  const cand=miss.filter(i=>!k.hinted.includes(i));const pool=cand.length?cand:miss;
+  const p=pool[Math.floor(Math.random()*pool.length)];k.hinted.push(p);
+  const d=String(L.disp[p]).replace(/^ال/,'');
+  k.hint='تلميح: العنصر رقم '+(p+1)+' بيبدأ بحرف «'+d.charAt(0)+'» وطوله '+Array.from(d).length+' حروف';
+  k.fail=0;hostBroadcast();
 }
 function rkSend(x,sk){
   if(!S||S.ph!=='rk'||!S.rk||S.rk.ov||myIndex()!==S.rk.tu||mine.sent===S.r)return;if(!sk&&!String(x).trim())return;
@@ -317,20 +368,22 @@ function rkSug(){
   bx.innerHTML=a.map(d=>`<button class="rsgb" data-o="rsug" data-t="${esc(d)}">${esc(d)}</button>`).join('');
 }
 function rkView(host,tv){
-  const k=S.rk,my=myIndex(),meT=!tv&&k.tu===my,over=!!k.ov,n=k.n,nf=k.x.filter(Boolean).length,HR=window.__rk.heart;
-  if(rkSeq!==S.seq){S.pl.forEach((p,i)=>{const pv=rkSeen[p.i];rkBrk[p.i]=pv!==undefined&&k.lv[i]<pv;rkSeen[p.i]=k.lv[i];});rkSeq=S.seq;}
-  const cards=S.pl.map((p,i)=>`<div class="rp ${i===k.tu&&!over?'on':''} ${k.lv[i]<=0?'out':''}" style="--tc:${RKC[i%RKC.length]}"><span>${esc(p.n)}</span><b>${p.s}</b><i>${[0,1,2].map(j=>HR(j<k.lv[i]?'ok':(j===k.lv[i]&&rkBrk[p.i]?'brk':'gone'))).join('')}</i></div>`).join('');
+  const k=S.rk,my=myIndex(),meT=!tv&&k.tu===my,over=!!k.ov,n=k.n,nf=k.x.filter(Boolean).length;
+  const pc=i=>RKC[i%RKC.length];
+  const cards=S.pl.map((p,i)=>`<div class="rp ${i===k.tu&&!over?'on':''}" style="--tc:${pc(i)}"><span>${esc(p.n)}</span><b>${p.s}</b></div>`).join('');
   const cnt=S.pl.length;const cls=cnt>4?'many':'n'+cnt;
-  const slots=k.f.map((f,i)=>{const nm=f||'؟';return `<div class="rs ${k.x[i]?'f':''} ${over&&!k.x[i]?'miss':''} ${nm.length>9?'ln':''}"><em>${i+1}</em><span class="${nm.length>12?'l3':nm.length>9?'l2':nm.length>6?'l1':''}">${esc(nm)}</span><b>${i+1} ن</b></div>`}).join('');
+  const slots=k.f.map((f,i)=>{const ow=k.o&&k.o[i]>=0?k.o[i]:-1;const nm=f||'؟';const on=ow>=0&&S.pl[ow];
+    return `<div class="rs ${k.x[i]?'f ow':''} ${over&&!k.x[i]?'miss':''} ${nm.length>9?'ln':''}" style="--tc:${on?pc(ow):'#1fa34a'}"><em>${i+1}</em><span class="${nm.length>12?'l3':nm.length>9?'l2':nm.length>6?'l1':''}">${esc(nm)}</span><b class="rsw">${on?esc(S.pl[ow].n):''}</b></div>`}).join('');
+  const links=`<div class="rlk">${k.hb&&!over?'<button class="link" data-o="rh">تلميح</button>':''}<button class="link" data-o="rvq">غيّر السؤال</button>${meT?'<button class="link" data-o="rsk">تخطي</button>':''}</div>`;
   let foot='';
-  if(over)foot=`<div class="res good">خلصت اللعبة</div>${host?'<button class="btn big" data-o="rkfin">شوف النتيجة</button>':'<p class="warn">مستني صاحب الغرفة...</p>'}`;
-  else if(meT)foot=`<div class="rmsg">${esc(k.m||'دورك!')}</div><div class="rin"><input class="mdin" id="orans" autocomplete="off" placeholder="اكتب اسم عنصر"><button class="btn" data-o="rans">تمام</button></div><div class="rsg" id="orsg"></div><button class="link" data-o="rsk">تخطي (غلطة)</button>`;
-  else foot=`<div class="rmsg">${esc(k.m||'')}</div><div class="res wait">${k.lv[my]<=0&&my>=0?'خرجت من اللعبة، متابع...':'دور '+esc(S.pl[k.tu].n)+'...'}</div>`;
+  if(over)foot=`<div class="res good">خلصت القايمة</div>${host?'<button class="btn big" data-o="rkfin">شوف النتيجة</button>':'<p class="warn">مستني صاحب الغرفة...</p>'}`;
+  else if(k.v)foot=`<div class="rvcard"><b>${esc(k.v.by)} عايز يغيّر السؤال</b><span>${k.v.y} من ${cnt} موافقين، ولازم أكتر من النص</span>${mine.vv?'<span>صوتك اتسجل، مستنيين الباقي</span>':'<div class="rvb"><button class="btn" data-o="rvy" data-v="1">موافق ✓</button><button class="btn ghost" data-o="rvy" data-v="0">لا ✗</button></div>'}</div>`;
+  else if(meT)foot=`${k.h?`<div class="rhint">${esc(k.h)}</div>`:''}<div class="rmsg"${k.mo>=0?` style="background:${pc(k.mo)};color:#fff"`:''}>${esc(k.m||'دورك!')}</div><div class="rin"><input class="mdin" id="orans" autocomplete="off" placeholder="اكتب اسم عنصر"><button class="btn" data-o="rans">تمام</button></div><div class="rsg" id="orsg"></div>${links}`;
+  else foot=`${k.h?`<div class="rhint">${esc(k.h)}</div>`:''}<div class="rmsg"${k.mo>=0?` style="background:${pc(k.mo)};color:#fff"`:''}>${esc(k.m||'')}</div><div class="res wait">دور ${esc(S.pl[k.tu].n)}...</div>${links}`;
   shell(`${over?'':'<div class="bar"><i id="obar"></i></div>'}<div class="rsb ${cls}">${cards}</div><div class="rhd"><div class="rt">${esc(k.t)}</div><div class="rc"><span class="rbar"><i style="width:${Math.round(100*nf/n)}%"></i></span><b>${nf}/${n}</b></div></div><div class="rgrid ${n>12?'dense':n>8?'mid':''}">${slots}</div>${foot}`);
-  if(meT&&!over){const el=document.getElementById('orans');if(el)setTimeout(()=>{try{el.focus()}catch(e){}},50);}
+  if(meT&&!over&&!k.v){const el=document.getElementById('orans');if(el)setTimeout(()=>{try{el.focus()}catch(e){}},50);}
   const on=document.querySelector('.rsb .rp.on');if(on&&cnt>4&&on.scrollIntoView)try{on.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}
 }
-
 // ---------- imposter mode ----------
 function impSendWords(){const h=H;if(!h.iw)return;h.players.forEach(p=>{const w=p.id===h.iw.imp?null:h.iw.word;if(p.id===ME.id)IW={r:h.r,th:h.iw.theme,w};else NET.send({t:'iw',to:p.id,r:h.r,th:h.iw.theme,w});});}
 function impStart(){
@@ -420,7 +473,7 @@ function hostKick(id){const h=H,i=h.players.findIndex(p=>p.id===id);if(i<=0)retu
 function lobbyRoom(host){
   const c=lobbyCfg,hc=H?H.cfg:c;
   const cfgHtml=host?`<h3 id="rsettings">نوع اللعب</h3><div class="chips"><button class="chip ${hc.mode==='classic'?'on':''}" data-o="mode" data-v="classic">🎯 سباق إجابات</button><button class="chip ${hc.mode==='bluff'?'on':''}" data-o="mode" data-v="bluff">🎭 بلوف</button><button class="chip ${hc.mode==='imp'?'on':''}" data-o="mode" data-v="imp">🕵️ برا السرب</button><button class="chip ${hc.mode==='rk'?'on':''}" data-o="mode" data-v="rk">🔟 رتّب القايمة</button></div>
-  ${hc.mode==='rk'?`<h3>الفئة</h3><div class="chips">${((window.__rk||{}).RCATS||[]).map(([k,n])=>`<button class="chip ${(hc.rc||'all')===k?'on':''}" data-o="rkc" data-v="${k}">${n}</button>`).join('')}</div><h3>وقت دور كل لاعب</h3><div class="chips">${[15,30,45,60,90].map(t=>`<button class="chip ${(hc.rt||30)===t?'on':''}" data-o="rkt" data-v="${t}">${t} ثانية</button>`).join('')}</div><p class="center" style="color:var(--mut);font-size:13px">قايمة عشوائية، كل لاعب بالدور يكتب عنصر. الترتيب الأبعد بياخد نقط أكتر. 3 غلطات لكل لاعب.</p>`:`<h3>وضع الجمهور 👥</h3><div class="seg" style="width:100%"><button class="${hc.crowd?'':'on'}" data-o="crowd" data-v="0" style="flex:1">عادي (لحد 16)</button><button class="${hc.crowd?'on':''}" data-o="crowd" data-v="1" style="flex:1">جمهور (لحد 20 + شاشة)</button></div>
+  ${hc.mode==='rk'?`<h3>الفئة</h3><div class="chips">${((window.__rk||{}).RCATS||[]).map(([k,n])=>`<button class="chip ${(hc.rc||'all')===k?'on':''}" data-o="rkc" data-v="${k}">${n}</button>`).join('')}</div><h3>وقت دور كل لاعب</h3><div class="chips">${[15,30,45,60,90].map(t=>`<button class="chip ${(hc.rt||30)===t?'on':''}" data-o="rkt" data-v="${t}">${t} ثانية</button>`).join('')}</div><p class="center" style="color:var(--mut);font-size:13px">قايمة عشوائية، كل لاعب بالدور يكتب عنصر. الترتيب الأبعد بياخد نقط أكتر. مفيش قلوب، واللعبة بتخلص لما القايمة تتكمل.</p>`:`<h3>وضع الجمهور 👥</h3><div class="seg" style="width:100%"><button class="${hc.crowd?'':'on'}" data-o="crowd" data-v="0" style="flex:1">عادي (لحد 16)</button><button class="${hc.crowd?'on':''}" data-o="crowd" data-v="1" style="flex:1">جمهور (لحد 20 + شاشة)</button></div>
   <h3>فرق</h3><div class="chips">${[0,2,3,4].map(n=>`<button class="chip ${(hc.teams|0)===n?'on':''}" data-o="teams" data-v="${n}">${n?n+' فرق':'فردي'}</button>`).join('')}</div>
   <h3>الفئات</h3><div class="srow"><span class="lb"><span class="e">🗂️</span>${hc.cats.length?hc.cats.length+'/6 فئات مختارة':'ماختارتش فئات لسه'}</span><button class="btn sm ghost" data-o="cats">${hc.cats.length?'تعديل':'اختار'}</button></div>
   <h3>عدد الأسئلة</h3><div class="srow slider"><span class="lb"><span class="e">🔁</span>عدد الأسئلة</span><b id="orv" class="rv">${hc.n}</b></div><input type="range" id="orng" min="10" max="30" step="1" value="${hc.n}" class="rng"><div class="rngl"><span>١٠</span><span>٣٠</span></div>
@@ -515,6 +568,9 @@ document.addEventListener('click',e=>{
     case 'ivote':{if(mine.k!==undefined||!S||S.ph!=='iv')return;const k=+t.dataset.k;mine.k=k;if(room.host)impVote(ME.id,S.r,k);else NET.send({t:'iv',id:ME.id,r:S.r,k});return view();}
     case 'rans':{const el=document.getElementById('orans');return rkSend(el?el.value:'');}
     case 'rsk':return rkSend('',true);
+    case 'rvq':if(room.host)rkVoteStart(ME.id);else NET.send({t:'rv',id:ME.id});return;
+    case 'rvy':{if(!S||!S.rk||!S.rk.v||mine.vv)return;const kk=v==='1'?1:0;mine.vv=1;if(room.host)rkVote(ME.id,kk);else NET.send({t:'rvv',id:ME.id,k:kk});return view();}
+    case 'rh':if(room.host)rkHintReq(ME.id);else NET.send({t:'rh',id:ME.id});return;
     case 'rsug':{const el=document.getElementById('orans');if(el){el.value=t.dataset.t;rkSug();try{el.focus()}catch(e){}}return;}
     case 'rkfin':if(H&&H.ph==='rk'){H.ph='fin';H.ends=0;hostBroadcast();}return;
     case 'rkc':H.cfg.rc=v;return hostBroadcast();
