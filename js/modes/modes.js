@@ -7,7 +7,7 @@ const N=t=>N0(t).replace(/(^| )ال(?=[\u0621-\u064a]{2})/g,'$1').replace(/ /g,'
 const lev=(a,b)=>{const m=a.length,n=b.length;if(Math.abs(m-n)>1)return 9;const d=[];for(let i=0;i<=m;i++){d[i]=[i];}for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];};
 const sh=(h,o)=>window.shell(h,o||{});
 const TK=(n,f)=>function(...a){return window.__trk?window.__trk(n,f).apply(this,a):f.apply(this,a);};
-const TC=['#2f5486','#b8562a','#2c7a4b','#7a3c8c'];
+const TC=['#2f5486','#b8562a','#2c7a4b','#a8324e'];
 const tapfx=()=>{try{window.__sfx&&window.__sfx.tap()}catch(e){}};
 
 /* ---------------- Team board ---------------- */
@@ -71,7 +71,7 @@ function jQ_(){
     if(cu.blocked.length)tips.push('⛔ ممنوع من الإجابة: <b>'+cu.blocked.map(i=>E(J.names[i])).join('، ')+'</b>');
     if(cu.bomb!==null)tips.push('💣 السؤال عند <b>'+E(J.names[cu.bomb])+'</b>: لو غلط تتخصم '+pts);
     if(cu.shown)tips.push('🔢 '+cu.shown.map(t=>'<b>'+E(t)+'</b>').join(' • '));
-    if(cu.hint)tips.push('💡 '+E(cu.hint));
+    if(cu.hint)tips.push(''+E(cu.hint));
     if(cu.call)tips.push('📞 <b id="jfr">1:00</b>');
     mid=`<div class="jlls">${lb}</div>${cu.pend?`<div class="jtip">اختار الفريق:<div class="jaw">${tgtBtns(cu.pend)}</div></div>`:''}${tips.map(t=>`<div class="jtip">${t}</div>`).join('')}<button class="btn big" data-jx="rev">👁 كشف الإجابة</button>`;
   }
@@ -115,29 +115,54 @@ function pickList(){const all=LISTS();let seen=[];try{seen=JSON.parse(localStora
   const i=free[Math.floor(Math.random()*free.length)];seen.push(all[i].id);try{localStorage.setItem(seenK,JSON.stringify(seen))}catch(e){}return i;}
 function rList_(){
   R=R||{n:2,names:['لاعب 1','لاعب 2','لاعب 3','لاعب 4']};
-  sh(`<div class="panel mdp"><h2>🔟 رتّب القايمة</h2><p class="mdmut">هتطلعلكم قايمة عشوائية (من 5 لـ 20 عنصر). كل لاعب يكتب عنصر منها. كل ما العنصر ترتيبه أبعد في القايمة بياخد نقط أكتر، والأول بياخد نقطة واحدة. كل لاعب معاه 3 غلطات.</p>
+  sh(`<div class="panel mdp"><h2>🔟 رتّب القايمة</h2><p class="mdmut">هتطلعلكم قايمة عشوائية (من 5 لـ 20 عنصر). كل لاعب يكتب عنصر منها. كل ما العنصر ترتيبه أبعد في القايمة بياخد نقط أكتر، والأول بياخد نقطة واحدة. مفيش قلوب: اللعبة بتخلص لما القايمة تتكمل، ولو الكل غلط مرتين ورا بعض بيظهر تلميح.</p>
   <div class="mdlab">الفئة</div><div class="rcats">${RCATS.map(([k,n])=>`<button class="rcb ${(R.cat||'all')===k?'on':''}" data-jx="rcat" data-k="${k}">${n}</button>`).join('')}</div><div class="mdlab">عدد اللاعبين</div><div class="mdrow">${[1,2,3,4].map(n=>`<button class="btn ${R.n===n?'':'ghost'}" data-jx="rn" data-n="${n}">${n}</button>`).join('')}</div>
   <div class="mdnames">${[...Array(R.n).keys()].map(k=>`<input class="mdin rn" data-k="${k}" maxlength="12" value="${E(R.names[k])}">`).join('')}</div>
   <button class="btn big" data-jx="rgo">ابدأ</button></div>`);
 }
 function rSaveNames(){document.querySelectorAll('.rn').forEach(i=>{R.names[+i.dataset.k]=i.value.trim().slice(0,12)||('لاعب '+(+i.dataset.k+1));});}
 function rGo(){
-  rSaveNames();R.li=pickList();const L=LISTS()[R.li];
-  R.found=Array(L.items.length).fill(0);R.score=Array(R.n).fill(0);R.lives=Array(R.n).fill(3);R.turn=0;R.msg='';R.over=false;rView();
+  rSaveNames();R.li=pickList();R.score=Array(R.n).fill(0);rReset('');rView();
 }
-const HM=['.XX..XX.','XXXXXXXX','XXXXXXXX','XXXXXXXX','.XXXXXX.','..XXXX..','...XX...'];
-const hrects=(c0,c1)=>HM.map((r,y)=>[...r].map((ch,x)=>ch==='X'&&x>=c0&&x<c1?`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`:'').join('')).join('');
-const HL=hrects(0,4),HR=hrects(4,8);
-const heart=st=>`<span class="hrt ${st}"><svg viewBox="-1 -1 10 9" shape-rendering="crispEdges"><g class="hl">${HL}</g><g class="hr">${HR}</g><rect class="hs" x="1" y="1" width="1" height="1"/></svg></span>`;
-const hearts=k=>[0,1,2].map(j=>heart(j<R.lives[k]?'ok':(j===R.lives[k]&&R.brk===k?'brk':'gone'))).join('');
-function rAlive(){return R.lives.some(l=>l>0);}
+const col=k=>TC[k%TC.length];
+function rReset(msg){
+  const L=LISTS()[R.li];
+  R.found=Array(L.items.length).fill(0);R.own=Array(L.items.length).fill(-1);
+  R.turn=0;R.over=false;R.fail=0;R.hint='';R.hinted=[];R.vote=null;R.mo=-1;R.msg=msg||'';
+}
+function rSwap(){
+  const all=LISTS(),old=R.li;let cand=all.map((l,i)=>i).filter(i=>i!==old&&((R.cat||'all')==='all'||RC[all[i].id]===R.cat));
+  if(!cand.length)cand=all.map((l,i)=>i).filter(i=>i!==old);if(!cand.length)return;
+  R.li=cand[Math.floor(Math.random()*cand.length)];rReset('السؤال اتغير، كمّلوا القايمة الجديدة');
+  try{const s=JSON.parse(localStorage.getItem(seenK)||'[]');s.push(LISTS()[R.li].id);localStorage.setItem(seenK,JSON.stringify(s))}catch(e){}
+  rView();
+}
+function rHint(){
+  const L=LISTS()[R.li];const miss=[];L.items.forEach((al,i)=>{if(!R.found[i])miss.push(i)});if(!miss.length)return;
+  const cand=miss.filter(i=>!R.hinted.includes(i));const pool=cand.length?cand:miss;
+  const p=pool[Math.floor(Math.random()*pool.length)];R.hinted.push(p);
+  const d=String(L.disp[p]).replace(/^ال/,'');
+  R.hint='تلميح: العنصر رقم '+(p+1)+' بيبدأ بحرف «'+d.charAt(0)+'» وطوله '+Array.from(d).length+' حروف';
+  R.fail=0;rView();
+}
+function rVoteOpen(){if(R.over)return;R.vote={by:R.turn,v:{}};rView();}
+function rVoteYes(k){if(!R.vote)return;R.vote.v[k]=1;if(Object.keys(R.vote.v).length>R.n/2)return rSwap();rView();}
+function rVoteNo(){R.vote=null;R.msg='الاقتراح اتلغى، كمّلوا';rView();}
 function rView_(){
-  const L=LISTS()[R.li];const n=L.items.length;
-  const nf=R.found.filter(Boolean).length;
-  const slots=L.items.map((it,i)=>{const f=R.found[i];const nm=f||R.over?L.disp[i]:'؟';return `<div class="rs ${f?'f':''} ${R.over&&!f?'miss':''} ${nm.length>9?'ln':''}"><em>${i+1}</em><span class="${nm.length>12?'l3':nm.length>9?'l2':nm.length>6?'l1':''}">${E(nm)}</span><b>${i+1} ن</b></div>`}).join('');
-  const sb=R.names.slice(0,R.n).map((nm,k)=>`<div class="rp ${k===R.turn&&!R.over?'on':''} ${R.lives[k]<=0?'out':''}" style="--tc:${TC[k]}"><span>${E(nm)}</span><b>${R.score[k]}</b><i>${hearts(k)}</i></div>`).join('');
-  sh(`<div class="rsb n${R.n}">${sb}</div><div class="rhd"><div class="rt">${L.t}</div><div class="rc"><span class="rbar"><i style="width:${Math.round(100*nf/n)}%"></i></span><b>${nf}/${n}</b></div></div><div class="rgrid ${n>12?'dense':n>8?'mid':''}">${slots}</div>${R.over?`<div class="res good">خلصت اللعبة${R.n>1?' - '+rWin():''}</div><button class="btn big" data-jx="rgo2">قايمة تانية</button>`:`<div class="rmsg">${R.msg||('دور '+E(R.names[R.turn]))}</div><div class="rin"><input class="mdin" id="rans" autocomplete="off" placeholder="اكتب اسم عنصر"><button class="btn" data-jx="rsend">تمام</button></div><div class="rsg" id="rsg"></div><button class="link" data-jx="rskip">تخطي (غلطة)</button>`}`);
-  R.brk=-1;if(!R.over){const el=document.getElementById('rans');if(el)setTimeout(()=>el.focus(),50);}
+  const L=LISTS()[R.li];const n=L.items.length;const nf=R.found.filter(Boolean).length;
+  const slots=L.items.map((it,i)=>{const f=R.found[i];const ow=R.own[i]>=0?R.own[i]:-1;const nm=f||R.over?L.disp[i]:'؟';
+    return `<div class="rs ${f?'f ow':''} ${R.over&&!f?'miss':''} ${nm.length>9?'ln':''}" style="--tc:${ow>=0?col(ow):'#1fa34a'}"><em>${i+1}</em><span class="${nm.length>12?'l3':nm.length>9?'l2':nm.length>6?'l1':''}">${E(nm)}</span><b class="rsw">${ow>=0?E(R.names[ow]):''}</b></div>`}).join('');
+  const sb=R.names.slice(0,R.n).map((nm,k)=>`<div class="rp ${k===R.turn&&!R.over?'on':''}" style="--tc:${col(k)}"><span>${E(nm)}</span><b>${R.score[k]}</b></div>`).join('');
+  const canHint=R.fail>=2*R.n&&!R.over;
+  let foot;
+  if(R.over)foot=`<div class="res good">خلصت القايمة${R.n>1?' - '+rWin():''}</div><button class="btn big" data-jx="rgo2">قايمة تانية</button>`;
+  else if(R.vote){const y=Object.keys(R.vote.v).length;
+    foot=`<div class="rvcard"><b>${E(R.names[R.vote.by])} عايز يغيّر السؤال</b><span>${y} من ${R.n} موافقين، ولازم أكتر من النص</span><div class="rvb">${R.names.slice(0,R.n).map((nm,k)=>R.vote.v[k]?`<span class="rvon" style="--tc:${col(k)}">${E(nm)} ✓</span>`:`<button class="btn" style="--tc:${col(k)}" data-jx="rvy" data-k="${k}">${E(nm)}</button>`).join('')}</div><button class="link" data-jx="rvx">إلغاء الاقتراح</button></div>`;
+  }else{
+    foot=`${R.hint?`<div class="rhint">${E(R.hint)}</div>`:''}<div class="rmsg"${R.mo>=0?` style="background:${col(R.mo)};color:#fff"`:''}>${R.msg||('دور '+E(R.names[R.turn]))}</div><div class="rin"><input class="mdin" id="rans" autocomplete="off" placeholder="اكتب اسم عنصر"><button class="btn" data-jx="rsend">تمام</button></div><div class="rsg" id="rsg"></div><div class="rlk"><button class="link" data-jx="rskip">تخطي</button>${canHint?'<button class="link" data-jx="rhint">تلميح</button>':''}<button class="link" data-jx="rvq">غيّر السؤال</button></div>`;
+  }
+  sh(`<div class="rsb n${R.n}">${sb}</div><div class="rhd"><div class="rt">${L.t}</div><div class="rc"><span class="rbar"><i style="width:${Math.round(100*nf/n)}%"></i></span><b>${nf}/${n}</b></div></div><div class="rgrid ${n>12?'dense':n>8?'mid':''}">${slots}</div>${foot}`);
+  if(!R.over&&!R.vote){const el=document.getElementById('rans');if(el)setTimeout(()=>el.focus(),50);}
 }
 const TY={"area": "ctry", "pop": "ctry", "afr": "ctry", "eu": "ctry", "arb": "ctry", "gdp": "ctry", "gold": "ctry", "oil": "ctry", "gas": "ctry", "coal": "ctry", "elc": "ctry", "for": "ctry", "cst": "ctry", "car": "ctry", "rl": "ctry", "rice": "ctry", "wht": "ctry", "exp": "ctry", "ren": "ctry", "wtr": "ctry", "geu": "ctry", "gaa": "ctry", "gsa": "ctry", "gde": "ctry", "gsm": "ctry", "gpa": "ctry", "gpl": "ctry", "gap": "ctry", "gaq": "ctry", "gas2": "ctry", "bcf": "ctry", "bmt": "ctry", "bpo": "ctry", "bml": "ctry", "bst": "ctry", "btr": "ctry", "bwn": "ctry", "bbl": "ctry", "btm": "ctry", "bfr": "ctry", "bel": "ctry", "bfs": "ctry", "bcn": "ctry", "bag": "ctry", "bbr": "ctry", "bwp": "ctry", "bwg": "ctry", "gwc": "ctry", "gov": "egov", "gva": "egov", "gev": "egov", "gep": "egov", "ged": "egov", "egc": "city", "gac": "city", "prt": "city", "apt": "city", "mtn": "geo", "isl": "geo", "des": "geo", "lak": "geo", "riv": "geo", "grv": "geo", "tow": "bld", "gst": "bld", "gdm": "bld", "fst": "bld", "plz": "plan", "pld": "plan", "gsr": "plan", "con": "plan", "oce": "plan", "bar": "biz", "bco": "biz", "bfm": "biz", "pl": "ply", "fll": "ply", "flb": "ply", "fl1": "ply", "flu": "ply", "fpa": "ply", "fsa": "ply", "rma": "ply", "rmg": "ply", "bca": "ply", "bcg": "ply", "lvg": "ply", "arp": "ply", "chp": "ply", "mlp": "ply", "mlg": "ply", "tpp": "ply", "tpg": "ply", "psg": "ply", "bvp": "ply", "bvg": "ply", "jvp": "ply", "jvg": "ply", "inp": "ply", "ing": "ply", "mup": "ply", "gus": "pres", "gu2": "pres", "bcr": "club", "lng": "lng", "ust": "ust", "hem": "emp"};
 const RC={"gac":"ge","pl": "fb", "fll": "fb", "flb": "fb", "fl1": "fb", "flu": "fb", "fpa": "fb", "fsa": "fb", "rma": "fb", "rmg": "fb", "bca": "fb", "bcg": "fb", "lvg": "fb", "arp": "fb", "chp": "fb", "mlp": "fb", "mlg": "fb", "tpp": "fb", "tpg": "fb", "psg": "fb", "bvp": "fb", "bvg": "fb", "jvp": "fb", "jvg": "fb", "inp": "fb", "ing": "fb", "mup": "fb", "gwc": "fb", "bwp": "fb", "bwg": "fb", "fst": "fb", "bcr": "fb", "gov": "eg", "gva": "eg", "gev": "eg", "gep": "eg", "ged": "eg", "egc": "eg", "gdp": "ec", "gold": "ec", "oil": "ec", "gas": "ec", "coal": "ec", "elc": "ec", "for": "ec", "car": "ec", "rl": "ec", "rice": "ec", "wht": "ec", "exp": "ec", "ren": "ec", "wtr": "ec", "bcf": "ec", "bmt": "ec", "bpo": "ec", "bml": "ec", "bst": "ec", "btr": "ec", "bwn": "ec", "bbl": "ec", "btm": "ec", "bfr": "ec", "bel": "ec", "bfs": "ec", "bcn": "ec", "bag": "ec", "bbr": "ec", "apt": "ec", "prt": "ec", "bar": "ec", "bco": "ec", "gus": "cu", "gu2": "cu", "hem": "cu", "lng": "cu", "bfm": "cu", "plz": "cu", "pld": "cu", "gsr": "cu", "area": "ge", "pop": "ge", "afr": "ge", "arb": "ge", "eu": "ge", "geu": "ge", "gaa": "ge", "gsa": "ge", "gde": "ge", "gsm": "ge", "gpa": "ge", "gpl": "ge", "gap": "ge", "gaq": "ge", "gas2": "ge", "cst": "ge", "con": "ge", "oce": "ge", "mtn": "ge", "isl": "ge", "des": "ge", "lak": "ge", "riv": "ge", "grv": "ge", "ust": "ge", "tow": "ge", "gst": "ge", "gdm": "ge"};const RCATS=[['all','🎲 عشوائي'],['fb','⚽ كورة'],['ge','🌍 جغرافيا'],['eg','☥ مصر'],['ec','💰 اقتصاد وإنتاج'],['cu','📚 ثقافة وعلوم']];
@@ -153,18 +178,17 @@ function rSug(){const el=document.getElementById('rans'),bx=document.getElementB
   bx.innerHTML=a.map(o=>`<button class="rsgb" data-jx="rsug" data-t="${E(o.d)}">${E(o.d)}</button>`).join('');}
 function rWin(){const m=Math.max(...R.score);const w=R.names.slice(0,R.n).filter((n,k)=>R.score[k]===m);return w.length>1?'تعادل':'🏆 '+E(w[0]);}
 function rNext(){
-  if(R.found.every(x=>x)||!rAlive()){R.over=true;return rView();}
-  let k=R.turn;for(let i=0;i<R.n;i++){k=(k+1)%R.n;if(R.lives[k]>0)break;}R.turn=k;rView();
+  if(R.found.every(x=>x)){R.over=true;R.turn=0;return rView();}
+  R.turn=(R.turn+1)%R.n;rView();
 }
 function rAns(txt,skip){
   const L=LISTS()[R.li];const a=N(txt);if(!skip&&!a)return;
   let hit=-1;
   if(!skip){L.items.forEach((al,i)=>{if(hit<0&&al.some(x=>N(x)===a))hit=i;});if(hit<0&&a.length>=6)L.items.forEach((al,i)=>{if(hit>=0)return;if(al.some(x=>{const y=N(x);return y.length>=6&&lev(a,y)<=1;}))hit=i;});}
-  const k=R.turn;
-  R.brk=-1;if(hit>=0&&!R.found[hit]){R.found[hit]=1;R.score[k]+=hit+1;R.msg='✅ '+E(L.disp[hit])+' ترتيبه '+(hit+1)+'، +'+(hit+1);}
-  else if(hit>=0){R.lives[k]--;R.brk=k;R.msg='اتقال قبل كده! -1 قلب';}
-  else{R.lives[k]--;R.brk=k;R.msg=skip?'تخطي: -1 قلب':'مش في القايمة: -1 قلب';}
-  rNext();
+  const k=R.turn;R.mo=-1;
+  if(hit>=0&&!R.found[hit]){R.found[hit]=1;R.own[hit]=k;R.score[k]+=hit+1;R.msg=E(R.names[k])+' لقى '+E(L.disp[hit])+' ترتيبه '+(hit+1)+'، +'+(hit+1);R.mo=k;R.fail=0;R.hint='';}
+  else{R.fail++;R.msg=E(R.names[k])+': '+(skip?'تخطي':hit>=0?'اتقالت قبل كده':'مش في القايمة');}
+  R.vote=null;rNext();
 }
 function jLP_(){
   const st=J.setup,i=J.lpT||0,arr=st.lls[i];
@@ -212,11 +236,15 @@ document.addEventListener('click',e=>{
   if(a==='rsend'){const el=document.getElementById('rans');return rAns(el?el.value:'');}
   if(a==='rsug'){const el=document.getElementById('rans');if(el){el.value=t.dataset.t;rSug();el.focus();}return;}
   if(a==='rskip')return rAns('',true);
+  if(a==='rhint')return rHint();
+  if(a==='rvq')return rVoteOpen();
+  if(a==='rvy')return rVoteYes(+t.dataset.k);
+  if(a==='rvx')return rVoteNo();
 });
 document.addEventListener('input',e=>{if(e.target.id==='rans')rSug();});
 document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('.rsgb'))e.preventDefault();});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='rans'){e.preventDefault();rAns(e.target.value);}});
-window.__rk={N,N0,lev,TY,RC,RCATS,heart,lists:LISTS,sug:(id,raw,found)=>{const ty=TY[id]||id,z=N0(raw).replace(/ /g,''),q=N(raw);if(!z)return[];const done=new Set(found.map(N));const P=pool(ty).filter(o=>!done.has(o.k));
+window.__rk={N,N0,lev,TY,RC,RCATS,lists:LISTS,sug:(id,raw,found)=>{const ty=TY[id]||id,z=N0(raw).replace(/ /g,''),q=N(raw);if(!z)return[];const done=new Set(found.map(N));const P=pool(ty).filter(o=>!done.has(o.k));
   let a=P.filter(o=>o.k.startsWith(q)||o.z.replace(/ /g,'').startsWith(z));if(a.length<5&&q.length>=2)a=a.concat(P.filter(o=>!a.includes(o)&&o.k.includes(q)));
   return a.filter(o=>o.k!==q).sort((x,y)=>x.d.length-y.d.length).slice(0,8).map(o=>o.d);}};
 window.Modes={team:()=>{J=J&&J.setup&&!J.g?J:null;jSetup();},rank:()=>{R=null;rList();}};
