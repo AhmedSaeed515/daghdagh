@@ -127,3 +127,20 @@
 .lg .rp.out{opacity:.45}
 .lg .bar+.rsb{margin-top:12px}.lg .rp.on{transform:translateY(-2px)}
 .lg .rcats{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0 4px}.lg .rcb{background:var(--card2);color:var(--y2);border:2px solid var(--y2);border-radius:99px;padding:3px 10px;font:inherit;font-size:13px;font-weight:800}.lg .rcb.on{background:var(--y);color:#151515;box-shadow:2px 2px 0 var(--y2)}
+
+/* v121 rank: no hearts, per-player colors, vote + hint */
+.lg .rs b.rsw{max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;padding:1px 7px}
+.lg .rs.f.ow{background:var(--tc);color:#fff}.lg .rs.f.ow em{background:#fff;color:#151515}.lg .rs.f.ow b{background:rgba(255,255,255,.94);color:#151515;border-color:#151515}
+.lg .rgrid.dense .rs b.rsw{font-size:9px;max-width:46%;padding:0 5px}
+.lg .rgrid.mid .rs b.rsw{font-size:10px;max-width:44%}
+.lg .rlk{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:6px}
+.lg .rlk .link{width:auto;margin:0;font-size:13px;text-decoration:none;font-weight:800;color:var(--y2);opacity:.9}
+.lg .rhint{background:rgba(255,216,74,.16);border:2px solid var(--y2);border-radius:10px;padding:4px 8px;margin:4px 0 0;font-size:12.5px;font-weight:800;text-align:center;line-height:1.35}
+.lg .rvcard{background:var(--card2);border:2px solid var(--y2);border-radius:12px;padding:7px 8px;margin:4px 0 0;text-align:center;display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:800}
+.lg .rvcard>span{font-size:12px;font-weight:600;color:var(--mut)}
+.lg .rvb{display:flex;gap:6px;justify-content:center}
+.lg .rvb .btn{flex:1 1 0;min-height:0;min-width:0;padding:8px 6px;font-size:14px;background:var(--tc);color:#fff;border:0;border-radius:10px}
+.lg .rvb .btn.ghost{background:var(--card3);color:var(--tx)}
+.lg .rvon{display:inline-block;background:var(--tc);color:#fff;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:800;flex:1 1 0}
+.lg .rvcard .link{width:auto;margin:0 auto;font-size:12px}
+@media (max-height:620px){.lg .rlk{margin-top:3px}.lg .rhint{padding:3px 7px;font-size:12px}.lg .rvcard{padding:5px 7px;gap:3px}}
