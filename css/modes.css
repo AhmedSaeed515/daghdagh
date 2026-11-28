@@ -157,3 +157,5 @@
 
 .wl .hero{margin:0 0 4px}.wl h2{margin:6px 0}.wl .btn,.wl .link{width:100%}.wl .link{padding:8px}
 @media(max-height:660px){.wl .hero{display:none}.wl h2{margin-top:14px}}
+
+.frico{color:var(--ink,#151515);margin:0 0 6px;display:flex;justify-content:center}.frico svg{width:52px;height:52px}.mode .ic svg{width:30px;height:30px}
