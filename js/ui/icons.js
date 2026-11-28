@@ -51,16 +51,62 @@ bomb:'<circle cx="10.5" cy="14.5" r="6.5"/><path d="M15 9.5l3-3M18 3.5l.5 2.5 2.
 bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.8.7 1 1.4 1 2.1h5c0-.7.2-1.4 1-2.1A6 6 0 0 0 12 3z"/>',
 flag:'<path d="M5 21V3M5 4h14l-2.5 4.5L19 13H5"/>',
 star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
-eye:'<path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'};
-var M={'📊':'chart','🎮':'pad','🎉':'spark','📲':'phone','📱':'phone','🌐':'globe','🎯':'target','🎭':'mask','🕵':'spy','⚠':'warn','🎲':'dice','🛟':'buoy','✂':'cut','⏱':'clock','⏳':'hour','🔥':'fire','🤫':'shh','😅':'face','😎':'cool','🗳':'ballot','✅':'ok','🏠':'home','✍':'pen','🤝':'people','🏆':'cup','🔊':'spk','🔇':'mute','🤖':'bot','➕':'plus','👑':'crown','🙋':'hand','📺':'tv','🔟':'list','👥':'people','🗂':'grid','🔁':'repeat','🔒':'lock','📨':'mail','📷':'cam','⚙':'gear','🎛':'sliders','🛑':'stop','✖':'x','❌':'x','🗣':'talk','⛔':'ban','📞':'call','🔄':'refresh','🔢':'hash','💣':'bomb','💡':'bulb','🏁':'flag','⭐':'star','👁':'eye'};
-var keys=Object.keys(M).join('|');var RE=new RegExp('('+keys+')[\\uFE0F\\u200D]?','g'),TEST=new RegExp(keys);
+eye:'<path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ankh:'<ellipse cx="12" cy="7" rx="3.4" ry="4.6"/><path d="M12 11.6V21M6.5 13.5h11"/>',
+temple:'<path d="M3 9l9-6 9 6zM5.5 9.5v8M10 9.5v8M14 9.5v8M18.5 9.5v8M3 20.5h18M4 17.5h16"/>',
+atom:'<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>',
+laptop:'<rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 19h19"/>',
+film:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7.5 4v16M16.5 4v16M3 9h4.5M3 15h4.5M16.5 9H21M16.5 15H21"/>',
+note:'<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+book:'<path d="M4 5.5C7 4 10 4.5 12 6.5c2-2 5-2.5 8-1V19c-3-1.5-6-1-8 1-2-2-5-2.5-8-1z"/><path d="M12 6.5V20"/>',
+coin:'<circle cx="12" cy="12" r="9.5"/><path d="M14.8 9c-.6-1-1.6-1.5-2.8-1.5-1.7 0-2.8.9-2.8 2.1 0 3 5.8 1.3 5.8 4.3 0 1.2-1.2 2.1-3 2.1-1.3 0-2.4-.6-3-1.6M12 6v1.5M12 16.5V18"/>',
+ball:'<circle cx="12" cy="12" r="9.5"/><path d="M12 8l3.8 2.8-1.4 4.4H9.6l-1.4-4.4zM12 8V2.6M15.8 10.8l5.4-1.6M14.4 15.2l3.4 4.4M9.6 15.2l-3.4 4.4M8.2 10.8L2.8 9.2"/>',
+car:'<path d="M3 15v-3.5L5.5 6h13L21 11.5V15zM3 15v2.5h3V15M18 15v2.5h3V15M3.5 11.5h17"/><circle cx="7.5" cy="13.5" r=".6"/><circle cx="16.5" cy="13.5" r=".6"/>',
+food:'<path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2.5 1.5-3.5 4.5-3.5 8H17"/>',
+paw:'<circle cx="6.5" cy="10" r="1.8"/><circle cx="10" cy="6" r="1.8"/><circle cx="14" cy="6" r="1.8"/><circle cx="17.5" cy="10" r="1.8"/><path d="M12 11.5c-3 0-5.5 3.5-5.5 6 0 2 2 2.5 3.5 2.2.8-.2 1.3-.4 2-.4s1.2.2 2 .4c1.5.3 3.5-.2 3.5-2.2 0-2.5-2.5-6-5.5-6z"/>',
+city:'<path d="M3 21V9h7v12M10 21V3h8v18M18 21V11h3v10M13 7h2M13 11h2M13 15h2M6 12.5h1M6 16.5h1M3 21h18"/>',
+drop:'<path d="M12 3c4 5 6.5 8 6.5 11.5a6.5 6.5 0 0 1-13 0C5.5 11 8 8 12 3z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+moon:'<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>',
+snow:'<path d="M12 2.5v19M3.8 7.2l16.4 9.6M3.8 16.8L20.2 7.2M9.5 4L12 6.5 14.5 4M9.5 20L12 17.5 14.5 20"/>',
+bolt:'<path d="M13 2.5L4.5 13.5H11L10 21.5l8.5-11H12z"/>',
+mount:'<path d="M2.5 20L9.5 7l4 7 2.5-4 5.5 10zM9.5 7l1.8 3.3"/>',
+tree:'<path d="M12 21v-5M12 3l5 7h-3l4 6H6l4-6H7z"/>',
+plane:'<path d="M21 3L10 14M21 3l-6.5 18-3.5-7-7-3.5z"/>',
+rocket:'<path d="M12 2.5c3.5 2.5 5 6 4.5 10l-2 2.5h-5l-2-2.5c-.5-4 1-7.5 4.5-10zM9.5 15l-3.5 3.5M14.5 15l3.5 3.5M12 15v6"/><circle cx="12" cy="9.5" r="1.6"/>',
+planet:'<circle cx="12" cy="12" r="5"/><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(-25 12 12)"/>',
+pin:'<path d="M12 21.5s7-6 7-11.5a7 7 0 0 0-14 0c0 5.5 7 11.5 7 11.5z"/><circle cx="12" cy="10" r="2.5"/>',
+brief:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8.5 7V4.5h7V7M3 13h18"/>',
+shirt:'<path d="M8.5 3.5L3 7l2.5 4 2.5-1.2V20.5h8V9.8L18.5 11 21 7l-5.5-3.5c-.5 1.5-1.8 2.5-3.5 2.5s-3-1-3.5-2.5z"/>',
+heart:'<path d="M12 20.5S3 14.5 3 8.8A4.8 4.8 0 0 1 12 6.5a4.8 4.8 0 0 1 9 2.3c0 5.700-9 11.700-9 11.700z"/>',
+tag:'<path d="M3 3h8.5L21 12.500 12.500 21 3 11.500z"/><circle cx="7.500" cy="7.500" r="1.200"/>',
+calc:'<rect x="4.500" y="3" width="15" height="18" rx="2"/><path d="M8 7.500h8M8 12h2M14 12h2M8 16h2M14 16h2"/>',
+cal:'<rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 10h17M8 3v4M16 3v4"/>',
+box:'<path d="M3.500 7.500L12 3l8.500 4.500v9L12 21l-8.500-4.500zM3.500 7.500L12 12l8.500-4.500M12 12v9"/>',
+glasses:'<circle cx="6.500" cy="14" r="3.500"/><circle cx="17.500" cy="14" r="3.500"/><path d="M10 14h4M3 14L4.500 7M21 14l-1.500-7"/>',
+person:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.500 3.500-7 8-7s8 2.500 8 7"/>',
+ring:'<circle cx="12" cy="15" r="5.500"/><path d="M8.500 6.500L12 2.500l3.500 4-3.500 2.500z"/>',
+cube:'<path d="M12 3l8.500 4.500v9L12 21l-8.500-4.500v-9zM12 12L3.500 7.500M12 12l8.500-4.500M12 12v9"/>',
+drum:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.700 3.100 3 7 3s7-1.300 7-3V6M5 12c0 1.700 3.100 3 7 3s7-1.300 7-3"/>',
+anchor:'<circle cx="12" cy="5" r="2"/><path d="M12 7v14M7 11h10M4 14c0 4 3.500 7 8 7s8-3 8-7"/>',
+skip:'<path d="M5 5l9 7-9 7zM17 5v14"/>',
+vase:'<path d="M9 3h6M10 3v4c-3 2-4.500 4-4.500 7a6.500 6.500 0 0 0 13 0c0-3-1.500-5-4.500-7V3"/>',
+dotR:'<circle cx="12" cy="12" r="7" fill="#d6281a" stroke="#151515"/>',
+dotB:'<circle cx="12" cy="12" r="7" fill="#1d6fa5" stroke="#151515"/>',
+dotK:'<circle cx="12" cy="12" r="7" fill="#151515" stroke="#151515"/>',
+dotW:'<circle cx="12" cy="12" r="7" fill="#fff" stroke="#151515"/>',
+dotY:'<circle cx="12" cy="12" r="7" fill="#ffd23f" stroke="#151515"/>',
+dotG:'<circle cx="12" cy="12" r="7" fill="#1fa34a" stroke="#151515"/>'};
+var M={'📊':'chart','🎮':'pad','🎉':'spark','📲':'phone','📱':'phone','🌐':'globe','🎯':'target','🎭':'mask','🕵':'spy','⚠':'warn','🎲':'dice','🛟':'buoy','✂':'cut','⏱':'clock','⏳':'hour','🔥':'fire','🤫':'shh','😅':'face','😎':'cool','🗳':'ballot','✅':'ok','🏠':'home','✍':'pen','🤝':'people','🏆':'cup','🔊':'spk','🔇':'mute','🤖':'bot','➕':'plus','👑':'crown','🙋':'hand','📺':'tv','🔟':'list','👥':'people','🗂':'grid','🔁':'repeat','🔒':'lock','📨':'mail','📷':'cam','⚙':'gear','🎛':'sliders','🛑':'stop','✖':'x','❌':'x','🗣':'talk','⛔':'ban','📞':'call','🔄':'refresh','🔢':'hash','💣':'bomb','💡':'bulb','🏁':'flag','⭐':'star','👁':'eye','☥':'ankh','🏛':'temple','🕌':'temple','🗿':'person','🗽':'pin','🌍':'globe','🌎':'globe','🌏':'globe','⚛':'atom','🔬':'atom','🧠':'bulb','💻':'laptop','🎬':'film','🎞':'film','🎵':'note','📖':'book','📚':'book','💰':'coin','💵':'coin','🪙':'coin','🏅':'cup','⚽':'ball','🚗':'car','🍽':'food','🍷':'food','🍺':'food','🥩':'food','🍚':'food','🍅':'food','🍎':'food','🥔':'food','🥛':'food','🌽':'food','☕':'food','🐾':'paw','🦁':'paw','🐼':'paw','🐀':'paw','🦇':'paw','🐠':'paw','🐟':'paw','🦈':'paw','🦜':'paw','🦖':'paw','🕷':'paw','🕸':'paw','🏙':'city','🌃':'city','🏢':'city','🏭':'city','🏗':'city','🏰':'city','🏟':'city','🌊':'drop','💧':'drop','🌦':'sun','☀':'sun','🌞':'sun','🌙':'moon','❄':'snow','⛄':'snow','⚡':'bolt','🌋':'mount','⛰':'mount','🏜':'mount','🏝':'mount','🏖':'mount','🌲':'tree','🌱':'tree','🌾':'tree','🚢':'plane','✈':'plane','🚆':'plane','🧳':'brief','🚀':'rocket','🛸':'rocket','🪐':'planet','🌌':'planet','📍':'pin','🗺':'pin','💼':'brief','👕':'shirt','🩺':'heart','❤':'heart','🏷':'tag','➗':'calc','📅':'cal','📦':'box','🔍':'spy','📸':'cam','👓':'glasses','👤':'person','🧑':'person','👸':'person','🤠':'person','😈':'person','🧙':'person','🧞':'person','🧟':'person','👨':'person','🥋':'person','🏴':'flag','🚩':'flag','💍':'ring','🧊':'cube','🧸':'face','🛢':'drum','⚓':'anchor','⏭':'skip','🏺':'vase','🪔':'bulb','🔴':'dotR','🔵':'dotB','⚫':'dotK','⚪':'dotW','🟡':'dotY','🟢':'dotG','😀':'face','🙂':'face'};
+var EP='(?:\\p{Extended_Pictographic}|\\u{1F3F4}|\\u2625)(?:\\uFE0F|\\u{1F3FB}-\\u{1F3FF}|\\u200D(?:\\p{Extended_Pictographic})\\uFE0F?)*';
+var RE=new RegExp(EP,'gu'),TEST=new RegExp(EP,'u'),KEEP='✔⬅©®™↔↩↪‼⁉↕↖↗↘↙';
 var CACHE={};
 function svg(n){return CACHE[n]||(CACHE[n]='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>');}
 function fix(t){
- var v=t.nodeValue;if(!v||!TEST.test(v))return;var p=t.parentNode;if(!p)return;var tg=p.nodeName;if(tg==='SCRIPT'||tg==='STYLE'||tg==='TEXTAREA'||tg==='OPTION'||tg==='TITLE'||(p.classList&&p.classList.contains('ei')))return;
- var f=document.createDocumentFragment(),last=0,m;RE.lastIndex=0;
- while((m=RE.exec(v))){if(m.index>last)f.appendChild(document.createTextNode(v.slice(last,m.index)));var s=document.createElement('span');s.className='ei';s.setAttribute('aria-hidden','true');s.innerHTML=svg(M[m[1]]);f.appendChild(s);last=RE.lastIndex;}
- if(last<v.length)f.appendChild(document.createTextNode(v.slice(last)));p.replaceChild(f,t);}
+ var v=t.nodeValue;if(!v||!TEST.test(v))return;if(t.__x)return;var p=t.parentNode;if(!p)return;var tg=p.nodeName;if(tg==='SCRIPT'||tg==='STYLE'||tg==='TEXTAREA'||tg==='OPTION'||tg==='TITLE'||(p.classList&&p.classList.contains('ei')))return;
+ var f=document.createDocumentFragment(),last=0,m,did=0;RE.lastIndex=0;
+ while((m=RE.exec(v))){var cp=String.fromCodePoint(m[0].codePointAt(0));if(KEEP.indexOf(cp)>=0)continue;if(m.index>last)f.appendChild(document.createTextNode(v.slice(last,m.index)));var s=document.createElement('span');s.className='ei';s.setAttribute('aria-hidden','true');s.innerHTML=svg(M[cp]||'tag');f.appendChild(s);last=RE.lastIndex;did=1;}
+ if(!did)return;if(last<v.length)f.appendChild(document.createTextNode(v.slice(last)));p.replaceChild(f,t);}
 function scan(n){if(n.nodeType===3){fix(n);return;}if(n.nodeType!==1)return;if(!TEST.test(n.textContent||''))return;var w=document.createTreeWalker(n,4,null),a=[],x;while((x=w.nextNode()))a.push(x);a.forEach(fix);}
 var q=null;
 function go(){q=null;scan(document.body);}
