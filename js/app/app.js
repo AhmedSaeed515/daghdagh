@@ -29,7 +29,7 @@ addEventListener('resize',()=>requestAnimationFrame(fitScr));
 const AVS=Object.keys(window.AVSVG||{});
 const avOK=a=>AVS.includes(a)?a:AVS[[...String(a||'x')].reduce((q,c)=>q+c.codePointAt(0),0)%AVS.length];
 const avh=(a,c)=>`<span class="av ${c||''}" role="img" aria-label="${(window.AVNAME||{})[avOK(a)]||''}">${window.AVSVG[avOK(a)]}</span>`;
-window.avh=avh;
+window.avh=avh;window.setTabK=k=>{TAB=k};
 (()=>{const a=store.get('myav','');if(a&&!AVS.includes(a))store.set('myav',avOK(a));})();
 let PF=null;
 const pfValid=()=>!!(PF&&PF.name&&PF.av);
