@@ -1,7 +1,7 @@
 // Friends (real accounts, anonymous sign-in) on Supabase. Public URL + publishable key only; access is enforced by row level security.
 (function(){
 const URL_='https://lfvsfrfpevrjmspjaycc.supabase.co',KEY='sb_publishable_opPmE74Sx_Mk23SyFGjz6g__Epa7UKo',SK='lo3ba_sb';
-let SES=null,ME=null,FR=[],INV=[],busy=false,msg='',poll=null,seen={};
+let sent={},SES=null,ME=null,FR=[],INV=[],busy=false,msg='',poll=null,seen={};
 try{SES=JSON.parse(localStorage.getItem(SK)||'null')}catch(e){}
 const E=s=>(typeof esc==='function'?esc(s):String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])));
 const sv=()=>{try{localStorage.setItem(SK,JSON.stringify(SES))}catch(e){}};
@@ -29,13 +29,13 @@ async function load(){
  FR=fs.map(f=>{const o=f.a===ME.id?f.b:f.a;return {id:f.id,status:f.status,mine:f.a===ME.id,other:ps[o]||null,oid:o};});
  INV=await api('/invites?select=*&to_id=eq.'+ME.id+'&order=created_at.desc&limit=5');
  INV=INV.filter(i=>Date.now()-new Date(i.created_at).getTime()<30*60000);}
-function av(a){try{return typeof avh==='function'&&typeof AVSVG!=='undefined'&&AVSVG[a]?avh(a,'avs'):'<span style="font-size:22px">'+E(a||'😀')+'</span>'}catch(e){return '😀'}}
+function av(a,c){try{if(window.avh&&window.AVSVG)return window.avh(a,c||'avl');}catch(e){}return '<span class="av avl" style="display:inline-block;width:46px;height:46px"></span>';}
 function curRoom(){try{const r=ONL.debug().room;return r&&r.code?r.code:''}catch(e){return ''}}
 function view(){
  const reqs=FR.filter(f=>f.status==='pending'&&!f.mine),out=FR.filter(f=>f.status==='pending'&&f.mine),fl=FR.filter(f=>f.status==='accepted');
  const rm=curRoom();
- const row=(f,btns)=>`<div class="rk"><span class="who" style="display:flex;align-items:center;gap:8px">${f.other?av(f.other.avatar)+E(f.other.name):'<span style="color:var(--mut)">طلب مبعوت</span>'}</span><span style="display:flex;gap:6px">${btns}</span></div>`;
- shell(`<div class="panel center"><div class="big-emoji">👥</div><h2>صحابي</h2>
+ const row=(f,btns)=>`<div class="rk"><span class="who" style="display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px">${f.other?av(f.other.avatar)+E(f.other.name):'<span style="color:var(--mut)">طلب مبعوت</span>'}</span><span style="display:flex;gap:6px">${btns}</span></div>`;
+ shell(`<div class="panel center"><div class="frico"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14c2.8 0 4.5 1.9 4.5 5"/></svg></div><h2>صحابي</h2>
   ${ME?`<p>كودك: <b style="font-size:26px;letter-spacing:3px;direction:ltr;display:inline-block" id="mycode">${E(ME.code)}</b></p><p style="color:var(--mut);font-size:13px">ادي الكود ده لصاحبك يضيفك.</p>`:'<p>بحمّل...</p>'}
   ${msg?`<p style="color:var(--acc)">${E(msg)}</p>`:''}
   <input id="frcode" maxlength="6" placeholder="كود صاحبك" autocomplete="off" style="direction:ltr;text-align:center;text-transform:uppercase"><button class="btn big" data-fr="add">ضيف صاحب</button></div>
@@ -53,7 +53,7 @@ async function act(t){
   if(k==='add'){const c=(document.getElementById('frcode')||{}).value||'';if(c.trim().length<4){msg='اكتب كود صاحبك';}else{const r=await api('/rpc/add_friend',{method:'POST',body:{c:c.trim()}});msg={sent:'اتبعت الطلب ✅',notfound:'الكود ده مش موجود',self:'ده كودك انت 🙂',exists:'انتو أصحاب أو فيه طلب قبل كده'}[r]||r;}}
   else if(k==='acc'||k==='rej')await api('/rpc/respond_friend',{method:'POST',body:{fid:+v,accept:k==='acc'}});
   else if(k==='del')await api('/friendships?id=eq.'+v,{method:'DELETE'});
-  else if(k==='inv'){const rc=curRoom();if(rc){await api('/invites',{method:'POST',body:{from_id:ME.id,to_id:v,room:rc}});msg='اتبعتله الدعوة ✅';}}
+  else if(k==='inv'){const rc=curRoom();if(rc){await api('/invites',{method:'POST',body:{from_id:ME.id,to_id:v,room:rc}});msg='اتبعتله الدعوة ✅';sent[v]=1;t.textContent='اتبعتت ✅';t.disabled=true;busy=false;if(document.getElementById('frinv'))return;}}
   else if(k==='dismiss'){await api('/invites?id=eq.'+t.dataset.i,{method:'DELETE'});}
   else if(k==='joinr'){await api('/invites?id=eq.'+t.dataset.i,{method:'DELETE'}).catch(()=>{});busy=false;return ONL.joinCode(v);}
   await load();
@@ -68,7 +68,12 @@ function banner(){
  b.innerHTML=`<span>${E(f&&f.other?f.other.name:'صاحب')} داعيك للعب 🎮</span><span><button class="btn" id="invgo">ادخل</button> <button class="btn ghost" id="invno">×</button></span>`;
  b.querySelector('#invgo').onclick=()=>{seen[i.id]=1;b.remove();api('/invites?id=eq.'+i.id,{method:'DELETE'}).catch(()=>{});ONL.joinCode(i.room);};
  b.querySelector('#invno').onclick=()=>{seen[i.id]=1;b.remove();};}
-function startPoll(){if(poll)return;poll=setInterval(async()=>{if(busy||document.hidden)return;try{await load();banner();if(document.getElementById('mycode')&&document.getElementById('frcode')&&document.activeElement!==document.getElementById('frcode'))view();}catch(e){}},15000);}
-window.FR={open,act,boot:()=>{if(SES){load().then(()=>{banner();startPoll();}).catch(()=>{});}}};
+function startPoll(){if(poll)return;poll=setInterval(async()=>{if(busy||document.hidden)return;try{await load();banner();if(document.getElementById('mycode')&&document.getElementById('frcode')&&document.activeElement!==document.getElementById('frcode'))view();}catch(e){}},6000);}
+async function sync(){try{await load();banner();startPoll();}catch(e){}}
+function fill(){const b=document.getElementById('frinv');if(!b)return;
+ const go=()=>{const fl=FR.filter(f=>f.status==='accepted'&&f.other);b.innerHTML=fl.length?fl.map(f=>`<div class="rk"><span class="who" style="display:flex;align-items:center;gap:10px;font-weight:800">${av(f.other.avatar)}${E(f.other.name)}</span><button class="btn sm" data-fr="inv" data-v="${f.oid}" ${sent[f.oid]?'disabled':''}>${sent[f.oid]?'اتبعتت ✅':'ادعيه'}</button></div>`).join(''):'<p style="color:var(--mut);font-size:13px">لسه مفيش أصحاب. ضيفهم من تاب صحابي.</p>';};
+ if(ME)go();else{b.textContent='بحمّل...';load().then(go).catch(()=>{b.textContent='مش قادر أحمّل الأصحاب';});}}
+function box(){return '<h3>ادعي من أصحابك</h3><div class="rank" id="frinv"></div>';}
+window.FR={open,act,sync,fill,box,boot:()=>{let n='';try{n=JSON.parse(localStorage.getItem('lo3ba_myname')||'""')}catch(e){}if(SES||n){sync();}}};
 })();
 setTimeout(()=>window.FR&&FR.boot(),2000);
