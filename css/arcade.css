@@ -12,3 +12,10 @@ html.dk .lg a,html.dk .lg a:visited,html.dk .lg a:active{color:#f2b95c}
 .lg .opt.right::after,.lg .opt.wrong::after{position:absolute;inset-inline-end:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;line-height:1;color:inherit}
 .lg .opt.right::after{content:"✓"}
 .lg .opt.wrong::after{content:"✕"}
+/* stat boxes: readable digits in dark theme (pastel boxes had light text) */
+.lg .sg b{font-size:26px;font-weight:900;line-height:1.2}
+html.dk .lg .sg .w{background:#1d6b3a;color:#fff}
+html.dk .lg .sg .l{background:#8f2a1f;color:#fff}
+html.dk .lg .sg .w small,html.dk .lg .sg .l small{color:#fff;opacity:1}
+.lg .sg .w,.lg .sg .l{color:#151515}
+html.dk .lg .sg .w,html.dk .lg .sg .l{color:#fff}
