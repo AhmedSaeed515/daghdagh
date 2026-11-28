@@ -54,14 +54,14 @@ function leave(quiet){
 function lobbyView(){
   X.setTab&&X.setTab('online');
   shell(`<div class="panel center"><div class="big-emoji">🌐</div><h2>لعب أونلاين</h2><p>كل واحد بموبايله. واحد يعمل غرفة ويدّي الكود لصحابه، وهما يدخلوا بنفس الكود.</p>
-  <div class="pcard">${avh(X.store.get('myav',''),'avl')}<b>${esc(X.store.get('myname',''))}</b><button class="btn sm ghost" data-act="me">تعديل</button></div>
+  <div class="pcard">${avh(X.store.get('myav',''),'avl')}<b>${esc(X.store.get('myname',''))}</b><button class="btn sm ghost" data-act="me">تعديل</button></div>${window.LGAuth?LGAuth.card():''}
   <div id="omsg" class="warn">${esc(msg)}</div>
   <button class="btn big" data-o="create">🎮 اعمل غرفة جديدة</button>
   <h3>أو ادخل غرفة صاحبك</h3><input id="ocode" maxlength="5" placeholder="كود الغرفة" style="text-align:center;letter-spacing:6px;text-transform:uppercase">
   <button class="btn ghost" data-o="join">ادخل الغرفة</button></div>`,{title:'أونلاين',nav:true});
 }
 function joinUrl(){return location.origin+location.pathname+'?r='+S.code;}
-function readName(){ME.name=String(X.store.get('myname','')).trim().slice(0,14);ME.av=avOK(X.store.get('myav',''));ME.g=X.store.get('mygender','');return ME.name;}
+function readName(){try{const pv=localStorage.getItem('lo3ba_pid');if(/^[A-Z2-9]{8}$/.test(pv||''))ME.id=pv;}catch(e){}ME.name=String(X.store.get('myname','')).trim().slice(0,14);ME.av=avOK(X.store.get('myav',''));ME.g=X.store.get('mygender','');return ME.name;}
 function warn(t){msg=t;const e=document.getElementById('omsg');if(e)e.textContent=t;}
 
 async function create(){
