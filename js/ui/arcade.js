@@ -1,6 +1,5 @@
-// Arcade background preview: pixel stars + pixel rockets with particle flames. Light on CPU: low-res canvas, 30fps cap, pauses when hidden, static with reduced motion.
+// Arcade background: pixel stars + pixel rockets with particle flames. Light on CPU: low-res canvas, 30fps cap, pauses when hidden, static with reduced motion.
 (function(){
-if(document.documentElement.classList.contains('noarc'))return;
 var S=3,cv=document.createElement('canvas');cv.id='arcbg';
 cv.style.cssText='position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none;image-rendering:pixelated';
 document.body.insertBefore(cv,document.body.firstChild);
@@ -30,9 +29,12 @@ function step(){
 function loop(t){if(!run)return;requestAnimationFrame(loop);if(t-last<33)return;last=t;step();draw();}
 function start(){if(run||reduce)return;run=true;requestAnimationFrame(loop);}
 function stop(){run=false;}
+var en=true;try{en=JSON.parse(localStorage.getItem('lo3ba_arcade'))!==false}catch(e){}
+function set(on){en=!!on;html.classList.toggle('arc',en);cv.style.display=en?'':'none';if(en){size();draw();start();}else stop();}
 init();draw();
 if(reduce){for(var k=0;k<40;k++)step();draw();}
-addEventListener('resize',function(){size();draw();});
-document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
-start();
+addEventListener('resize',function(){if(en){size();draw();}});
+document.addEventListener('visibilitychange',function(){if(!en)return;document.hidden?stop():start();});
+window.ARC={set:set,on:function(){return en}};
+set(en);
 })();
