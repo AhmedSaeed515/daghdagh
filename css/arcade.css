@@ -26,3 +26,25 @@ html.dk .lg .sg .w,html.dk .lg .sg .l{color:#fff}
 .lg .sg b{font-size:32px;letter-spacing:2px;line-height:1.2}
 .lg .code,.lg #mycode{letter-spacing:6px}
 .lg #mycode{font-size:32px!important;letter-spacing:5px!important}
+/* time counter replaces the time bar in every mode (arcade-timer.js adds .atm) */
+.lg .bar{display:none!important}
+.atm{display:flex;align-items:center;justify-content:flex-start;direction:ltr;gap:6px;margin:6px 4px 8px;height:24px}
+.atm .atn{color:#151515;display:inline-flex}
+.atm .atn.lo{animation:atk 1s steps(1) infinite}
+.atm .atu{font-weight:800;font-size:15px;color:#151515;padding-top:2px}
+html.dk .atm .atu,html.dk .atm .atn{color:#e9e6dc}
+@keyframes atk{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.atm .atn.lo{animation:none}}
+/* rank cards: dim without opacity so rockets never show through */
+.lg .rp:not(.on),.lg .rp.out{opacity:1!important;filter:brightness(.7)}
+.lg .rp.out{filter:grayscale(.6) brightness(.55)}
+/* vote buttons: always visible labels */
+.lg .rvb .btn:not(.ghost){background:#1fa34a!important;color:#fff!important}
+html.dk .lg .rvb .btn:not(.ghost){background:#1d6b3a!important}
+.lg .rvb .btn.ghost{background:var(--card3)!important;color:var(--tx)!important}
+/* room code chip in the header during a game */
+.lg .rchip{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--card2,#1e1e2c);color:var(--tx,#fff);padding:4px 8px;font-family:"DDPixel","Cairo",sans-serif;font-size:15px;letter-spacing:2px;line-height:1;cursor:pointer;direction:ltr;box-shadow:0 -2px 0 #f1ede2,0 2px 0 #f1ede2,-2px 0 0 #f1ede2,2px 0 0 #f1ede2}
+html:not(.dk) .lg .rchip{background:#fff;color:#151515;box-shadow:0 -2px 0 #151515,0 2px 0 #151515,-2px 0 0 #151515,2px 0 0 #151515}
+.lg .rchip small{font-family:Cairo,sans-serif;font-size:10px;letter-spacing:0;font-weight:800;opacity:.8}
+/* during a game the rockets fade back so text and counters stay readable */
+body:has(.atm) #arcbg,body:has(.rsb) #arcbg{opacity:.3}
