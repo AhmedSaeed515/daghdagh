@@ -1,6 +1,5 @@
 /* Arcade look, preview only. Own pixel style: near-black teal, stepped pixel borders, amber/coral/teal palette, dither textures. */
-@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
-html.arc .lg{--pxl:#e9e6dc;--amb:#f2b95c;--amb2:#b9812a;font-family:"Silkscreen","Cairo",system-ui,sans-serif}
+html.arc .lg{--pxl:#e9e6dc;--amb:#f2b95c;--amb2:#b9812a;font-family:"Cairo",system-ui,sans-serif}
 html.arc.dk .lg{--bg:#040a09;--card:#0b1716;--card2:#112321;--card3:#1b3531;--line:rgba(150,200,190,.16);--mut:#8fb0a8;--y:#f2b95c;--y2:#b9812a;--p:#e8806a;--g:#6cc58a;--b:#5fb3c9;--v:#3fa7a0;--ok:#6cc58a;--bad:#ff6a55;--tx:#e9e6dc;--ink:#2a1a05;--ac:#f2b95c}
 html.arc:not(.dk) .lg{--bg:#ece3cf;--card:#f8f1e1;--card2:#efe4cc;--card3:#e2d4b4;--line:rgba(60,40,10,.18);--mut:#6d5f48;--y:#e0a23c;--y2:#a8701a;--p:#d9674f;--g:#3f9a5e;--b:#2f87a0;--v:#2f8f89;--ok:#3f9a5e;--bad:#c93b2b;--tx:#1a1410;--ink:#1a1410;--pxl:#1a1410}
 /* background: teal grid in dark, parchment pixels in light */
