@@ -1,0 +1,13 @@
+/* Arcade look, preview only: near-black teal screen with a faint grid, pixel timer counter, chunky retro bar. */
+html.arc.dk,html.arc.dk body{background:linear-gradient(rgba(150,190,180,.07) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(150,190,180,.07) 1px,transparent 1px) 0 0/24px 24px,#040a09!important}
+.atm{display:flex;align-items:center;justify-content:flex-start;direction:ltr;gap:6px;margin:6px 4px 4px;height:24px}
+.atm .atn{color:#151515;display:inline-flex;animation:atp .25s steps(2) 1}
+.atm .atu{font-weight:800;font-size:15px;color:var(--tx,#151515);padding-top:2px}
+html.arc.dk .atm .atu{color:#e9e6dc}
+@keyframes atp{0%{transform:translateY(-3px)}100%{transform:none}}
+html.arc .lg .bar{border-radius:0!important;border:3px solid var(--ink,#151515)!important;height:16px!important;background:transparent!important}
+html.arc.dk .lg .bar{border-color:#e9e6dc!important}
+html.arc .lg .bar i{border-radius:0!important;background:repeating-linear-gradient(90deg,#f2b95c 0 8px,#d99a3a 8px 10px)!important;transition:none!important}
+html.arc .lg .bar i.low{background:repeating-linear-gradient(90deg,#ff4a36 0 8px,#b71c2b 8px 10px)!important;animation:none!important}
+@media (prefers-reduced-motion:reduce){.atm .atn{animation:none}}
+html.arc.dk .atm .atn{color:#e9e6dc}
