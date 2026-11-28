@@ -8,6 +8,6 @@ function svg(n,low){var d=String(n).split(''),w=12+d.length*6,h=7,x=11+1,body=px
  return '<svg viewBox="0 0 '+w+' 7" width="'+w*3+'" height="21" shape-rendering="crispEdges">'+body+'</svg>';}
 function sync(){var bs=document.querySelectorAll('.bar i[data-s]');for(var i=0;i<bs.length;i++){var b=bs[i],bar=b.parentNode,s=b.getAttribute('data-s'),prev=bar.previousElementSibling;
   if(!prev||!prev.classList||!prev.classList.contains('atm')){prev=document.createElement('div');prev.className='atm';prev.setAttribute('aria-hidden','true');bar.parentNode.insertBefore(prev,bar);}
-  if(prev.getAttribute('data-v')!==s){prev.setAttribute('data-v',s);var low=+s<=5;prev.innerHTML='<span class="atn'+(low?' lo':'')+'">'+svg(+s,low)+'</span><span class="atu">ث</span>';}}}
+  if(prev.getAttribute('data-v')!==s){prev.setAttribute('data-v',s);var low=+s<=10;prev.innerHTML='<span class="atn'+(low?' lo':'')+'">'+svg(+s,low)+'</span><span class="atu">ث</span>';}}}
 setInterval(sync,200);
 })();
