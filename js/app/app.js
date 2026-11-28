@@ -35,6 +35,13 @@ const pfValid=()=>!!(PF&&PF.name&&PF.av);
 function profileOk(){return !!(store.get('myname','')&&store.get('myav',''));}
 function statsBox(){const st=store.get('stats',{gp:0,w:0,l:0,d:0,vs:{}});const vs=Object.entries(st.vs||{}).sort((x,y)=>(y[1].w+y[1].l+y[1].d)-(x[1].w+x[1].l+x[1].d)).slice(0,30);
 return `<div class="sbox"><h3>📊 سجل نتايجي</h3><div class="sg"><div><b>${st.gp}</b><small>لعبت</small></div><div class="w"><b>${st.w}</b><small>فزت</small></div><div class="l"><b>${st.l}</b><small>خسرت</small></div><div><b>${st.d||0}</b><small>تعادل</small></div></div>${vs.length?`<div class="svs">${vs.map(([n,v])=>`<div class="rk"><span class="who">${esc(n)}</span><span>فزت ${v.w} • خسرت ${v.l}${v.d?' • تعادل '+v.d:''}</span></div>`).join('')}</div>`:'<p style="color:var(--mut);font-size:13px">العب أونلاين مع صحابك وهتظهر هنا نتايجك ضد كل واحد. بتتحفظ على جهازك بس.</p>'}</div>`;}
+function welcome(){
+  TAB='';clearTimer();
+  shell(`<div class="panel pf center wl"><div class="hero center">${HomeLogo.markup}<h1>دغدغ</h1></div><h2>أهلاً بيك!</h2><p>سجّل دخول عشان اسمك وأفاتارك وكرسيك في اللعب يتحفظوا على حسابك.</p>
+  <button class="btn big" data-lga="google">ادخل بحساب جوجل</button><div id="lgaMsg" class="lga-msg"></div>
+  <button class="btn ghost" data-lga="open">ادخل بالإيميل</button>
+  <button class="link" data-act="guest">كمّل من غير حساب</button></div>`);
+}
 function profileForm(first){
   clearTimer();if(typeof ONL!=='undefined'&&ONL)ONL.leave();
   if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav','')};
@@ -47,7 +54,7 @@ function profileForm(first){
    <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد اللعب.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="theme"><span class="ic">${store.get('dark',false)?'☀️':'🌙'}</span><span class="tx"><b>${store.get('dark',false)?'الوضع الفاتح':'الوضع الداكن'}</b><small>بدّل بين الفاتح والداكن.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="sound"><span class="ic">${store.get('sound',true)?'🔊':'🔇'}</span><span class="tx"><b>الصوت</b><small>${store.get('sound',true)?'شغال - دوس للكتم':'مكتوم - دوس للتشغيل'}</small></span><span class="ch">‹</span></button></div>`;
-  shell(`<div class="panel pf center">${first?'<h2>أهلاً بيك في دغدغ!</h2><p>اعمل بروفايلك الأول. بيتحفظ على موبايلك بس.</p>':`<div class="big-av">${avh(PF.av,'avxl')}</div><h2>بروفايلي</h2>`}
+  shell(`<div class="panel pf center">${first?`<h2>أهلاً بيك في دغدغ!</h2><p>${localStorage.getItem("lo3ba_acct")?"اكتب اسمك واختار أفاتار. بيتحفظوا على حسابك.":"اعمل بروفايلك الأول. بيتحفظ على موبايلك بس."}</p>`:`<div class="big-av">${avh(PF.av,'avxl')}</div><h2>بروفايلي</h2>`}
   <h3>اسمك</h3><input id="pfname" maxlength="14" value="${esc(PF.name)}" placeholder="اكتب اسمك" autocomplete="off">
   <h3>اختار أفاتار</h3><div class="avgrid">${AVS.map(a=>`<button class="avb ${PF.av===a?'on':''}" data-pf="av" data-v="${a}" aria-label="${window.AVNAME[a]}">${window.AVSVG[a]}</button>`).join('')}</div>
   <button class="btn big" id="pfsave" data-pf="save" ${pfValid()?'':'disabled'}>${first?'يلا نبدأ':'حفظ'}</button>
@@ -277,6 +284,7 @@ document.addEventListener('click',e=>{
     case 'online':return openOnline();
     case 'friends':return FR.open();
     case 'catsopen':return catsBrowser({get:()=>CFG.cats,set:c=>{CFG.cats=c;store.set('cats',c);},onDone:()=>home(),tab:'home'});
+    case 'guest':try{localStorage.setItem('lo3ba_guest','1');}catch(e){}return profileForm(true);
     case 'me':return profileView();
     case 'install':return installView();
     case 'catsall2':{const sel=catBr.get();const had=sel.length>0;sel.length=0;if(!had)shuffle(Object.keys(CATS)).slice(0,MAXCATS).forEach(k=>sel.push(k));catBr.set(sel);return catsSync();}
@@ -314,5 +322,5 @@ document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id
 
 const ONL=initOnline({picker,app,esc,shuffle,norm,Q,CATS,shell,sfx,home,store,catsBrowser,avh,avOK,setTab:k=>{TAB=k},catsOpen:()=>!!catBr});
 window.__picker=picker;window.__catsBrowser=catsBrowser;window.__CFG=CFG;window.__sfx=sfx;window.__ONL=ONL;window.__lgHome=home;window.shell=shell;window.CATS=CATS;
-JR?linkJoin():(profileOk()?home():profileForm(true));
+JR?linkJoin():(profileOk()?home():((window.LGAuth&&!localStorage.getItem('lo3ba_guest')&&!localStorage.getItem('lo3ba_acct'))?welcome():profileForm(true)));
 }
