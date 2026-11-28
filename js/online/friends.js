@@ -8,9 +8,15 @@ const sv=()=>{try{localStorage.setItem(SK,JSON.stringify(SES))}catch(e){}};
 async function raw(path,o={}){const h={apikey:KEY,'Content-Type':'application/json'};if(o.tok)h.Authorization='Bearer '+o.tok;if(o.prefer)h.Prefer=o.prefer;
  const r=await fetch(URL_+path,{method:o.method||'GET',headers:h,body:o.body?JSON.stringify(o.body):undefined});const t=await r.text();let j=null;try{j=t?JSON.parse(t):null}catch(e){}
  if(!r.ok){const er=new Error((j&&(j.message||j.msg||j.error_description))||('HTTP '+r.status));er.status=r.status;throw er;}return j;}
-async function session(){
+let sp=null;
+function session(){if(!sp)sp=session1().finally(()=>{sp=null});return sp;}
+async function session1(){
  if(SES&&SES.expires_at&&SES.expires_at-60>Date.now()/1000)return SES;
- if(SES&&SES.refresh_token){try{const j=await raw('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:SES.refresh_token}});SES=j;sv();return SES;}catch(e){if(e.status!==400&&e.status!==401&&e.status!==403)throw e;SES=null;}}
+ if(SES&&SES.refresh_token){
+  try{const j=await raw('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:SES.refresh_token}});SES=j;sv();return SES;}
+  catch(e){
+   try{const o=JSON.parse(localStorage.getItem(SK)||'null');if(o&&o.refresh_token&&o.refresh_token!==SES.refresh_token){SES=o;if(SES.expires_at-60>Date.now()/1000)return SES;}}catch(x){}
+   throw e;}}
  const j=await raw('/auth/v1/signup',{method:'POST',body:{}});SES=j;sv();return SES;}
 async function api(path,o={}){const s=await session();return raw('/rest/v1'+path,Object.assign({tok:s.access_token},o));}
 async function myProfile(){
@@ -44,7 +50,7 @@ function view(){
   <div class="sbox"><h3>أصحابي (${fl.length})</h3>${fl.length?fl.map(f=>row(f,`${rm?`<button class="btn" data-fr="inv" data-v="${f.oid}">ادعيه</button>`:''}<button class="btn ghost" data-fr="del" data-v="${f.id}">حذف</button>`)).join(''):'<p style="color:var(--mut);font-size:13px">لسه مفيش أصحاب. ضيف حد بالكود بتاعه.</p>'}${rm?'':'<p style="color:var(--mut);font-size:12px">افتح غرفة أونلاين الأول عشان تدعي أصحابك لها.</p>'}</div>
   ${out.length?`<p style="color:var(--mut);font-size:13px">طلبات مبعوتة مستنية: ${out.length}</p>`:''}`,{title:'صحابي',nav:true,back:false});}
 async function open(){
- msg='';if(typeof clearTimer==='function')clearTimer();try{TAB='friends'}catch(e){}view();
+ msg='';if(typeof clearTimer==='function')clearTimer();try{window.setTabK&&setTabK('friends')}catch(e){}view();
  try{await load();}catch(e){msg='حصلت مشكلة في الاتصال: '+e.message;}
  view();startPoll();}
 async function act(t){
