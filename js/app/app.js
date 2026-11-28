@@ -29,6 +29,7 @@ addEventListener('resize',()=>requestAnimationFrame(fitScr));
 const AVS=Object.keys(window.AVSVG||{});
 const avOK=a=>AVS.includes(a)?a:AVS[[...String(a||'x')].reduce((q,c)=>q+c.codePointAt(0),0)%AVS.length];
 const avh=(a,c)=>`<span class="av ${c||''}" role="img" aria-label="${(window.AVNAME||{})[avOK(a)]||''}">${window.AVSVG[avOK(a)]}</span>`;
+window.avh=avh;
 (()=>{const a=store.get('myav','');if(a&&!AVS.includes(a))store.set('myav',avOK(a));})();
 let PF=null;
 const pfValid=()=>!!(PF&&PF.name&&PF.av);
@@ -42,13 +43,14 @@ function welcome(){
   <button class="btn ghost" data-lga="open">ادخل بالإيميل</button>
   <button class="link" data-act="guest">كمّل من غير حساب</button></div>`);
 }
+const FRI='<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14c2.8 0 4.5 1.9 4.5 5"/></svg>';
 function profileForm(first){
   clearTimer();if(typeof ONL!=='undefined'&&ONL)ONL.leave();
   if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav','')};
   TAB=first?'':'me';
   const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
   const extra=first?'':`${window.LGAuth?LGAuth.card():''}<div class="cards">
-   <button class="mode" data-act="friends"><span class="ic">👥</span><span class="tx"><b>صحابي</b><small>ضيف أصحابك بالكود وادعيهم للعب.</small></span><span class="ch">‹</span></button>
+   <button class="mode" data-act="friends"><span class="ic">${FRI}</span><span class="tx"><b>صحابي</b><small>ضيف أصحابك بالكود وادعيهم للعب.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
    ${QuestionReport.card()}
    <button class="mode" data-act="howto"><span class="ic">❓</span><span class="tx"><b>إزاي ألعب؟</b><small>قواعد اللعب.</small></span><span class="ch">‹</span></button>
@@ -65,7 +67,7 @@ function pfClick(t){
   const k=t.dataset.pf,v=t.dataset.v;
   if(k==='g'){PF.g=v;return profileForm(PF.first);}
   if(k==='av'){PF.av=v;return profileForm(PF.first);}
-  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);PF=null;if(window.LGAuth)LGAuth.push();return home();}
+  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);PF=null;if(window.LGAuth)LGAuth.push();if(window.FR&&FR.sync)FR.sync();return home();}
 }
 const SLOGAN='العب، اتحدّى، دغدغ';
 const JR=(()=>{const m=/[?&]r=([1-3][A-Za-z2-9]{4})(?![A-Za-z0-9])/.exec(location.search);return m?m[1].toUpperCase():''})();
