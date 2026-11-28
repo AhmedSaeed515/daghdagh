@@ -80,6 +80,7 @@ function fill(){const b=document.getElementById('frinv');if(!b)return;
  const go=()=>{const fl=FR.filter(f=>f.status==='accepted'&&f.other);b.innerHTML=fl.length?fl.map(f=>`<div class="rk"><span class="who" style="display:flex;align-items:center;gap:10px;font-weight:800">${av(f.other.avatar)}${E(f.other.name)}</span><button class="btn sm" data-fr="inv" data-v="${f.oid}" ${sent[f.oid]?'disabled':''}>${sent[f.oid]?'اتبعتت ✓':'ادعيه'}</button></div>`).join(''):'<p style="color:var(--mut);font-size:13px">لسه مفيش أصحاب. ضيفهم من تاب صحابي.</p>';};
  if(ME)go();else{b.textContent='بحمّل...';load().then(go).catch(()=>{b.textContent='مش قادر أحمّل الأصحاب';});}}
 function box(){return '<h3>ادعي من أصحابك</h3><div class="rank" id="frinv"></div>';}
+window.SBX={session:()=>session(),raw};
 window.FR={open,act,sync,fill,box,boot:()=>{let n='';try{n=JSON.parse(localStorage.getItem('lo3ba_myname')||'""')}catch(e){}if(SES||n){sync();}}};
 })();
 setTimeout(()=>window.FR&&FR.boot(),2000);
