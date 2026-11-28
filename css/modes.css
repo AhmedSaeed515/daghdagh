@@ -154,3 +154,6 @@
 .lga-x{position:absolute;top:6px;left:8px;background:none;border:0;font-size:26px;line-height:1;color:inherit;cursor:pointer}
 .lga-or{color:var(--mut,#777);font-size:12px}.lga-msg{min-height:18px;font-size:13px;color:#c0392b}.lga-msg.ok{color:#1e8449}
 .lga-l{display:flex;justify-content:space-between;gap:8px}.lga.busy .lga-box{opacity:.6;pointer-events:none}
+
+.wl .hero{margin:0 0 4px}.wl h2{margin:6px 0}.wl .btn,.wl .link{width:100%}.wl .link{padding:8px}
+@media(max-height:660px){.wl .hero{display:none}.wl h2{margin-top:14px}}
