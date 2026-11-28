@@ -52,7 +52,7 @@ bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.8.7 1 1.4 1 2.1h5c0-.7.2
 flag:'<path d="M5 21V3M5 4h14l-2.5 4.5L19 13H5"/>',
 star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
 eye:'<path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
-ankh:'<ellipse cx="12" cy="7" rx="3.4" ry="4.6"/><path d="M12 11.6V21M6.5 13.5h11"/>',
+ankh:'<path d="M12 3.5c-2.8 0-4 2-4 3.9 0 2 1.6 3.6 4 3.6s4-1.6 4-3.6c0-1.9-1.2-3.9-4-3.9zM4.5 11.5h15M12 11v10"/>',
 temple:'<path d="M3 9l9-6 9 6zM5.5 9.5v8M10 9.5v8M14 9.5v8M18.5 9.5v8M3 20.5h18M4 17.5h16"/>',
 atom:'<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>',
 laptop:'<rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 19h19"/>',
