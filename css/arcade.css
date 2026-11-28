@@ -7,3 +7,8 @@ html.arc.dk body::after{background:repeating-linear-gradient(0deg,rgba(0,0,0,.14
 /* links: no default blue/purple */
 .lg a,.lg a:visited,.lg a:active{color:#a8402c;text-decoration:underline;text-underline-offset:3px}
 html.dk .lg a,html.dk .lg a:visited,html.dk .lg a:active{color:#f2b95c}
+/* answer reveal: keep the number badge, show the check / cross on the other side */
+.lg .opt.right::before,.lg .opt.wrong::before{content:counter(o,arabic-indic)!important}
+.lg .opt.right::after,.lg .opt.wrong::after{position:absolute;inset-inline-end:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;line-height:1;color:inherit}
+.lg .opt.right::after{content:"✓"}
+.lg .opt.wrong::after{content:"✕"}
