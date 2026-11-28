@@ -1,0 +1,5 @@
+/* Arcade preview theme: dark night sky behind the app, light scanlines. Only active when html has class arc. */
+html.arc,html.arc body,html.arc.dk,html.arc.dk body{background:#0a1226!important}
+html.arc .lg,html.arc.dk .lg{background:transparent!important;position:relative;z-index:1}
+html.arc body::after{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0,rgba(0,0,0,.14) 1px,transparent 1px,transparent 3px)}
+@media (prefers-reduced-motion:reduce){#arcbg{opacity:.9}}
