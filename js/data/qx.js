@@ -25,13 +25,15 @@ window.QX={cats:{flg:'🚩 خمّن العلم (صور)',lmk:'📸 معالم (�
 (function(){
 window.PTS={1:5,2:10,3:20};
 const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const OKH=/^https:\/\/(upload\.wikimedia\.org|thumb\.wikimedia\.org|commons\.wikimedia\.org|flagcdn\.com|image\.tmdb\.org)\//;
+const safeU=u=>(OKH.test(u)||/^data:image\/(svg\+xml|png|jpeg|webp)[;,]/.test(u))?u:'';
 const qbox0=function(t){
   const m=/^§([FPDEA]):([^§]*)§([\s\S]*)$/.exec(t||'');
   if(!m)return '<div class="q">'+E(t)+'</div>';
   const k=m[1],v=m[2],txt=E(m[3]);let media='';
-  if(k==='F'){const f=(window.FLAGS||{})[v]||'';const src=!f?'https://flagcdn.com/w320/'+v+'.png':f.indexOf('<svg')===0?'data:image/svg+xml,'+encodeURIComponent(f):f;media='<div class="qmedia flag"><img alt="" src="'+E(src)+'"></div>';}
-  else if(k==='P'){const pv=v.split('|');media='<div class="qmedia photo'+(m[3].indexOf('صاحب')>=0?' pt':'')+'"><img alt="" src="'+E(pv[0])+'" onerror="this.parentNode.classList.add(\'fail\')"><span class="phf">📷 الصورة محتاجة نت</span><small class="pcr">📷 '+(pv[1]?E(pv[1])+(pv[1]==='TMDB'?' (الصورة من TMDB)':' - ويكيميديا كومنز'):'ويكيميديا (ترخيص حر)')+'</small></div>';}
-  else if(k==='A')media='<div class="qmedia audio"><audio controls preload="none" src="'+E(v)+'"></audio><small>🔊 اضغط تشغيل. الصوت من ويكيميديا كومنز (ترخيص حر)</small></div>';
+  if(k==='F'){const f=(window.FLAGS||{})[v]||'';const src=!f?'https://flagcdn.com/w320/'+v+'.png':f.indexOf('<svg')===0?'data:image/svg+xml,'+encodeURIComponent(f):f;media='<div class="qmedia flag"><img alt="" src="'+E(safeU(src))+'"></div>';}
+  else if(k==='P'){const pv=v.split('|');media='<div class="qmedia photo'+(m[3].indexOf('صاحب')>=0?' pt':'')+'"><img alt="" src="'+E(safeU(pv[0]))+'" onerror="this.parentNode.classList.add(\'fail\')"><span class="phf">📷 الصورة محتاجة نت</span><small class="pcr">📷 '+(pv[1]?E(pv[1])+(pv[1]==='TMDB'?' (الصورة من TMDB)':' - ويكيميديا كومنز'):'ويكيميديا (ترخيص حر)')+'</small></div>';}
+  else if(k==='A')media='<div class="qmedia audio"><audio controls preload="none" src="'+E(safeU(v))+'"></audio><small>🔊 اضغط تشغيل. الصوت من ويكيميديا كومنز (ترخيص حر)</small></div>';
   else if(k==='D')media='<div class="qmedia date"><small>📅 التاريخ</small><b>'+E(v)+'</b></div>';
   else media='<div class="qmedia emo">'+E(v)+'</div>';
   return media+'<div class="q sm">'+txt+'</div>';
