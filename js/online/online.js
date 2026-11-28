@@ -11,7 +11,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const ME={id:(()=>{try{let v=localStorage.getItem('lo3ba_pid');if(!/^[A-Z2-9]{8}$/.test(v||'')){v=rid(8);localStorage.setItem('lo3ba_pid',v);}return v;}catch(e){return rid(8);}})(),name:'',av:'',g:''};
 const LIM={q:20,wr:45,vt:30,rv:7};
 let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:(JSON.parse(localStorage.getItem('lo3ba_cats')||'[]')||[]).filter(k=>CATS[k]).slice(0,6),diff:0,n:10,maxP:8,appr:false};
-let IW=null;let joinTries=0,joinT=null,lastSt=0,qrOn=false;
+let wdT=null;let IW=null;let joinTries=0,joinT=null,lastSt=0,qrOn=false;
 
 // ---------- transport ----------
 function openNet(srv,topic,onmsg){
@@ -42,11 +42,20 @@ function openNet(srv,topic,onmsg){
   };
 }
 async function probe(srv){try{const c=new AbortController();const t=setTimeout(()=>c.abort(),4500);const r=await fetch('https://'+srv+'/lgz-probe-'+rid(6),{method:'POST',body:'{"t":"ping"}',signal:c.signal});clearTimeout(t);return r.ok;}catch(e){return false}}
+function hostClosed(){
+  leave(true);msg='';
+  try{if(!document.getElementById('ddcs')){const st=document.createElement('style');st.id='ddcs';st.textContent='.ddc{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:18px}.ddc>div{max-width:300px;width:100%;background:#fff3cf;color:#1b1b1b;border:4px solid #1b1b1b;box-shadow:6px 6px 0 #1b1b1b;padding:20px 16px;text-align:center;font-family:Cairo,sans-serif}.ddc h3{margin:0 0 8px;font-size:22px;font-weight:900}.ddc p{margin:0 0 14px;font-size:14px}.ddc button{font:inherit;font-weight:900;background:#ffd23f;color:#1b1b1b;border:3px solid #1b1b1b;box-shadow:3px 3px 0 #1b1b1b;padding:9px 26px;cursor:pointer}';document.head.appendChild(st);}}catch(e){}
+  const d=document.createElement('div');d.className='ddc';d.setAttribute('role','alertdialog');d.innerHTML='<div><h3>الهوست قفل الغرفة</h3><p>اللعبة خلصت. هنرجعك للرئيسية.</p><button type="button">تمام</button></div>';
+  d.querySelector('button').onclick=()=>{d.remove()};document.body.appendChild(d);
+  try{X.home()}catch(e){}
+}
 function connect(code){const i=+code[0]-1;const srv=SERVERS[i];return openNet(srv,'lgz-'+code,onNet);}
 
 // ---------- entry ----------
 function open(){leave(true);msg='';lobbyView();}
 function leave(quiet){
+  if(room&&room.host&&NET){try{NET.send({t:'close',id:ME.id,now:Date.now()})}catch(e){}}
+  clearInterval(wdT);wdT=null;
   if(NET){NET.close();NET=null}
   clearInterval(uiTimer);clearInterval(hostTimer);clearTimeout(joinT);uiTimer=hostTimer=joinT=null;
   S=null;H=null;room=null;mine={};
@@ -84,7 +93,7 @@ function joinCode(code){
   if(!readName())return warn('اكتب اسمك الأول');if(window.lgzBad&&window.lgzBad(ME.name))return warn('الاسم ده مش مناسب، غيّره.');
   code=String(code||'').trim().toUpperCase();
   if(!/^[1-3][A-Z2-9]{4}$/.test(code))return warn('الكود لازم يكون 5 حروف وأرقام زي 1K7QZ');
-  leave(true);room={code,host:false};NET=connect(code);joinTries=0;lastSt=0;
+  leave(true);room={code,host:false,t0:Date.now()};NET=connect(code);joinTries=0;lastSt=0;
   shell(`<div class="panel center"><div class="big-emoji">⏳</div><h2>بدخّلك الغرفة ${esc(code)}...</h2><p>لو اتأخر، يمكن صاحب الغرفة بيراجع طلبات الانضمام، أو اتأكد من الكود وإنه فاتح اللعبة.</p><button class="btn ghost" data-o="leave">رجوع</button></div>`);
   sendJoin();
 }
@@ -98,6 +107,7 @@ function sendJoin(){
 // ---------- incoming ----------
 function onNet(m){
   if(!m||!m.t)return;
+  if(m.t==='close'&&room&&!room.host){if(room.hid&&m.id===room.hid&&m.now>=room.t0-30000)hostClosed();return;}
   if(room.host){
     if(m.t==='join')return hostJoin(m);
     if(m.t==='ans')return hostAns(m.id,m.r,m.k);
@@ -123,6 +133,8 @@ function onNet(m){
   if(m.t==='kick'&&m.to===ME.id){leave();msg=m.why||'خرجت من الغرفة';lobbyView();}
 }
 function applyState(s,now,seq){
+  if(room&&!room.hid&&s.pl&&s.pl[0])room.hid=s.pl[0].i;
+  if(!wdT)wdT=setInterval(()=>{if(room&&!room.host&&lastSt&&Date.now()-lastSt>28000)hostClosed();},3000);
   const prev=S;S=s;S.seq=seq;off=now-Date.now();lastSt=Date.now();clearTimeout(joinT);
   if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
   if(!s.rk||!s.rk.v)mine.vv=0;
@@ -280,6 +292,7 @@ function hostReveal(){
 }
 function hostTick(){
   const h=H;if(!h)return;const now=Date.now();
+  if(now-lastSt>10000)hostBroadcast();
   if(h.ph==='q'&&now>=h.ends+800)hostReveal();
   else if(h.ph==='wr'&&now>=h.ends+800){if(Object.keys(h.fakes).length)hostVoteStart();else{h.ph='vt';h.fakes={};hostVoteStart();}}
   else if(h.ph==='vt'&&now>=h.ends+800)hostReveal();
@@ -504,7 +517,7 @@ function lobbyRoom(host){
 let tvT=null;
 function tvCode(code){
   code=String(code||'').trim().toUpperCase();if(!/^[1-3][A-Z2-9]{4}$/.test(code))return false;
-  leave(true);room={code,host:false,tv:true};S=null;NET=connect(code);
+  leave(true);room={code,host:false,tv:true,t0:Date.now()};S=null;NET=connect(code);
   shell(`<div class="panel center"><div class="big-emoji">📺</div><h2>شاشة التلفزيون</h2><p>بدور على الغرفة ${esc(code)}...</p></div>`,);
   const ask=()=>{if(S||!room||!room.tv)return;NET.send({t:'tv'});};ask();clearInterval(tvT);tvT=setInterval(ask,3000);return true;
 }
@@ -618,7 +631,7 @@ document.addEventListener('input',e=>{if(e.target.id==='orans')rkSug();});
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='orans'){e.preventDefault();rkSend(e.target.value);return;}if(e.target.id==='ofake')doFake();if(e.target.id==='oname'||e.target.id==='ocode'){const c=(document.getElementById('ocode')||{}).value;c?join():create();}});
 document.addEventListener('change',e=>{if(e.target.id==='orng'&&H&&H.ph==='lobby'){H.cfg.n=Math.max(10,Math.min(30,+e.target.value||10));hostBroadcast();}});
 (function(){const m=/[?&]tv=([A-Za-z0-9]{5})/.exec(location.search);if(m)setTimeout(()=>tvCode(m[1]),400);})();
-return {open,leave,joinCode,debug:()=>({S,H,room})};
+return {open,leave,joinCode,hostClosed,debug:()=>({S,H,room})};
 }
 
 ;
