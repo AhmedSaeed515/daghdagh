@@ -8,7 +8,7 @@ const SERVERS=['ntfy.envs.net','ntfy.adminforge.de','ntfy.sh'];
 const ALPH='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 const rid=n=>Array.from({length:n},()=>ALPH[Math.floor(Math.random()*ALPH.length)]).join('');
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const ME={id:rid(8),name:'',av:'',g:''};
+const ME={id:(()=>{try{let v=localStorage.getItem('lo3ba_pid');if(!/^[A-Z2-9]{8}$/.test(v||'')){v=rid(8);localStorage.setItem('lo3ba_pid',v);}return v;}catch(e){return rid(8);}})(),name:'',av:'',g:''};
 const LIM={q:20,wr:45,vt:30,rv:7};
 let NET=null,S=null,H=null,room=null,off=0,uiTimer=null,hostTimer=null,mine={},msg='',lobbyCfg={mode:'classic',cats:(JSON.parse(localStorage.getItem('lo3ba_cats')||'[]')||[]).filter(k=>CATS[k]).slice(0,6),diff:0,n:10,maxP:8,appr:false};
 let IW=null;let joinTries=0,joinT=null,lastSt=0,qrOn=false;
@@ -90,7 +90,7 @@ function joinCode(code){
 }
 function sendJoin(){
   if(!room||room.host||S)return;
-  if(joinTries++>=15){leave();msg='الغرفة مردتش. اتأكد من الكود وإن صاحبها لسه فاتح اللعبة.';return lobbyView();}
+  if(joinTries++>=40){leave();msg='الغرفة مردتش. اتأكد من الكود وإن صاحبها لسه فاتح اللعبة.';return lobbyView();}
   NET.send({t:'join',id:ME.id,name:ME.name,av:ME.av});
   joinT=setTimeout(sendJoin,4000);
 }
@@ -127,8 +127,8 @@ function applyState(s,now,seq){
   if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
   if(!s.rk||!s.rk.v)mine.vv=0;
   if(room&&room.tv){clearInterval(tvT);view();startUi();return;}
-  if(!s.pl.some(p=>p.i===ME.id)){ // not accepted (game already started?)
-    if(s.ph!=='lobby'){leave();msg='اللعبة بدأت بالفعل في الغرفة دي.';return lobbyView();}
+  if(!s.pl.some(p=>p.i===ME.id)){ // not a member: game running, wait for the host to approve
+    if(s.ph!=='lobby'){S=null;clearTimeout(joinT);joinTries=0;joinT=setTimeout(sendJoin,3000);shell(`<div class="panel center"><div class="big-emoji">⏳</div><h2>اللعبة شغالة</h2><p>مستني صاحب الغرفة يوافق على دخولك...</p><button class="btn ghost" data-o="leave">رجوع</button></div>`);return;}
   }
   if(prev&&s.ph==='rv'&&prev.ph!=='rv'){setTimeout(()=>sfx.round(),900);const k=s.pl.findIndex(p=>p.i===ME.id);if(s.pt&&s.pt[k]>0)sfx.ok();else sfx.bad();}
   view();startUi();
@@ -175,7 +175,7 @@ function hostJoin(m){
   const h=H;if(!m.id||!m.name)return;
   let p=h.players.find(x=>x.id===m.id);
   if(p){hostBroadcast();return;}
-  if(h.ph!=='lobby'){NET.send({t:'kick',to:m.id,why:'اللعبة بدأت بالفعل في الغرفة دي.'});return;}
+  if(h.ph!=='lobby'){if(h.cfg.mode==='imp'||h.ph==='fin'){NET.send({t:'kick',to:m.id,why:'اللعبة بدأت بالفعل في الغرفة دي.'});return;}if(h.players.length>=h.cfg.maxP){NET.send({t:'kick',to:m.id,why:'الغرفة مليانة.'});return;}if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:(window.lgzBad&&window.lgzBad(String(m.name))?'لاعب جديد':String(m.name).slice(0,14)),av:avOK(m.av)});view();}return;}
   if(h.players.length>=h.cfg.maxP){NET.send({t:'kick',to:m.id,why:'الغرفة مليانة ('+h.cfg.maxP+' لاعبين).'});return;}
   if(h.cfg.appr){if(!h.pending.some(x=>x.id===m.id)){h.pending.push({id:m.id,name:(window.lgzBad&&window.lgzBad(String(m.name))?'لاعب '+(h.players.length+h.pending.length+1):String(m.name).slice(0,14)),av:avOK(m.av)});view();}return;}
   let nm=String(m.name).slice(0,14);if(window.lgzBad&&window.lgzBad(nm))nm='لاعب '+(h.players.length+1);let k=2;while(h.players.some(x=>x.name===nm))nm=String(m.name).slice(0,12)+' '+k++;
@@ -428,6 +428,16 @@ function remain(){if(!S||!S.ends)return 0;return Math.max(0,(S.ends-(Date.now()+
 function tmBar(){if(!S.tn)return '';const t=tmTotals(S.pl,S.tn);return `<div class="tmbar">${t.map((v,k)=>`<span class="tmc" style="background:${TM[k][1]}">${TM[k][0]} <b>${v}</b></span>`).join('')}</div>`;}
 function sbHtml(){const my=myIndex();const all=S.pl.map((p,i)=>({p,i}));const top=S.pl.length>8?all.slice().sort((a,b)=>b.p.s-a.p.s).slice(0,5):all;const extra=S.pl.length>8&&my>=0&&!top.some(x=>x.i===my)?`<div class="sp cur"><span class="who">إنت: المركز ${all.slice().sort((a,b)=>b.p.s-a.p.s).findIndex(x=>x.i===my)+1} من ${S.pl.length}</span><b>${S.pl[my].s}</b></div>`:'';return tmBar()+`<div class="sb">${top.map(x=>x.p).map(p=>`<div class="sp ${p.i===ME.id?'cur':''}"><span class="who">${avh(p.a)}${esc(p.n)}</span><b>${p.s}</b></div>`).join('')}${extra}</div>`;}
 function view(){
+  view0();
+  const h=H;const old=document.getElementById('jreq');if(old)old.remove();
+  if(room&&room.host&&h&&h.ph!=='lobby'&&h.pending&&h.pending.length){
+    const p=h.pending[0];const d=document.createElement('div');d.id='jreq';
+    d.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:50;background:#fff;color:#151515;border:3px solid #151515;border-radius:12px;padding:8px;display:flex;gap:8px;align-items:center;font-weight:800;font-size:14px;box-shadow:3px 3px 0 #151515';
+    d.innerHTML=`<span style="flex:1">${esc(p.name)} عايز يدخل اللعبة</span><button class="btn sm" data-o="ok" data-v="${esc(p.id)}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${esc(p.id)}">رفض</button>`;
+    document.body.appendChild(d);
+  }
+}
+function view0(){
   if(!S||!room)return;
   const host=room.host;
   if(room.tv)return (S.mode==='rk'&&S.ph==='rk')?rkView(false,true):tvView();
