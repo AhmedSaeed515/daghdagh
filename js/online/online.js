@@ -42,19 +42,67 @@ function openNet(srv,topic,onmsg){
   };
 }
 async function probe(srv){try{const c=new AbortController();const t=setTimeout(()=>c.abort(),4500);const r=await fetch('https://'+srv+'/lgz-probe-'+rid(6),{method:'POST',body:'{"t":"ping"}',signal:c.signal});clearTimeout(t);return r.ok;}catch(e){return false}}
-function hostClosed(){
-  leave(true);msg='';
+function ddStyle(){if(document.getElementById('ddcs'))return;const st=document.createElement('style');st.id='ddcs';st.textContent='.ddc{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:18px}.ddc>div{max-width:300px;width:100%;background:#fff3cf;color:#1b1b1b;border:4px solid #1b1b1b;box-shadow:6px 6px 0 #1b1b1b;padding:20px 16px;text-align:center;font-family:Cairo,sans-serif}.ddc h3{margin:0 0 8px;font-size:22px;font-weight:900}.ddc p{margin:0 0 14px;font-size:14px}.ddc button{font:inherit;font-weight:900;background:#ffd23f;color:#1b1b1b;border:3px solid #1b1b1b;box-shadow:3px 3px 0 #1b1b1b;padding:9px 22px;margin:0 4px;cursor:pointer}.ddc button.n{background:#fff}';document.head.appendChild(st);}
+function ddAsk(t,p,yes){ddStyle();const d=document.createElement('div');d.className='ddc';d.setAttribute('role','alertdialog');d.innerHTML='<div><h3>'+t+'</h3><p>'+p+'</p><button type="button" class="y">أيوه</button><button type="button" class="n">لأ</button></div>';d.querySelector('.n').onclick=()=>d.remove();d.querySelector('.y').onclick=()=>{d.remove();yes()};document.body.appendChild(d);}
+function hostClosedLocal(){hostClosed('host');}
+function hostClosed(why){
+  const few=why==='few'||why==='gone';leave(true);msg='';
   try{if(!document.getElementById('ddcs')){const st=document.createElement('style');st.id='ddcs';st.textContent='.ddc{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:18px}.ddc>div{max-width:300px;width:100%;background:#fff3cf;color:#1b1b1b;border:4px solid #1b1b1b;box-shadow:6px 6px 0 #1b1b1b;padding:20px 16px;text-align:center;font-family:Cairo,sans-serif}.ddc h3{margin:0 0 8px;font-size:22px;font-weight:900}.ddc p{margin:0 0 14px;font-size:14px}.ddc button{font:inherit;font-weight:900;background:#ffd23f;color:#1b1b1b;border:3px solid #1b1b1b;box-shadow:3px 3px 0 #1b1b1b;padding:9px 26px;cursor:pointer}';document.head.appendChild(st);}}catch(e){}
-  const d=document.createElement('div');d.className='ddc';d.setAttribute('role','alertdialog');d.innerHTML='<div><h3>الهوست قفل الغرفة</h3><p>اللعبة خلصت. هنرجعك للرئيسية.</p><button type="button">تمام</button></div>';
+  const d=document.createElement('div');d.className='ddc';d.setAttribute('role','alertdialog');d.innerHTML='<div><h3>'+(few?'الغرفة اتقفلت':'الهوست قفل الغرفة')+'</h3><p>'+(few?'لأن مفيش لاعبين كفاية. هنرجعك للرئيسية.':'اللعبة خلصت. هنرجعك للرئيسية.')+'</p><button type="button">تمام</button></div>';
   d.querySelector('button').onclick=()=>{d.remove()};document.body.appendChild(d);
   try{X.home()}catch(e){}
 }
-function connect(code){const i=+code[0]-1;const srv=SERVERS[i];return openNet(srv,'lgz-'+code,onNet);}
+// ---------- Supabase transport (authenticated, server-stamped senders, host migration) ----------
+function sbRpc(fn,args){return window.SBX.session().then(se=>window.SBX.raw('/rest/v1/rpc/'+fn,{method:'POST',tok:se.access_token,body:args}));}
+function snap(){try{return JSON.parse(JSON.stringify(H))}catch(e){return null}}
+function demote(){if(!room||!room.host)return;room.host=false;clearInterval(hostTimer);hostTimer=null;H=null;if(NET&&NET.reset)NET.reset();}
+function becomeHost(hs){
+  if(!hs||!hs.players||!hs.players.some(p=>p.id===ME.id))return false;
+  H=hs;H.pending=H.pending||[];room.host=true;clearInterval(hostTimer);hostTimer=setInterval(hostTick,300);hostBroadcast();return true;}
+function openSB(code){
+  let stop=false,after=0,sq=0,fails=0,claiming=0;
+  const api={
+    send(m){
+      if(room&&room.host){
+        if(m.t==='st')return sbRpc('host_state',{c:code,st:m,sq:m.seq,hs:snap()}).then(ok=>{if(ok===false)demote();return true}).catch(()=>false);
+        if(m.t==='close')return sbRpc('host_close',{c:code,why:m.why||'host'}).catch(()=>false);
+        if(m.to)return sbRpc('host_send',{c:code,to_pid:m.to,b:m}).catch(()=>false);
+        return Promise.resolve(false);}
+      return sbRpc('send_host',{c:code,b:m}).then(r=>{if(r==='gone')sbClosed('gone');return r==='ok'}).catch(()=>false);},
+    close(){stop=true},
+    reset(){sq=0}
+  };
+  async function loop(){
+    while(!stop){
+      try{
+        if(room&&room.host){
+          const r=await sbRpc('host_poll',{c:code,after});
+          if(stop)return;
+          if(r===null){demote();}else{r.ms.forEach(x=>{after=Math.max(after,x.id);if(x.b&&x.b.t&&room&&room.host)try{onNet(Object.assign({},x.b,{id:x.f}))}catch(e){console.error(e)}});if(H)H.pr=r.pr;}
+          await sleep(600);
+        }else{
+          const r=await sbRpc('client_poll',{c:code,sq,after});
+          if(stop)return;
+          if(r.gone||r.closed){sbClosed(r.closed?(r.why||'host'):'gone');return;}
+          if(room&&r.hid)room.hid=r.hid;
+          r.ms.forEach(x=>{after=Math.max(after,x.id);try{onNet(x.b)}catch(e){console.error(e)}});
+          if(r.st){sq=r.seq;try{onNet(r.st)}catch(e){console.error(e)}}
+          if(r.age>15000&&S&&room&&!room.tv&&Date.now()-claiming>6000){claiming=Date.now();sbRpc('claim_host',{c:code}).then(x=>{if(x&&x.hs&&room&&!room.host)becomeHost(x.hs)}).catch(()=>{});}
+          await sleep(room&&room.tv?1500:800);
+        }
+        fails=0;
+      }catch(e){fails++;await sleep(Math.min(5000,700*fails));}
+    }
+  }
+  loop();return api;
+}
+function sbClosed(why){if(!room)return;if(why==='gone'&&!S&&!room.host){leave();msg='مفيش غرفة بالكود ده. اتأكد من الكود.';return lobbyView();}hostClosed(why);}
+function connect(code){if(code[0]==='4'){room.sb=true;return openSB(code);}const i=+code[0]-1;const srv=SERVERS[i];return openNet(srv,'lgz-'+code,onNet);}
 
 // ---------- entry ----------
 function open(){leave(true);msg='';lobbyView();}
 function leave(quiet){
-  if(room&&room.host&&NET){try{NET.send({t:'close',id:ME.id,now:Date.now()})}catch(e){}}
+  if(room&&room.sb&&NET&&!room.tv){try{sbRpc('leave_room',{c:room.code})}catch(e){}}
   clearInterval(wdT);wdT=null;
   if(NET){NET.close();NET=null}
   clearInterval(uiTimer);clearInterval(hostTimer);clearTimeout(joinT);uiTimer=hostTimer=joinT=null;
@@ -76,10 +124,12 @@ function warn(t){msg=t;const e=document.getElementById('omsg');if(e)e.textConten
 async function create(){
   if(!readName())return warn('اكتب اسمك الأول');if(window.lgzBad&&window.lgzBad(ME.name))return warn('الاسم ده مش مناسب، غيّره.');
   warn('بجهّز الغرفة...');
-  let idx=-1;for(let i=0;i<SERVERS.length;i++){if(await probe(SERVERS[i])){idx=i;break}}
+  let code=null,sb=false;
+  if(window.SBX&&!window.__NOSB){for(let a=0;a<3&&!code;a++){const c='4'+rid(4);try{const r=await sbRpc('create_room',{c,p:ME.id});if(r==='ok'){code=c;sb=true;}}catch(e){break}}}
+  if(!code){let idx=-1;for(let i=0;i<SERVERS.length;i++){if(await probe(SERVERS[i])){idx=i;break}}
   if(idx<0)return warn('معرفتش أوصل لخدمة الاتصال دلوقتي. جرّب تاني بعد شوية.');
-  const code=(idx+1)+rid(4);
-  room={code,host:true};
+  code=(idx+1)+rid(4);}
+  room={code,host:true,sb:sb};
   H={players:[{id:ME.id,name:ME.name,av:ME.av,score:0,right:0}],pending:[],cfg:{...lobbyCfg,cats:lobbyCfg.cats.slice()},r:0,ph:'lobby',seq:0,items:[],ans:{},fakes:{},votes:{},opts:[],owners:[],right:-1,ends:0};
   NET=connect(code);
   hostTimer=setInterval(hostTick,300);
@@ -92,7 +142,7 @@ function join(){
 function joinCode(code){
   if(!readName())return warn('اكتب اسمك الأول');if(window.lgzBad&&window.lgzBad(ME.name))return warn('الاسم ده مش مناسب، غيّره.');
   code=String(code||'').trim().toUpperCase();
-  if(!/^[1-3][A-Z2-9]{4}$/.test(code))return warn('الكود لازم يكون 5 حروف وأرقام زي 1K7QZ');
+  if(!/^[1-4][A-Z2-9]{4}$/.test(code))return warn('الكود لازم يكون 5 حروف وأرقام زي 1K7QZ');
   leave(true);room={code,host:false,t0:Date.now()};NET=connect(code);joinTries=0;lastSt=0;
   shell(`<div class="panel center"><div class="big-emoji">⏳</div><h2>بدخّلك الغرفة ${esc(code)}...</h2><p>لو اتأخر، يمكن صاحب الغرفة بيراجع طلبات الانضمام، أو اتأكد من الكود وإنه فاتح اللعبة.</p><button class="btn ghost" data-o="leave">رجوع</button></div>`);
   sendJoin();
@@ -133,8 +183,8 @@ function onNet(m){
   if(m.t==='kick'&&m.to===ME.id){leave();msg=m.why||'خرجت من الغرفة';lobbyView();}
 }
 function applyState(s,now,seq){
-  if(room&&!room.hid&&s.pl&&s.pl[0])room.hid=s.pl[0].i;
-  if(!wdT)wdT=setInterval(()=>{if(room&&!room.host&&lastSt&&Date.now()-lastSt>28000)hostClosed();},3000);
+  if(room&&!room.sb&&!room.hid&&s.pl&&s.pl[0])room.hid=s.pl[0].i;
+  if(!wdT&&room&&!room.sb)wdT=setInterval(()=>{if(room&&!room.host&&!room.sb&&lastSt&&Date.now()-lastSt>28000)hostClosed();},3000);
   const prev=S;S=s;S.seq=seq;off=now-Date.now();lastSt=Date.now();clearTimeout(joinT);
   if(!prev||prev.r!==s.r||(prev.q&&s.q&&prev.q.t!==s.q.t))mine={};else if(prev.ph!==s.ph)mine={fk:mine.fk};
   if(!s.rk||!s.rk.v)mine.vv=0;
@@ -222,7 +272,7 @@ function botPlan(){
     },d);
   });
 }
-function hostBye(id){const h=H;if(h.ph!=='lobby')return;const i=h.players.findIndex(p=>p.id===id);if(i>0){h.players.splice(i,1);hostBroadcast();}}
+function hostBye(id){const h=H;if(h.ph!=='lobby')return;const i=h.players.findIndex(p=>p.id===id);if(i>=0&&id!==ME.id){h.players.splice(i,1);hostBroadcast();}}
 function pickItems(cfg){return X.picker.pick(cfg.cats,cfg.diff,cfg.n);}
 function hostStart(){
   const h=H;if(h.cfg.mode==='rk'){h.players=h.players.filter(p=>!p.bot);if(h.players.length<2){hostBroadcast();return;}return rkStart();}
@@ -290,9 +340,16 @@ function hostReveal(){
   h.players.forEach((p,i)=>p.score+=h.pts[i]);
   h.sk=h.players.map(p=>!!(h.ans[p.id]&&h.ans[p.id].skip));h.rscore=null;h.ph='rv';h.lim=LIM.rv+(h.cfg.mode==='bluff'?3:0);h.ends=Date.now()+h.lim*1000;hostBroadcast();
 }
+function hostPresence(h,now){
+  const pr=h.pr;const ok=p=>p.bot||p.id===ME.id||pr.indexOf(p.id)>=0;
+  if(h.ph==='lobby'){h.lowSince=0;const n=h.players.length;if(now-(h.prT||0)>3000){h.prT=now;const keep=h.players.filter(ok);if(keep.length<n&&(h.gone=(h.gone||0)+1)>=15){h.gone=0;h.players=keep;hostBroadcast();}else if(keep.length===n)h.gone=0;}return;}
+  const cnt=h.players.filter(ok).length;
+  if(cnt<2){if(!h.lowSince)h.lowSince=now;else if(now-h.lowSince>20000){H.lowSince=0;NET.send({t:'close',why:'few'});hostClosed('few');}}else h.lowSince=0;
+}
 function hostTick(){
   const h=H;if(!h)return;const now=Date.now();
-  if(now-lastSt>10000)hostBroadcast();
+  if(now-lastSt>(room&&room.sb?4000:10000))hostBroadcast();
+  if(room&&room.sb&&h.pr)hostPresence(h,now);
   if(h.ph==='q'&&now>=h.ends+800)hostReveal();
   else if(h.ph==='wr'&&now>=h.ends+800){if(Object.keys(h.fakes).length)hostVoteStart();else{h.ph='vt';h.fakes={};hostVoteStart();}}
   else if(h.ph==='vt'&&now>=h.ends+800)hostReveal();
@@ -486,7 +543,7 @@ function view0(){
 }
 function hostBoard(){
   if(!mine.hb)return `<div class="hbw"><button class="btn sm ghost" data-o="hb">🎛️ لوحة المضيف</button></div>`;
-  return `<div class="hbw hbo"><button class="btn sm ghost" data-o="hb">إخفاء اللوحة ▲</button><div class="hbr"><button class="btn sm" data-o="hskip">⏭️ تخطي السؤال</button><button class="btn sm ghost" data-o="hend">🛑 إنهاء اللعبة</button></div>${S.pl.slice(1).map(p=>`<div class="rk"><span class="who">${avh(p.a)}${esc(p.n)}</span><button class="btn sm ghost" data-o="kick" data-v="${p.i}">طرد ✖</button></div>`).join('')||'<small>مفيش لاعبين تانيين</small>'}</div>`;
+  return `<div class="hbw hbo"><button class="btn sm ghost" data-o="hb">إخفاء اللوحة ▲</button><div class="hbr"><button class="btn sm" data-o="hskip">⏭️ تخطي السؤال</button><button class="btn sm ghost" data-o="hend">🛑 إنهاء اللعبة</button><button class="btn sm ghost" data-o="closeall">اقفل الغرفة للكل</button></div>${S.pl.filter(p=>p.i!==ME.id).map(p=>`<div class="rk"><span class="who">${avh(p.a)}${esc(p.n)}</span><button class="btn sm ghost" data-o="kick" data-v="${p.i}">طرد ✖</button></div>`).join('')||'<small>مفيش لاعبين تانيين</small>'}</div>`;
 }
 function hostKick(id){const h=H,i=h.players.findIndex(p=>p.id===id);if(i<=0)return;h.players.splice(i,1);delete h.ans[id];NET.send({t:'kick',to:id,why:'صاحب الغرفة طردك.'});
   if(h.ph==='q'&&h.players.length&&h.players.every(p=>h.ans[p.id]))return hostReveal();
@@ -511,15 +568,15 @@ function lobbyRoom(host){
   ${window.FR&&FR.box?FR.box():''}
   ${cfgHtml}
   ${host?`<div class="warn">${S.mode==='imp'&&S.pl.length<3?'اللعبة دي محتاجة 3 لاعبين على الأقل':S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':S.tn&&new Set(S.pl.map(p=>p.tm)).size<2?'لازم فريقين فيهم لاعبين':S.mode!=='imp'&&S.mode!=='rk'&&S.cats.length<1?'اختار فئة واحدة على الأقل':''}</div><button class="btn big" data-o="start" ${S.pl.length<2||(S.mode==='imp'&&S.pl.length<3)||(S.mode!=='imp'&&S.mode!=='rk'&&S.cats.length<1)||(S.tn&&new Set(S.pl.map(p=>p.tm)).size<2)?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
-  <button class="btn ghost" data-o="leave">خروج</button></div>`);
+  ${host?'<button class="btn ghost" data-o="closeall">اقفل الغرفة للكل</button>':''}<button class="btn ghost" data-o="leave">خروج</button></div>`);
   if(window.FR&&FR.fill)setTimeout(FR.fill,0);
 }
 let tvT=null;
 function tvCode(code){
-  code=String(code||'').trim().toUpperCase();if(!/^[1-3][A-Z2-9]{4}$/.test(code))return false;
+  code=String(code||'').trim().toUpperCase();if(!/^[1-4][A-Z2-9]{4}$/.test(code))return false;
   leave(true);room={code,host:false,tv:true,t0:Date.now()};S=null;NET=connect(code);
   shell(`<div class="panel center"><div class="big-emoji">📺</div><h2>شاشة التلفزيون</h2><p>بدور على الغرفة ${esc(code)}...</p></div>`,);
-  const ask=()=>{if(S||!room||!room.tv)return;NET.send({t:'tv'});};ask();clearInterval(tvT);tvT=setInterval(ask,3000);return true;
+  const ask=()=>{if(S||!room||!room.tv||room.sb)return;NET.send({t:'tv'});};ask();clearInterval(tvT);tvT=setInterval(ask,3000);return true;
 }
 function tvView(){
   const sb=`<div class="sb">${S.pl.slice().sort((a,b)=>b.s-a.s).slice(0,8).map(p=>`<div class="sp"><span class="who">${avh(p.a)}${esc(p.n)}</span><b>${p.s}</b></div>`).join('')}</div>`;
@@ -581,6 +638,7 @@ document.addEventListener('click',e=>{
   switch(a){
     case 'create':return create();
     case 'join':return join();
+    case 'closeall':{if(!room||!room.host)return;ddAsk('تقفل الغرفة للكل؟','كل اللاعبين هيرجعوا للرئيسية.',()=>{NET.send({t:'close',why:'host'});setTimeout(()=>{hostClosedLocal()},300);});return;}
     case 'leave':{if(room&&!room.host&&NET)NET.send({t:'bye',id:ME.id});leave();return X.home();}
     case 'ans':return doAnswer(+t.dataset.k);
     case 'help':return doHelp(v);
@@ -631,7 +689,7 @@ document.addEventListener('input',e=>{if(e.target.id==='orans')rkSug();});
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='orans'){e.preventDefault();rkSend(e.target.value);return;}if(e.target.id==='ofake')doFake();if(e.target.id==='oname'||e.target.id==='ocode'){const c=(document.getElementById('ocode')||{}).value;c?join():create();}});
 document.addEventListener('change',e=>{if(e.target.id==='orng'&&H&&H.ph==='lobby'){H.cfg.n=Math.max(10,Math.min(30,+e.target.value||10));hostBroadcast();}});
 (function(){const m=/[?&]tv=([A-Za-z0-9]{5})/.exec(location.search);if(m)setTimeout(()=>tvCode(m[1]),400);})();
-return {open,leave,joinCode,hostClosed,debug:()=>({S,H,room})};
+return {open,leave,joinCode,hostClosed,hostStart:()=>hostStart(),debug:()=>({S,H,room})};
 }
 
 ;
