@@ -4,3 +4,6 @@ html.arc,html.arc body{background:#efece3 radial-gradient(#d8d3c4 2px,transparen
 html.arc.dk,html.arc.dk body{background:#0a1226!important}
 html.arc body::after{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0,rgba(0,0,0,.07) 1px,transparent 1px,transparent 3px)}
 html.arc.dk body::after{background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0,rgba(0,0,0,.14) 1px,transparent 1px,transparent 3px)}
+/* links: no default blue/purple */
+.lg a,.lg a:visited,.lg a:active{color:#a8402c;text-decoration:underline;text-underline-offset:3px}
+html.dk .lg a,html.dk .lg a:visited,html.dk .lg a:active{color:#f2b95c}
