@@ -40,7 +40,7 @@ function profileForm(first){
   if(!PF||PF.first!==first)PF={first,name:String(store.get('myname','')),av:store.get('myav','')};
   TAB=first?'':'me';
   const inp=document.getElementById('pfname');if(inp)PF.name=inp.value.trim().slice(0,14);
-  const extra=first?'':`<div class="cards">
+  const extra=first?'':`${window.LGAuth?LGAuth.card():''}<div class="cards">
    <button class="mode" data-act="friends"><span class="ic">👥</span><span class="tx"><b>صحابي</b><small>ضيف أصحابك بالكود وادعيهم للعب.</small></span><span class="ch">‹</span></button>
    <button class="mode" data-act="install"><span class="ic">📲</span><span class="tx"><b>ثبّت اللعبة</b><small>ضيفها على الشاشة الرئيسية زي أي تطبيق.</small></span><span class="ch">‹</span></button>
    ${QuestionReport.card()}
@@ -58,7 +58,7 @@ function pfClick(t){
   const k=t.dataset.pf,v=t.dataset.v;
   if(k==='g'){PF.g=v;return profileForm(PF.first);}
   if(k==='av'){PF.av=v;return profileForm(PF.first);}
-  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);PF=null;return home();}
+  if(k==='save'&&pfValid()){store.set('myname',PF.name);store.set('myav',PF.av);PF=null;if(window.LGAuth)LGAuth.push();return home();}
 }
 const SLOGAN='العب، اتحدّى، دغدغ';
 const JR=(()=>{const m=/[?&]r=([1-3][A-Za-z2-9]{4})(?![A-Za-z0-9])/.exec(location.search);return m?m[1].toUpperCase():''})();
