@@ -21,7 +21,7 @@ function load(){
   return loading;
 }
 function adopt(u){
-  ls('lo3ba_pid',pidOf(u.uid));
+  ls('lo3ba_pid',pidOf(u.uid));ls('lo3ba_acct',u.email||'حساب');
   var nm=u.displayName||'',ph=u.photoURL||'',av=/^av:/.test(ph)?ph.slice(3):'';
   var cn=jget('myname'),ca=jget('myav'),ch=false;
   if(nm&&nm!==cn){jset('myname',nm.slice(0,14));ch=true;}
