@@ -495,9 +495,11 @@ function lobbyRoom(host){
   <div class="panel center"><h3 class="hrow">اللاعبين <i>${S.pl.length} / ${mp}</i></h3><div class="plist">${S.pl.map((p,i)=>`<div class="pl" style="--i:${i}">${avh(p.a,'avl')}<b>${esc(p.n)}</b>${S.tn&&p.tm!==undefined?`<button class="tmb" style="background:${TM[p.tm][1]}" ${host?`data-o="tm" data-v="${p.i}"`:''}>${TM[p.tm][0]}</button>`:''}${i===0?'<em>👑 صاحب الغرفة</em>':p.b?'<em class="rd">بوت</em>':p.i===ME.id?'<em class="you">إنت</em>':'<em class="rd">✅ جاهز</em>'}${host&&i>0?`<button class="kx" data-o="kick" data-v="${p.i}" aria-label="طرد">✖</button>`:(p.b&&p.o===ME.id?`<button class="kx" data-o="botx" data-v="${p.i}" aria-label="شيل البوت">✖</button>`:'')}</div>`).join('')}${seats>0?`<div class="empty">+ ${seats} أماكن فاضية</div>`:''}</div>
   ${S.mode!=='imp'&&S.mode!=='rk'&&S.pl.filter(p=>p.b&&p.o===ME.id).length<2&&S.pl.length<mp?`<div class="srow"><span class="lb"><span class="e">🤖</span>بوتات للتجربة (لحد 2)</span><button class="btn sm ghost" data-o="addbot">➕ ضيف بوت</button></div>`:''}
   ${host&&H.pending.length?`<h3>طلبات انضمام 🙋</h3><div class="rank">${H.pending.map(p=>`<div class="rk pend"><span class="who">${avh(p.av)}${esc(p.name)}</span><span style="display:flex;gap:6px"><button class="btn sm" data-o="ok" data-v="${p.id}">قبول</button><button class="btn sm ghost" data-o="no" data-v="${p.id}">رفض</button></span></div>`).join('')}</div>`:''}
+  ${window.FR&&FR.box?FR.box():''}
   ${cfgHtml}
   ${host?`<div class="warn">${S.mode==='imp'&&S.pl.length<3?'اللعبة دي محتاجة 3 لاعبين على الأقل':S.pl.length<2?'استنى لاعب واحد على الأقل يدخل':S.tn&&new Set(S.pl.map(p=>p.tm)).size<2?'لازم فريقين فيهم لاعبين':S.mode!=='imp'&&S.mode!=='rk'&&S.cats.length<1?'اختار فئة واحدة على الأقل':''}</div><button class="btn big" data-o="start" ${S.pl.length<2||(S.mode==='imp'&&S.pl.length<3)||(S.mode!=='imp'&&S.mode!=='rk'&&S.cats.length<1)||(S.tn&&new Set(S.pl.map(p=>p.tm)).size<2)?'disabled':''}>ابدأ اللعبة</button><p style="color:var(--mut);font-size:13px">خلّي شاشتك مفتوحة طول اللعبة، لأن موبايلك هو اللي بيدير الغرفة.</p>`:'<p class="warn">مستني صاحب الغرفة يبدأ...</p>'}
   <button class="btn ghost" data-o="leave">خروج</button></div>`);
+  if(window.FR&&FR.fill)setTimeout(FR.fill,0);
 }
 let tvT=null;
 function tvCode(code){
