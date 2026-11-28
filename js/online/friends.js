@@ -36,7 +36,7 @@ async function load(){
  INV=await api('/invites?select=*&to_id=eq.'+ME.id+'&order=created_at.desc&limit=5');
  INV=INV.filter(i=>Date.now()-new Date(i.created_at).getTime()<30*60000);}
 function av(a,c){try{if(window.avh&&window.AVSVG)return window.avh(a,c||'avl');}catch(e){}return '<span class="av avl" style="display:inline-block;width:46px;height:46px"></span>';}
-function curRoom(){try{const r=ONL.debug().room;return r&&r.code?r.code:''}catch(e){return ''}}
+function curRoom(){try{const r=window.__ONL.debug().room;return r&&r.code?r.code:''}catch(e){return ''}}
 function view(){
  const reqs=FR.filter(f=>f.status==='pending'&&!f.mine),out=FR.filter(f=>f.status==='pending'&&f.mine),fl=FR.filter(f=>f.status==='accepted');
  const rm=curRoom();
@@ -61,7 +61,7 @@ async function act(t){
   else if(k==='del')await api('/friendships?id=eq.'+v,{method:'DELETE'});
   else if(k==='inv'){const rc=curRoom();if(rc){await api('/invites',{method:'POST',body:{from_id:ME.id,to_id:v,room:rc}});msg='اتبعتله الدعوة ✓';sent[v]=1;t.textContent='اتبعتت ✓';t.disabled=true;busy=false;if(document.getElementById('frinv'))return;}}
   else if(k==='dismiss'){await api('/invites?id=eq.'+t.dataset.i,{method:'DELETE'});}
-  else if(k==='joinr'){await api('/invites?id=eq.'+t.dataset.i,{method:'DELETE'}).catch(()=>{});busy=false;return ONL.joinCode(v);}
+  else if(k==='joinr'){await api('/invites?id=eq.'+t.dataset.i,{method:'DELETE'}).catch(()=>{});busy=false;return window.__ONL.joinCode(v);}
   await load();
  }catch(e){msg='حصلت مشكلة: '+e.message;}
  busy=false;view();}
@@ -72,7 +72,7 @@ function banner(){
  const f=FR.find(x=>x.oid===i.from_id);
  if(!b){b=document.createElement('div');b.id='invbn';b.style.cssText='position:fixed;top:8px;left:8px;right:8px;z-index:99;background:var(--ink,#222);color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;justify-content:space-between;font-size:14px';document.body.appendChild(b);}
  b.innerHTML=`<span>${E(f&&f.other?f.other.name:'صاحب')} داعيك للعب</span><span><button class="btn" id="invgo">ادخل</button> <button class="btn ghost" id="invno">×</button></span>`;
- b.querySelector('#invgo').onclick=()=>{seen[i.id]=1;b.remove();api('/invites?id=eq.'+i.id,{method:'DELETE'}).catch(()=>{});ONL.joinCode(i.room);};
+ b.querySelector('#invgo').onclick=()=>{seen[i.id]=1;b.remove();api('/invites?id=eq.'+i.id,{method:'DELETE'}).catch(()=>{});window.__ONL.joinCode(i.room);};
  b.querySelector('#invno').onclick=()=>{seen[i.id]=1;b.remove();};}
 function startPoll(){if(poll)return;poll=setInterval(async()=>{if(busy||document.hidden)return;try{await load();banner();if(document.getElementById('mycode')&&document.getElementById('frcode')&&document.activeElement!==document.getElementById('frcode'))view();}catch(e){}},6000);}
 async function sync(){try{await load();banner();startPoll();}catch(e){}}
