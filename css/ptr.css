@@ -1,0 +1,9 @@
+#ptr{white-space:nowrap;position:fixed;top:0;left:50%;z-index:70;display:flex;align-items:center;gap:8px;direction:rtl;padding:8px 12px;background:#0b1716;color:#e9e6dc;font:800 13px Cairo,system-ui,sans-serif;box-shadow:0 -3px 0 #e9e6dc,0 3px 0 #e9e6dc,-3px 0 0 #e9e6dc,3px 0 0 #e9e6dc,0 8px 0 rgba(0,0,0,.45);transform:translate(-50%,-60px);opacity:0;pointer-events:none;transition:opacity .12s}
+#ptr.on{opacity:1}
+#ptr svg{color:#f2b95c;transform:rotate(0)}
+#ptr.ar svg{animation:ptb .4s steps(2) infinite}
+#ptr .pm{display:flex;gap:2px;direction:ltr}#ptr .pm i{width:7px;height:12px;background:#243b37}#ptr .pm i.f{background:#f2b95c}
+#ptr.ar .pm i.f{background:#6cc58a}
+@keyframes ptb{50%{transform:translateY(3px)}}
+html:not(.dk) #ptr{background:#f7f0e0;color:#1a1410;box-shadow:0 -3px 0 #1a1410,0 3px 0 #1a1410,-3px 0 0 #1a1410,3px 0 0 #1a1410,0 8px 0 rgba(0,0,0,.25)}
+html:not(.dk) #ptr .pm i{background:#d8cfb8}html:not(.dk) #ptr .pm i.f{background:#d98a1f}
