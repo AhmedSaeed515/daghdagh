@@ -553,7 +553,7 @@ function finView(){
 }
 function updateBar(){
   const b=document.getElementById('obar');if(!b||!S)return;
-  const r=remain(),tot=S.lim||20;b.style.width=Math.min(100,r/tot*100)+'%';b.className=r<6?'low':'';
+  const r=remain(),tot=S.lim||20;b.style.width=Math.min(100,r/tot*100)+'%';b.className=r<6?'low':'';b.setAttribute('data-s',Math.ceil(r));
 }
 function startUi(){
   if(uiTimer)return;
